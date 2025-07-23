@@ -424,8 +424,8 @@ input[type="number"] {
 .switch-xsm {
   position: relative;
   display: inline-block;
-  width: 50px;
-  height: 26px;    
+  width: 40px;
+  height: 22px;    
   input { 
       opacity: 0;
       width: 0;
@@ -437,7 +437,7 @@ input[type="number"] {
           box-shadow: 0 0 1px var(--theme-color);
       }
       &:checked + .slider:before {
-          transform: translateX(23px);
+          transform: translateX(17px);
       }
         
   }
@@ -453,8 +453,8 @@ input[type="number"] {
       &:before {
           position: absolute;
           content: "";
-          height: 19px;
-          width: 19px;
+          height: 15px;
+          width: 15px;
           left: 4px;
           bottom: 4px;
           background-color: $white;

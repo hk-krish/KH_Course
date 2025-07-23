@@ -3,6 +3,7 @@ import SimpleBar from "simplebar-react";
 import { MenuList } from "../../Data/SidebarMenuList";
 import { useAppDispatch, useAppSelector } from "../../ReduxToolkit/Hooks";
 import { toggleSidebar } from "../../ReduxToolkit/Slice/LayoutSlice";
+import { RouteList } from "../../Constant/RouteList";
 
 const Sidebar = () => {
   const { sideBarToggle } = useAppSelector((state) => state.layout);
@@ -13,9 +14,10 @@ const Sidebar = () => {
     <div className={`sidebar-wrapper ${sideBarToggle ? "close_icon" : ""}`}>
       <div>
         <div className="logo-wrapper logo-wrapper-center">
-          <a href="index.html">
-            <img className="img-fluid for-white" src="assets/images/logo/full-white.svg" alt="logo" />
-          </a>
+          <Link to={RouteList.Home}>
+            {/* <img className="img-fluid for-white" src="assets/images/logo/full-white.svg" alt="logo" /> */}
+            <h2>HK Course</h2>
+          </Link>
           <div className="back-btn" onClick={() => dispatch(toggleSidebar())}>
             <i className="fa fa-angle-left" />
           </div>
@@ -24,9 +26,9 @@ const Sidebar = () => {
           </div>
         </div>
         <div className="logo-icon-wrapper">
-          <a href="index.html">
+          <Link to={RouteList.Home}>
             <img className="img-fluid main-logo" src="assets/images/logo/logo.png" alt="logo" />
-          </a>
+          </Link>
         </div>
         <nav className="sidebar-main">
           <div className="left-arrow" id="left-arrow">

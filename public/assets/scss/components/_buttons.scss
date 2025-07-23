@@ -13,11 +13,12 @@
   white-space: nowrap;
 
   &:hover {
-    background-color: var(--theme-color);
+    background-color: var(--theme-color)!important;
   }
 
   &:focus {
     box-shadow: none;
+    background-color: var(--theme-color)!important;
   }
 
   &.dark-button {
@@ -75,7 +76,7 @@
     }
 
     &:hover {
-      color: var(--theme-color);
+      color: var(--theme-color) !important;
 
       i {
         transform: translateX(3px);

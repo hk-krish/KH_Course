@@ -1,11 +1,10 @@
-
-//others
-
 import { RouteList } from "../Constant/RouteList";
+import ChangePassword from "../Pages/Auth/ChangePassword";
+import Banner from "../Pages/Banner";
 import Dashboard from "../Pages/Dashboard";
 
 export const AppRoutes = [
-  //Product
-  { path: RouteList.Home, element: <Dashboard /> },
   { path: RouteList.Dashboard, element: <Dashboard /> },
+  { path: RouteList.Banner, element: <Banner /> },
+  { path: RouteList.ChangePassword, element: <ChangePassword /> },
 ];

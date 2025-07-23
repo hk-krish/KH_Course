@@ -1,11 +1,13 @@
 import { configureStore } from "@reduxjs/toolkit";
 import AuthSlice from "./Slice/AuthSlice";
 import LayoutSlice from "./Slice/LayoutSlice";
+import BannerSlice from "./Slice/BannerSlice";
 
 export const store = configureStore({
   reducer: {
     auth: AuthSlice,
     layout: LayoutSlice,
+    banner: BannerSlice,
   },
 });
 

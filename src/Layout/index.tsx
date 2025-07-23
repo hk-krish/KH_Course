@@ -4,6 +4,7 @@ import { setSideBarToggle } from "../ReduxToolkit/Slice/LayoutSlice";
 import Header from "./Header";
 import Sidebar from "./Sidebar";
 import Footer from "./Footer";
+import { Outlet } from "react-router-dom";
 
 const Layout = () => {
   const dispatch = useAppDispatch();
@@ -23,7 +24,7 @@ const Layout = () => {
       <div className="page-body-wrapper">
         <Sidebar />
         <div className="page-body">
-          Layout
+          <Outlet />
           <Footer />
         </div>
       </div>

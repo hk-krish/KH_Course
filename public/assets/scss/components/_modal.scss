@@ -113,7 +113,7 @@
                     padding: 8px 20px !important;
                     &:first-child{
                         background-color: transparent;
-                        color: $theme-font-color;
+                        color: $white;
                         transition: all .4s ease-in-out;
                         &:hover {
                             background: linear-gradient(to right, rgba(#F2A93E, 1),rgba(#F07054, 1) );
@@ -459,7 +459,7 @@
     }
 
     .modal-footer {
-        justify-content: space-between;
+        justify-content: center;
         display: flex;
 
         .left-part {

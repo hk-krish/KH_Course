@@ -1,6 +1,38 @@
-import React from "react";
+import { yupResolver } from "@hookform/resolvers/yup";
+import { useState } from "react";
+import { useForm } from "react-hook-form";
+import { useNavigate } from "react-router-dom";
+import { Post } from "../../Api";
+import { Url_Keys } from "../../Constant";
+import { RouteList } from "../../Constant/RouteList";
+import { useAppDispatch } from "../../ReduxToolkit/Hooks";
+import { login } from "../../ReduxToolkit/Slice/AuthSlice";
+import { LoginSchema } from "../../Utils/ValidationSchemas";
+import { LoginType } from "../../Types/Auth";
 
 const Login = () => {
+  const [isPasswordVisible, setPasswordVisible] = useState(false);
+  const dispatch = useAppDispatch();
+  const navigate = useNavigate();
+
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm({
+    resolver: yupResolver(LoginSchema),
+  });
+
+  const onSubmit = async (data: LoginType) => {
+    try {
+      const response = await Post(Url_Keys.Auth.Login, data);
+      if (response.status === 200) {
+        dispatch(login(response.data));
+        navigate(RouteList.Dashboard);
+      }
+    } catch (error) {}
+  };
+
   return (
     <section className="log-in-section section-b-space">
       {/* <a href="" className="logo-login">
@@ -11,47 +43,52 @@ const Login = () => {
           <div className="col-xl-5 col-lg-6 mx-auto">
             <div className="log-in-box">
               <div className="log-in-title">
-                <h3>Welcome To Zomo</h3>
+                <h3>Welcome To HK Course</h3>
                 <h5>Log In Your Account</h5>
               </div>
               <div className="input-box">
-                <form className="row g-3">
+                <form onSubmit={handleSubmit(onSubmit)} className="row g-3">
                   <div className="col-12">
                     <label className="col-form-label pt-0">Your Email</label>
                     <div className="form-floating theme-form-floating log-in-form">
-                      <input type="email" name="email" placeholder="Enter Email" />
+                      <input type="email" placeholder="Enter Email" {...register("email")} />
                     </div>
+                    {errors.email && <p className="text-danger mt-1">{errors.email.message}</p>}
                   </div>
                   <div className="col-12">
                     <label className="col-form-label pt-0">Your Password</label>
                     <div className="form-floating theme-form-floating log-in-form">
-                      <input type="password" name="password" placeholder="Enter Password" />
+                      <input type={isPasswordVisible ? "text" : "password"} placeholder="Enter Password" {...register("password")} />
+                      <div className="show-hide" onClick={() => setPasswordVisible(!isPasswordVisible)}>
+                        <span className={!isPasswordVisible ? "show" : ""}> </span>
+                      </div>
                     </div>
+                    {errors.password && <p className="text-danger mt-1">{errors.password.message}</p>}
                   </div>
                   <div className="col-12">
                     <div className="forgot-box">
-                      <div className="form-check ps-0 m-0 remember-box">
+                      {/* <div className="form-check ps-0 m-0 remember-box">
                         <input className="custom-checkbox p-0" type="checkbox" name="text" id="flexCheckDefault" />
                         <label className="form-check-label" htmlFor="flexCheckDefault">
                           Remember me
                         </label>
-                      </div>
-                      <a href="forgot-password.html" className="forgot-password">
+                      </div> */}
+                      <a href={RouteList.Otp} className="forgot-password">
                         Forgot Password?
                       </a>
                     </div>
                   </div>
                   <div className="col-12">
-                    <a href="index.html" className="btn btn-animation w-100 justify-content-center" type="submit">
+                    <button className="btn btn-animation w-100 justify-content-center" type="submit">
                       Log In
-                    </a>
+                    </button>
                   </div>
                 </form>
               </div>
-              <div className="other-log-in">
+              {/* <div className="other-log-in">
                 <h6>or</h6>
-              </div>
-              <div className="log-in-button">
+              </div> */}
+              {/* <div className="log-in-button">
                 <ul>
                   <li>
                     <a href="https://www.google.com/" className="btn google-button w-100" target="_blank">
@@ -64,15 +101,15 @@ const Login = () => {
                     </a>
                   </li>
                 </ul>
-              </div>
-              <div>
+              </div> */}
+              {/* <div>
                 <h6 className="text-center mt-3">
                   Don't have account?
-                  <a href="sign-up.html" className="font-primary f-w-600">
+                  <a href="sign-up.html" className="font-primary f-w-600 ps-1">
                     Create Account
                   </a>
                 </h6>
-              </div>
+              </div> */}
             </div>
           </div>
         </div>

@@ -125,7 +125,7 @@
         }
 
         .forgot-box {
-            @include flex_common($dis: flex, $align: center, $justify: space-between);
+            @include flex_common($dis: flex, $align: center, $justify: end);
 
             @include mq-max(2xs) {
                 display: block;

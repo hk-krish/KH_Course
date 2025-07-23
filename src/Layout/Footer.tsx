@@ -6,7 +6,7 @@ const Footer = () => {
       <footer className="footer">
         <div className="row">
           <div className="col-md-12 footer-copyright text-center">
-            <p className="mb-0">Copyright 2024 ©Zomo template by pixelstrap</p>
+            <p className="mb-0">Copyright 2025 © HK Digiverse & IT Consultancy Pvt Ltd</p>
           </div>
         </div>
       </footer>
