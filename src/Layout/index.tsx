@@ -19,14 +19,14 @@ const Layout = () => {
   }, []);
 
   return (
-    <div className="page-wrapper compact-wrapper" id="pageWrapper">
+    <div className="page-wrapper compact-wrapper">
       <Header />
       <div className="page-body-wrapper">
         <Sidebar />
         <div className="page-body">
           <Outlet />
-          <Footer />
         </div>
+        <Footer />
       </div>
     </div>
   );

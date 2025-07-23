@@ -1,0 +1,223 @@
+//Track order
+.order-left-image {
+  margin-top: 0;
+  display: flex;
+  align-items: center;
+
+  .tracking-product-image {
+    margin-right: 40px;
+    width: 24%;
+  }
+
+  .order-image-contain {
+    width: calc(100% - 30px);
+
+    p {
+      margin-bottom: calc(5px + (10 - 5) * ((100vw - 320px) / (1920 - 320)));
+      letter-spacing: 0.05em;
+
+      span {
+        font-weight: 700;
+        margin-left: 10px;
+        color: $theme-font-color;
+        font-size: 16px;
+
+        [dir="rtl"] & {
+          margin-left: 0;
+          margin-right: 10px;
+        }
+      }
+    }
+
+    h4 {
+      font-size: 22px;
+      letter-spacing: 0.03em;
+      margin-bottom: calc(12px + (23 - 12) * ((100vw - 320px) / (1920 - 320)));
+      font-weight: 600;
+      color: $theme-font-color;
+    }
+
+    h5 {
+      font-size: 18px;
+      letter-spacing: 0.03em;
+      margin-top: calc(12px + (23 - 12) * ((100vw - 320px) / (1920 - 320)));
+      font-weight: 600;
+    }
+  }
+
+  // Responsive styles
+  @media (max-width: 991px) {
+    display: block;
+
+    .tracking-product-image {
+      margin-bottom: 18px;
+      width: 50%;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    .order-image-contain {
+      width: 100%;
+    }
+  }
+
+  @media (max-width: 767px) {
+    .tracking-product-image {
+      margin: 0 auto;
+      margin-bottom: calc(20px + (40 - 20) * ((100vw - 320px) / (1920 - 320)));
+    }
+
+    .order-image-contain h4 {
+      font-size: calc(16px + (24 - 16) * ((100vw - 320px) / (1920 - 320)));
+    }
+  }
+
+  @media (max-width: 575.98px) {
+    text-align: center;
+
+    .tracking-product-image {
+      width: 100%;
+      margin: 20px auto;
+    }
+  }
+}
+
+.progtrckr {
+  margin: 40px 0;
+  display: flex;
+  align-items: center;
+
+  @media (max-width: 575.98px) {
+    display: block;
+    margin: 30px 0;
+  }
+
+  li {
+    display: inline-block;
+    text-align: center;
+    margin: 10px 0;
+
+    @media (max-width: 575.98px) {
+      margin: 0;
+      width: 50% !important;
+    }
+
+    h5 {
+      margin-top: 20px;
+      width: 100%;
+      display: flex;
+      justify-content: center;
+      font-weight: 500;
+      text-align: center;
+
+      @media (min-width: 576px) {
+        text-overflow: ellipsis;
+        overflow: hidden;
+        display: -webkit-box !important;
+        -webkit-line-clamp: 1;
+        -webkit-box-orient: vertical;
+        white-space: normal;
+      }
+
+      @media (max-width: 575.98px) {
+        display: block;
+        text-align: left;
+        margin-top: 0;
+      }
+    }
+
+    &:before {
+      position: relative;
+      top: -2px;
+      float: left;
+      left: 50% !important;
+      line-height: 1;
+      transform: translate(-50%, -50%) !important;
+
+      @media (max-width: 575.98px) {
+        top: 10px;
+        left: -2px !important;
+      }
+    }
+
+    &.progtrckr-todo {
+      color: silver;
+      border-top: 2px dashed silver;
+      width: 100% !important;
+
+      @media (max-width: 575.98px) {
+        position: relative;
+        text-align: left;
+        margin-left: 30px;
+        padding-left: 30px;
+        align-items: flex-start;
+        padding-bottom: calc(20px + (40 - 20) * ((100vw - 320px) / (1920 - 320)));
+        border-top: none;
+        border-left: 2px dashed silver;
+      }
+
+      &:before {
+        content: "\f111";
+        font-family: "FontAwesome";
+        color: silver;
+        background-color: #fff;
+        font-size: 2.2em;
+
+        @media (max-width: 575.98px) {
+          position: absolute;
+          top: 10px;
+          left: -17px;
+          line-height: 1;
+          transform: translateY(-50%);
+        }
+      }
+      h5 {
+        color: silver;
+      }
+
+      h6 {
+        font-size: 13px;
+        margin-top: 8px;
+        color: silver;
+      }
+    }
+
+    &.progtrckr-done {
+      color: #1a1a1a; // Replace $black1 if needed
+      border-top: 2px dashed var(--theme-default);
+      width: 100% !important;
+
+      @media (max-width: 575.98px) {
+        position: relative;
+        text-align: left;
+        margin-left: 30px;
+        align-items: flex-start;
+        padding-bottom: calc(20px + (40 - 20) * ((100vw - 320px) / (1920 - 320)));
+        border-top: none;
+        border-left: 2px dashed var(--theme-default);
+      }
+
+      &:before {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        content: "\f00c";
+        font-family: "FontAwesome";
+        font-weight: 900;
+        color: #fff;
+        background-color: var(--theme-default);
+        width: 30px;
+        height: 30px;
+        border: none;
+        border-radius: 2.2em;
+        line-height: 2.2em;
+      }
+
+      h6 {
+        font-size: 13px;
+        margin-top: 8px;
+        color: #999; // Replace $font-light if needed
+      }
+    }
+  }
+}

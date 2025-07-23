@@ -1,0 +1,286 @@
+/**=====================
+    2.12 Datatable CSS Start
+==========================**/
+div {
+  &.dt-button-background {
+    display: none !important;
+  }
+  &.DTS {
+    div {
+      &.dataTables_scrollBody {
+        table {
+          z-index: 1;
+        }
+      }
+    }
+  }
+  .table-avtar {
+    height: 32px;
+    margin-right: 10px;
+    [dir="rtl"] & {
+      margin-right: unset;
+      margin-left: 10px;
+    }
+  }
+  .action {
+    display: flex;
+    i {
+      font-size: 16px;
+    }
+    .pdf {
+      i {
+        font-size: 20px;
+        color: $danger-color;
+      }
+    }
+    .edit {
+      margin-right: 5px;
+      i {
+        color: $success-color;
+      }
+      [dir="rtl"] & {
+        margin-left: 5px;
+      }
+    }
+    .delete {
+      i {
+        color: $danger-color;
+      }
+    }
+  }
+}
+
+.dataTables_wrapper {
+  width: calc(100% - 1px);
+  &.no-footer {
+    .dataTables_scrollBody {
+      border-bottom: 1px solid $light-gray;
+    }
+  }
+  .dt-buttons {
+    .btn {
+      border-radius: 0.25rem !important;
+    }
+  }
+  padding: 0;
+  .btn-group {
+    button {
+      margin-right: 5px;
+    }
+  }
+  button {
+    font-size: 14px;
+    font-weight: 500;
+    padding: 6px 16px;
+    border: none;
+  }
+  &+.dataTables_wrapper {
+    margin-top: 20px;
+  }
+  .dataTables_paginate {
+    margin-left: 15px !important;
+    border: 1px solid $light-color;
+    border-radius: 0.25rem;
+    padding-top: 0;
+    .paginate_button {
+      margin: 0;
+      &.current,
+      &:active {
+        background: $primary-color;
+        color: $white !important;
+        box-shadow: none;
+        border: 1px solid $primary-color;
+      }
+      &:hover {
+        border: 1px solid $primary-color;
+        color: $dark-color !important;
+        background: transparent !important;
+      }
+    }
+  }
+  .dataTables_length {
+    margin-bottom: 30px;
+    select {
+      border-color: $light-color;
+      color: $dark-color;
+      padding: 0 10px;
+      margin: 0 10px;
+      height: 2.7142em;
+      background-color: $white;
+    }
+  }
+  table.dataTable {
+    tbody {
+      td,
+      th {
+        &.select-checkbox {
+          padding-right: 40px !important;
+          &:before {
+            right: 20px;
+            top: 22px;
+            left: unset;
+          }
+          &:after {
+            margin-top: -5px;
+            margin-left: 21px;
+          }
+        }
+      }
+    }
+    thead {
+      th,
+      td {
+        border-bottom: 1px solid $light-semi-gray;
+      }
+    }
+    th,
+    td {
+      padding: 0.75rem;
+    }
+  }
+  .dataTables_filter {
+    margin-bottom: 25px;
+    margin-left: 15px;
+    input[type="search"] {
+      border: 1px solid $light-semi-gray;
+      padding: 0 10px;
+      margin-left: 10px;
+      height: 37px;
+      border-radius: 0;
+    }
+  }
+}
+
+table {
+  .fixedHeader-floating {
+    position: fixed !important;
+    background-color: $white;
+  }
+  .box {
+    >div {
+      padding: 5px 15px;
+      background-color: $primary-color;
+      display: inline-block;
+      color: $white;
+      border-radius: 5px;
+      margin-bottom: 15px;
+      margin-right: 15px;
+    }
+  }
+  &.dataTable {
+    &.fixedHeader-locked,
+    &.fixedHeader-floating {
+      width: calc(100vw - 250px) !important;
+      max-width: calc(100vw - 250px) !important;
+      overflow: hidden !important;
+      right: 0 !important;
+      z-index: 99;
+      left: 260px !important;
+    }
+    &:not(.fixedHeader-locked) {
+      &:not(.fixedHeader-floating) {
+        width: 100% !important;
+        border-bottom: none;
+      }
+    }
+  }
+  &.dataTable {
+    border-collapse: collapse !important;
+    margin-top: 0 !important;
+    thead {
+      .sorting,
+      .sorting_asc,
+      .sorting_desc,
+      .sorting_asc_disabled,
+      .sorting_desc_disabled {
+        &:before,
+        &:after {
+          bottom: 12px !important;
+        }
+      }
+    }
+    input,
+    select {
+      border: 1px solid $light-semi-gray;
+      height: 37px;
+    }
+  }
+}
+.user-datatable {
+  tr {
+    td,
+    th {
+      &:first-child {
+        min-width: 150px;
+      }
+    }
+  }
+}
+
+.toolbar {
+  padding: 5px 15px;
+  background-color: $primary-color;
+  display: inline-block;
+  color: $white;
+  border-radius: 5px;
+  margin-bottom: 15px;
+  margin-right: 15px;
+}
+code {
+  &.option {
+    color: $danger-color !important;
+  }
+  &.api {
+    color: $success-color !important;
+  }
+}
+// Datatable extension
+
+td.highlight {
+  background-color: $light-color !important;
+}
+td.details-control {
+  text-align: center;
+  cursor: pointer;
+  font-family: 'themify';
+}
+
+.product-table {
+  th {
+    &:last-child {
+      min-width: 120px;
+    }
+  }
+  h4 {
+    font-weight: 600;
+    color: $dark-color;
+    margin-bottom: 5px;
+  }
+}
+table {
+  &.dataTable {
+    &.display {
+      tbody {
+        tr {
+          &.odd {
+            >.sorting_1 {
+              background-color: $light;
+            }
+            .badge {
+              line-height: 15px;
+            }
+          }
+          &.even {
+            .badge {
+              line-height: 15px;
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+/**=====================
+     2.12 Datatable CSS Ends
+==========================**/

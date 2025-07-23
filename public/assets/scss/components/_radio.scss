@@ -1,5 +1,5 @@
 /**=====================
-     Radio CSS Start
+    2.25 Radio CSS Start
 ==========================**/
 .animate-chk {
     label {
@@ -15,28 +15,32 @@
 .checkbox_animated {
     cursor: pointer;
     position: relative;
-    margin: 0 12px 0 0;
+    margin: 0 1rem 0 0;
 
     &:before {
         transition: transform 0.4s cubic-bezier(0.45, 1.8, 0.5, 0.75);
         transform: rotate(-45deg) scale(0, 0);
-        @include pos;
+        content: "";
+        position: absolute;
         left: 0.25rem;
         top: 0.225rem;
         z-index: 1;
-        @include pseudowh($width: 0.75rem, $height: 0.375rem);
-        border: 1px solid var(--theme-color);
+        width: 0.75rem;
+        height: 0.375rem;
+        border: 2px solid var(--theme-default);
         border-top-style: none;
         border-right-style: none;
     }
 
     &:after {
-        @include pos;
+        content: "";
+        position: absolute;
         top: -0.125rem;
         left: 0;
-        @include pseudowh($width: 1.3rem, $height: 1.3rem);
+        width: 1.3rem;
+        height: 1.3rem;
         background: $white;
-        border: 1px solid $gray-light;
+        border: 2px solid $light-gray;
         cursor: pointer;
     }
 
@@ -53,22 +57,26 @@
     &:before {
         transition: transform 0.4s cubic-bezier(0.45, 1.8, 0.5, 0.75);
         transform: scale(0, 0);
-        @include pos;
+        content: "";
+        position: absolute;
         top: 0;
         left: 0.125rem;
         z-index: 1;
-        @include pseudowh($width: 0.75rem, $height: 0.75rem);
-        background: var(--theme-color);
+        width: 0.75rem;
+        height: 0.75rem;
+        background: var(--theme-default);
         border-radius: 50%;
     }
 
     &:after {
-        @include pos;
+        content: "";
+        position: absolute;
         top: -0.25rem;
         left: -0.125rem;
-        @include pseudowh($width: 1.25rem, $height: 1.25rem);
+        width: 1.25rem;
+        height: 1.25rem;
         background: $white;
-        border: 2px dashed $light-gray;
+        border: 2px solid $light-gray;
         border-radius: 50%;
     }
 
@@ -87,21 +95,26 @@
         margin-bottom: 10px;
 
         &::before {
-            @include pos;
+            content: "";
             display: inline-block;
-            @include pseudowh($width: 19px, $height: 19px);
+            position: absolute;
+            width: 19px;
+            height: 19px;
             left: 0;
             margin-left: -16px;
-            border: 1px dashed $light-semi-gray;
+            border: 1px solid $light-semi-gray;
             border-radius: 3px;
             background-color: $white;
+            -webkit-transition: border 0.15s ease-in-out, color 0.15s ease-in-out;
+            -o-transition: border 0.15s ease-in-out, color 0.15s ease-in-out;
             transition: border 0.15s ease-in-out, color 0.15s ease-in-out;
         }
 
         &::after {
             display: inline-block;
             position: absolute;
-            @include pseudowh($width: 16px, $height: 16px);
+            width: 16px;
+            height: 16px;
             left: 0;
             top: 0;
             margin-left: -20px;
@@ -163,8 +176,28 @@
     }
 }
 
+.m-squar {
+    label {
+        &::before {
+            border-radius: 0;
+        }
+    }
+
+    .checkbox-circle {
+        label {
+            &::before {
+                border-radius: 50%;
+            }
+        }
+    }
+
+    .checkbox-inline {
+        margin-top: 0;
+    }
+}
+
 @each $btn-name,
-$btn-color in (primary, var(--theme-color)),
+$btn-color in (primary, var(--theme-default)),
 (secondary, $secondary-color),
 (success, $success-color),
 (danger, $danger-color),
@@ -195,7 +228,7 @@ $btn-color in (primary, var(--theme-color)),
         }
     }
 
-    .checkbox-dashed-#{$btn-name} {
+    .checkbox-solid-#{$btn-name} {
         label {
             &:before {
                 background-color: $btn-color;
@@ -270,27 +303,39 @@ $btn-color in (primary, var(--theme-color)),
         cursor: pointer;
 
         &::before {
-            @include pos;
+            content: "";
             display: inline-block;
-            @include pseudowh($width: 19px, $height: 19px);
+            position: absolute;
+            width: 19px;
+            height: 19px;
             left: 0;
             margin-left: -20px;
-            border: 1px dashed $light-semi-gray;
+            border: 1px solid $light-semi-gray;
             border-radius: 50%;
             background-color: $white;
+            -webkit-transition: border 0.15s ease-in-out;
+            -o-transition: border 0.15s ease-in-out;
             transition: border 0.15s ease-in-out;
         }
 
         &::after {
             display: inline-block;
-            @include pos;
-            @include pseudowh($width: 9px, $height: 9px);
+            position: absolute;
+            content: " ";
+            width: 9px;
+            height: 9px;
             left: 5px;
             top: 5px;
             margin-left: -20px;
             border-radius: 50%;
             background-color: $dark-gray;
+            -webkit-transform: scale(0, 0);
+            -ms-transform: scale(0, 0);
+            -o-transform: scale(0, 0);
             transform: scale(0, 0);
+            -webkit-transition: -webkit-transform 0.1s cubic-bezier(0.8, -0.33, 0.2, 1.33);
+            -moz-transition: -moz-transform 0.1s cubic-bezier(0.8, -0.33, 0.2, 1.33);
+            -o-transition: -o-transform 0.1s cubic-bezier(0.8, -0.33, 0.2, 1.33);
             transition: transform 0.1s cubic-bezier(0.8, -0.33, 0.2, 1.33);
         }
     }
@@ -310,6 +355,9 @@ $btn-color in (primary, var(--theme-color)),
         &:checked {
             &+label {
                 &::after {
+                    -webkit-transform: scale(1, 1);
+                    -ms-transform: scale(1, 1);
+                    -o-transform: scale(1, 1);
                     transform: scale(1, 1);
                 }
 
@@ -332,200 +380,6 @@ $btn-color in (primary, var(--theme-color)),
     }
 }
 
-#app-cover {
-    display: table;
-    counter-reset: button-counter;
-    width: 100%;
-
-    .toggle-button-cover {
-        display: table-cell;
-        position: relative;
-        @include pseudowh($width: 100%, $height: auto);
-        box-sizing: border-box;
-    }
-
-    .button-cover {
-        height: auto;
-        background-color: $white;
-        box-shadow: 0 10px 20px -8px $light-body-bg-color;
-        border-radius: 4px;
-        position: absolute;
-        top: 0;
-        right: 0;
-        bottom: 0;
-        left: 0;
-    }
-
-    .knobs {
-        position: absolute;
-        top: 0;
-        right: 0;
-        bottom: 0;
-        left: 0;
-        z-index: 2;
-    }
-
-    .layer {
-        position: absolute;
-        top: 0;
-        right: 0;
-        bottom: 0;
-        left: 0;
-        width: 100%;
-        background-color: $white-ice;
-        transition: 0.3s ease all;
-        z-index: 1;
-    }
-
-    .button {
-        position: relative;
-        top: 50%;
-        @include pseudowh($width: 100px, $height: 35px);
-        margin: 0;
-        overflow: hidden;
-    }
-
-    .button {
-        &.r {
-            border-radius: 100px;
-
-            .layer {
-                border-radius: 100px;
-            }
-        }
-    }
-
-    .button.b2 {
-        border-radius: 2px;
-    }
-
-    .checkbox {
-        position: relative;
-        @include pseudowh;
-        padding: 0;
-        margin: 0;
-        opacity: 0;
-        cursor: pointer;
-        z-index: 3;
-    }
-
-    #button-9 {
-        .knobs {
-            &:before {
-                @include center(vertical);
-                @include pseudowh($width: 30px, $height: auto);
-                @include pos($pos: absolute, $content: "YES");
-                font-size: 10px;
-                font-weight: bold;
-                text-align: center;
-                line-height: 1;
-                padding-top: 4px;
-                border-radius: 50%;
-                transition: 0.4s cubic-bezier(0.18, 0.89, 0.35, 1.15) all;
-                left: 4px;
-                color: $white;
-                opacity: 0;
-                z-index: 2;
-            }
-
-            &:after {
-                @include center(vertical);
-                @include pseudowh($width: 30px, $height: auto);
-                @include pos($pos: absolute, $content: "NO");
-                font-size: 10px;
-                font-weight: bold;
-                text-align: center;
-                line-height: 1;
-                padding-top: 4px;
-                border-radius: 50%;
-                transition: 0.4s cubic-bezier(0.18, 0.89, 0.35, 1.15) all;
-                right: -24px;
-                color: $white;
-                z-index: 2;
-                opacity: 0;
-            }
-
-            span {
-                @include pseudowh($width: 30px, $height: 30px);
-                position: absolute;
-                top: 4px;
-                font-size: 10px;
-                font-weight: bold;
-                text-align: center;
-                line-height: 1;
-                padding: 9px 4px;
-                border-radius: 50%;
-                transition: 0.4s cubic-bezier(0.18, 0.89, 0.35, 1.15) all;
-                left: 4px;
-                background-color: $dark-card-background;
-                z-index: 1;
-            }
-        }
-
-        .checkbox {
-            &:checked {
-                &+.knobs {
-                    &:before {
-                        left: -24px;
-                    }
-
-                    &:after {
-                        right: 0;
-                        opacity: 1;
-                    }
-
-                    span {
-                        right: 0;
-                        background-color: var(--theme-color);
-                        left: unset;
-                    }
-                }
-
-                ~.layer {
-                    background-color: $skin-tutu;
-                }
-            }
-        }
-    }
-}
-
-.radio-section {
-    padding: 8px;
-    background-color: $white;
-    border: 1px dashed $border-color;
-    border-radius: 4px;
-    label {
-        margin-right: 20px;
-        margin-bottom: 0;
-
-        >input {
-            display: none;
-        }
-
-        >i {
-            display: inline-block;
-            @include pseudowh($width: 15px, $height: 15px);
-            border-radius: 50%;
-            margin-right: 5px;
-            vertical-align: middle;
-            border: 2px solid var(--theme-color);
-            box-shadow: none;
-            transition: 0.25s;
-        }
-
-        >input:checked {
-            +i {
-                background: var(--theme-color);
-            }
-        }
-
-        &:hover {
-            cursor: pointer;
-        }
-    }
-}
-
-
 /**=====================
-     Radio CSS Ends
+    2.25 Radio CSS Ends
 ==========================**/

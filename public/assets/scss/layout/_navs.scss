@@ -1,5 +1,5 @@
 /**=====================
-     NAV CSS Start
+    5.4 Navs CSS Start
 ==========================**/
 #accordionoc {
 
@@ -22,7 +22,7 @@
 			position: relative;
 
 			&:hover {
-				color: var(--theme-color) !important;
+				color: var(--theme-default) !important;
 			}
 		}
 
@@ -50,7 +50,7 @@
 			color: $theme-body-font-color;
 
 			&:hover {
-				color: var(--theme-color);
+				color: var(--theme-default);
 			}
 		}
 
@@ -75,16 +75,10 @@
 	}
 }
 
-.pl-navs-inline {
-	padding-left: 30px !important;
-}
-
-.inline-nav {
-	li {
-		line-height: 1.3;
-	}
+.icon-lists {
+	font-family: inherit;
 }
 
 /**=====================
-     NAV CSS Ends
+    5.4 Navs CSS Ends
 ==========================**/

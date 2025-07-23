@@ -1,108 +1,142 @@
 /**=====================
-     typahead-search CSS Start
+    2.35 typeahead-search CSS Start
 ==========================**/
-.Typeahead {
-    width: 100%;
+.typeahead {
+  width: 100%;
 
-    * {
-        box-sizing: border-box;
+  * {
+    box-sizing: border-box;
 
-        &:before {
-            box-sizing: border-box;
-        }
-
-        &:after {
-            box-sizing: border-box;
-        }
-    }
-
-    .tt-hint {
-        display: none !important;
-    }
-}
-
-.u-cf {
     &:before {
-        content: " ";
-        display: table;
+      box-sizing: border-box;
     }
 
     &:after {
-        content: " ";
-        display: table;
-        clear: both;
+      box-sizing: border-box;
     }
+  }
+
+  .tt-hint {
+    display: none !important;
+  }
 }
 
-.u-hidden {
-    display: none !important;
+.u-cf {
+  &:before {
+    content: " ";
+    display: table;
+  }
+
+  &:after {
+    content: " ";
+    display: table;
+    clear: both;
+  }
 }
 
 .u-posRelative {
-    position: relative;
+  position: relative;
 }
 
-.Typeahead-spinner {
-    position: absolute;
-    top: 14px;
-    right: 18px;
-    display: none;
-    color: #c5c5c5;
-}
 
-.Typeahead-hint {
-    width: 100%;
-    padding: 5px 8px;
-    font-size: 24px;
-    line-height: 30px;
-    border: 1px dashed #024e6a;
-    border-radius: 8px;
-    position: absolute;
-    top: 0;
-    left: 0;
-    color: #ccd6dd;
-    opacity: 1;
-}
+.Profile-Card-avatar {
+  svg {
+    height: 18px;
+    vertical-align: bottom;
 
-.Typeahead-menu {
-    position: absolute;
-    top: 100%;
-    left: 0;
-    padding: 15px;
-    z-index: 100;
-    display: none;
-    width: 100%;
-    overflow: hidden;
-    background-color: $white;
-    box-shadow: 0 5px 10px rgba(0, 0, 0, .2);
-}
-
-.Typeahead-menu.is-open {
-    display: block;
-}
-
-.Typeahead-selectable {
-    cursor: pointer;
-
-    + {
-        .Typeahead-selectable {
-            border-top: 1px dashed #ccd6dd;
-        }
+    path {
+      color: #7e7c7c !important;
     }
+
+    polygon {
+      color: #7e7c7c !important;
+    }
+  }
 }
 
-.EmptyMessage {
-    position: relative;
-    padding: 10px;
-    font-size: 14px;
-    line-height: 30px;
-    text-align: center;
+.typeahead-menu {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  padding: 15px;
+  height: 227px;
+  overflow: auto;
+  z-index: 100; 
+  display: none;
+  width: 100%;
+  background-color: $white;
+  box-shadow: 0 5px 10px rgba(0, 0, 0, .2);
 }
 
-.Typeahead-spinner {
-    @include pseudowh($width: 1rem, $height: 1rem);
+.typeahead-menu.is-open {
+  display: block;
 }
+
+
+.Profile-Card {
+  position: relative;
+  padding: 10px;
+  border: 1px solid $gray-60 !important;
+  margin-bottom: 10px;
+  border-radius: 10px;
+
+  &:hover {
+    .Profile-Card-avatar {
+      border-color: #f5f8fa;
+    }
+
+    color: #414345;
+    background: #f8f8f8;
+
+    .Profile-Card-screenName {
+      color: $white;
+    }
+
+    .Profile-Card-stat-label {
+      color: $white;
+    }
+  }
+}
+
+
+.Profile-Card-avatar {
+  position: absolute;
+  border-radius: 5px; 
+}
+
+.Profile-Card-details {
+  padding-left: 35px;
+  float: left;
+}
+
+.Profile-Card-realName {
+  display: inline-block;
+  color: $dark-gray;
+}
+
+.Profile-Card.is-active {
+  color: $white;
+  background: var(--theme-default);
+
+  .Profile-Card-screenName {
+    color: $white;
+  }
+
+  .Profile-Card-stat-label {
+    color: $white;
+  }
+}
+
+// typehead new search 
+$color_1: #333;
+$color_2: #fff;
+$color_3: #aaa;
+$background-color_1: #fff;
+$background-color_2: #444;
+$background-color_3: #333;
+$background-color_4: #eee;
+
 
 /**=====================
-      typahead-search CSS Ends
-  ==========================**/
+  2.35 typeahead-search CSS Ends
+==========================**/

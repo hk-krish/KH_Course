@@ -1,3 +1,9 @@
+//dynamic image
+const images = require.context(`/public/assets/images`, true);
+
+export const dynamicImage = (image: string) => {
+  return images(`./${image}`);
+};
 
 //dynamic Number
 export const dynamicNumber = (totalLength: number) => {

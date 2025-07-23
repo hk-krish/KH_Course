@@ -5,6 +5,9 @@ import { Url_Keys } from "../../Constant";
 import { useAppDispatch, useAppSelector } from "../../ReduxToolkit/Hooks";
 import { fetchBannerApiData, setBannerModal, setSingleEditingIdBanner } from "../../ReduxToolkit/Slice/BannerSlice";
 import BannerModel from "./BannerModel";
+import Breadcrumbs from "../../CoreComponents/Breadcrumbs";
+import { Card, CardBody, Col, Container } from "reactstrap";
+import CommonCardHeader from "../../CoreComponents/CommonCardHeader";
 
 const Banner = () => {
   const dispatch = useAppDispatch();
@@ -27,10 +30,14 @@ const Banner = () => {
     } catch (error) {}
   };
 
-    const handleEdit = (item: any) => {
+  const setSearchData = (e: string) => {};
+  const AddBannerModalClick = () => dispatch(setBannerModal());
+
+
+  const handleEdit = (item: any) => {
     dispatch(setSingleEditingIdBanner(item?._id));
     // setEdit(true.);
-    dispatch(setBannerModal())
+    dispatch(setBannerModal());
   };
 
   const columns = [
@@ -72,7 +79,7 @@ const Banner = () => {
       title: "Active",
       dataIndex: "action",
       key: "action",
-      render: (active: boolean) => <Switch checked={active} disabled className="switch-xsm"/>,
+      render: (active: boolean) => <Switch checked={active} disabled className="switch-xsm" />,
       width: 100,
     },
     {
@@ -92,36 +99,23 @@ const Banner = () => {
 
   return (
     <>
-      <div className="container-fluid">
-        <div className="row">
-          <div className="col-sm-12">
-            <div className="card card-table">
-              <div className="card-body">
-                <div className="title-header option-title d-sm-flex d-block justify-content-between align-items-center">
-                  <h5>Banner</h5>
-                  <div className="right-options">
-                    <div className="d-flex gap-2">
-                      <input type="search" placeholder="Search..." aria-controls="table_id" className="form-control" />
-                      <button className="btn btn-dashed" onClick={() => dispatch(setBannerModal())}>
-                        Add Product
-                      </button>
-                    </div>
-                  </div>
-                </div>
-
-                {isLoadingBanner ? (
+      <Breadcrumbs mainTitle="Banners" parent="Pages" />
+       <Container fluid>
+        <Col md="12" className="custom-table">
+          <Card>
+            <CommonCardHeader Search={setSearchData} searchClass="col-md-10 col-sm-7" btnTitle="Add Banners" btnClick={AddBannerModalClick} />
+            <CardBody>
+               {isLoadingBanner ? (
                   <div className="text-center py-5">
                     <Spin size="large" />
                   </div>
                 ) : (
                   <Table className="custom-banner-table" dataSource={Array.isArray(allBanner?.banner_data) ? allBanner.banner_data : []} columns={columns} rowKey="_id" pagination={{ pageSize: 10 }} scroll={{ x: "max-content" }} />
                 )}
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-
+            </CardBody>
+          </Card>
+        </Col>
+      </Container>
       <BannerModel />
     </>
   );

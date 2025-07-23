@@ -1,434 +1,655 @@
 /**=====================
-    Form CSS Start
+  2.18 Forms CSS Start
 ==========================**/
+.form-label {
+  margin-bottom: 4px;
+  font-weight: 600;
+}
+.col-form-label {
+  padding-bottom: 4px;
+}
 .form-space {
-    margin-bottom: -10px;
-
-    > div {
-        margin-bottom: 10px;
-    }
+  margin-bottom: -10px;
+  > div {
+    margin-bottom: 10px;
+  }
 }
-
-.form-choose {
-    padding: 0;
-}
-
-.form-control {
-    &:focus {
-        box-shadow: none;
-        border-color: var(--theme-color);
-    }
-}
-
-.bootstrap-tagsinput {
-    background-color: $white !important;
-    border-style: dashed;
-    border-color: $border-color;
-    padding: 10px 16px;
-
-    .tag {
-        font-size: 13px;
-        padding: 3px 15px;
-        line-height: 2;
-        background-color: var(--theme-color);
-        border-radius: 5px;
-        margin-bottom: 4px;
-
-        [data-role="remove"] {
-            &:hover {
-                box-shadow: none;
-            }
-
-            &:after {
-                content: "\EB99";
-                font-family: remixicon !important;
-                font-style: normal;
-            }
-        }
-    }
-}
-
-.add-option {
-    border-top: 1px dashed #efefef;
-    padding-top: 18px;
-    margin-top: 26px;
-    display: block;
-    font-weight: 600;
-}
-
-.select2-container {
-    .select2-dropdown {
-        background-color: $white;
-        border-color: $form-input-border-color !important;
-        box-shadow: 1px 5px 11px 0px #ededed;
-    }
-
-    .select2-search__field {
-        border-color: $form-input-border-color !important;
-    }
-}
-
-.select2-container--default {
-    .select2-results__option--selected {
-        background-color: #f9f9f6;
-    }
-}
-
 .theme-form {
-    .ck-toolbar {
-        border-color: $form-input-border-color !important;
-        background-color: $inner-bg !important;
+  .form-control {
+    :focus {
+      box-shadow: 0 0 0 0.2rem rgba(171, 140, 228, 0.05);
     }
-
-    .select2-container {
-        .selection {
-            width: 100%;
-            background-color: $inner-bg !important;
-            border: 1px dashed $form-input-border-color;
-
-            .select2-selection {
-                padding: 0;
-                display: flex !important;
-                align-content: center;
-            }
-        }
+  }
+  textarea {
+    border-color: $form-input-border-color;
+    &::-webkit-input-placeholder {
+      color: $form-placeholder-color;
+      font-size: $form-placeholder-font-size;
+      letter-spacing: $form-placeholder-letter-spacing;
+      font-weight: $form-placeholder-font-weight;
     }
-
-    .select2-selection__rendered {
-        width: 100%;
-        display: flex !important;
-        align-items: center;
-        background-color: $inner-bg !important;
+  }
+  input[type="text"],
+  input[type="email"],
+  input[type="search"],
+  input[type="password"],
+  input[type="number"],
+  input[type="tel"],
+  input[type="date"],
+  input[type="datetime-local"],
+  input[type="time"],
+  input[type="datetime-local"],
+  input[type="month"],
+  input[type="week"],
+  input[type="url"],
+  input[type="file"],
+  textarea,
+  select {
+    border-color: $light-gray;
+    background-color: $form-input-bg-color;
+    font-size: $form-placeholder-font-size;
+    color: $form-placeholder-color;
+    padding: 12px 10px;
+    -webkit-box-shadow: none;
+    box-shadow: none;
+    &::-webkit-input-placeholder {
+      color: $form-placeholder-color;
+      font-size: $form-placeholder-font-size;
+      letter-spacing: $form-placeholder-letter-spacing;
+      font-weight: $form-placeholder-font-weight;
     }
-
-    .ck-content {
-        height: 170px;
-        border-color: $form-input-border-color !important;
-        background-color: $inner-bg !important;
-    }
-
-    &-2 {
-        input[type="text"],
-        input[type="email"],
-        input[type="search"],
-        input[type="password"],
-        input[type="number"],
-        input[type="tel"],
-        input[type="date"],
-        input[type="datetime-local"],
-        input[type="time"],
-        input[type="datetime-local"],
-        input[type="month"],
-        input[type="week"],
-        input[type="url"],
-        textarea,
-        select {
-            padding: 10px 10px !important;
-        }
-    }
-
-    &-2 {
-        input[type="file"] {
-            padding: 6px 10px !important;
-        }
-    }
-
-    textarea {
-        border-color: $form-input-border-color;
-
-        &::-webkit-input-placeholder {
-            color: $form-placeholder-color;
-            font-size: $form-placeholder-font-size;
-            letter-spacing: $form-placeholder-letter-spacing;
-            font-weight: $form-placeholder-font-weight;
-        }
-    }
-
-    input[type="text"],
-    input[type="email"],
-    input[type="search"],
-    input[type="password"],
-    input[type="number"],
-    input[type="tel"],
-    input[type="date"],
-    input[type="datetime-local"],
-    input[type="time"],
-    input[type="datetime-local"],
-    input[type="month"],
-    input[type="week"],
-    input[type="url"],
-    input[type="file"],
-    textarea,
-    select {
-        border-color: $form-input-border-color;
-        background-color: $inner-bg ;
-        font-size: $form-placeholder-font-size;
-        color: $form-placeholder-color;
-        padding: calc(10px + (12 - 10) * ((100vw - 320px) / (1920 - 320))) 10px;
-        outline: inherit;
-        box-shadow: none;
-
-        &::-webkit-input-placeholder {
-            color: $form-placeholder-color;
-            font-size: $form-placeholder-font-size;
-            letter-spacing: $form-placeholder-letter-spacing;
-            font-weight: $form-placeholder-font-weight;
-        }
-    }
-
-    input[type="file"] {
-        height: auto;
-    }
-
-    select.form-control:not([size]):not([multiple]) {
-        border-color: $form-input-border-color;
-        font-size: $form-placeholder-font-size;
-    }
-
-    .checkbox {
-        label {
-            padding-left: 10px;
-        }
-    }
-
-    .form-divider {
-        position: relative;
-        clear: both;
-        height: 0;
-        margin: 30px 0;
-        border-top: 1px dashed $light-semi-gray;
-
-        &:before {
-            @include pos($pos: absolute, $content: "Or Signup With");
-            top: -11px;
-            left: 40%;
-            margin-left: -10px;
-            padding: 0 5px;
-            color: $theme-font-color;
-            background: $white;
-        }
-    }
-
-    .login-divider {
-        position: relative;
-        clear: both;
-        height: 0;
-        margin: 30px 0;
-        border-top: 1px dashed $light-semi-gray;
-
-        &:before {
-            @include pos($pos: absolute, $content: "Or Login With");
-            top: -11px;
-            left: 40%;
-            margin-left: -10px;
-            padding: 0 5px;
-            color: $theme-font-color;
-            background: $white;
-        }
-    }
-
-    .btn-fb,
-    .btn-twitter,
-    .btn-google,
-    .btn-linkedin {
-        color: $white;
-        width: 100%;
-    }
-
-    .btn-fb {
-        background-color: $fb;
-    }
-
-    .btn-twitter {
-        background-color: $twitter;
-    }
-
-    .btn-google {
-        background-color: $google-plus;
-    }
-
-    .btn-linkedin {
-        background-color: $linkedin;
-    }
-}
-
-.form-inline {
-    display: flex;
-    flex: 0 0 auto;
-    flex-flow: row wrap;
-    align-items: center;
-    margin-bottom: 0;
-
-    .col-form-label {
-        margin-right: 5px;
-    }
-}
-
-.search-form {
-    .form-group {
-        &:before {
-            @include pos;
-            @include pseudowh($width: 1px, $height: 25px);
-            background: $suva-grey;
-            left: 82px;
-            top: 50px;
-        }
-
-        &:after {
-            @include pos($pos: absolute, $content: "\f002");
-            font-family: "FontAwesome";
-            top: 53px;
-            left: 53px;
-            color: $inner-bg;
-        }
-    }
-
-    input {
-        border: 1px dashed $light-semi-gray;
-        padding: 10px 10px 10px 70px;
-        border-radius: 10px;
-        background-color: rgba($light-color, 0.3);
-
-        &:focus {
-            outline: none !important;
-        }
-    }
-}
-
-.variation-table {
-    border-color: #efefef;
-
-    .form-control {
-        border-color: #efefef;
-        background-color: $inner-bg !important;
-    }
-
-    &.table {
-        th {
-            font-size: 14px;
-        }
-    }
-}
-
-.seo-view {
-    background-color: $white;
-    padding: 20px;
-    border: 1px dashed #d1d1d1;
-    border-radius: 10px;
-
-    h5 {
-        color: rgba($primary-color, 1);
-        font-size: 20px;
-        line-height: 1.5;
-    }
-
-    .link {
-        color: $theme-font-color;
-        margin-bottom: 12px;
-    }
-
-    p {
-        color: #4d5156;
-        font-size: 14px;
-    }
-}
-
-.form-label-align-right {
+  }
+  input[type="file"] {
+    height: auto;
+  }
+  select.form-control:not([size]):not([multiple]) {
+    border-color: $form-input-border-color;
+    font-size: $form-placeholder-font-size;
+  }
+  .checkbox {
     label {
-        text-align: right;
-        padding-top: 17px;
-        font-weight: 500;
+      padding-left: 10px;
+      [dir="rtl"] & {
+        padding-right: 10px;
+        padding-left: unset;
+      }
     }
+  }
+  .form-divider {
+    position: relative;
+    clear: both;
+    height: 0;
+    margin: 30px 0;
+    border-top: 1px solid $light-semi-gray;
+    &:before {
+      position: absolute;
+      top: -11px;
+      left: 40%;
+      margin-left: -10px;
+      padding: 0 5px;
+      content: "Or Signup With";
+      color: $theme-font-color;
+      background: $white;
+      [dir="rtl"] & {
+        left: unset;
+        right: 40%;
+        margin-left: unset;
+        margin-right: -10px;
+      }
+    }
+  }
+  .login-divider {
+    position: relative;
+    clear: both;
+    height: 0;
+    margin: 30px 0;
+    border-top: 1px solid $light-semi-gray;
+    &:before {
+      position: absolute;
+      top: -11px;
+      left: 40%;
+      margin-left: -10px;
+      padding: 0 5px;
+      color: $theme-font-color;
+      background: $white;
+      content: "Or Login With";
+      [dir="rtl"] & {
+        left: unset;
+        right: 40%;
+        margin-left: unset;
+        margin-right: -10px;
+      }
+    }
+  }
+  .btn-fb,
+  .btn-twitter,
+  .btn-google,
+  .btn-linkedin {
+    color: $white;
+    width: 100%;
+  }
+  .btn-fb {
+    background-color: $fb;
+  }
+  .btn-twitter {
+    background-color: $twitter;
+  }
+  .btn-google {
+    background-color: $google-plus;
+  }
+  .btn-linkedin {
+    background-color: $linkedin;
+  }
 }
-
-.form-label-title {
-    font-size: 16px;
-    font-weight: 600;
+.form-inline {
+  display: flex;
+  -webkit-box-flex: 0;
+  -ms-flex: 0 0 auto;
+  flex: 0 0 auto;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+  flex-flow: row wrap;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  margin-bottom: 0;
+  .col-form-label {
+    margin-right: 5px;
+    [dir="rtl"] & {
+      margin-left: 5px;
+      margin-right: unset;
+    }
+  }
 }
-
-.choose {
-    input {
-        padding-left: 108px !important;
-        position: relative;
-
-        &[type="file"]::file-selector-button {
-            position: absolute;
-            padding: 25px 10px 14px;
-            @include center(vertical);
-            left: 11px;
-            background-color: $inner-bg !important;
+.search-form {
+  .form-group {
+    &:before {
+      position: absolute;
+      content: "";
+      width: 1px;
+      height: 25px;
+      background: #e8ebf2;
+      left: 82px;
+      top: 50px;
+      [dir="rtl"] & {
+        left: unset;
+        right: 82px;
+      }
+    }
+    &:after {
+      position: absolute;
+      content: "\f002";
+      font-family: "FontAwesome";
+      top: 53px;
+      left: 53px;
+      color: #8e8e8e;
+      [dir="rtl"] & {
+        left: unset;
+        right: 53px;
+      }
+    }
+  }
+  input {
+    border: 1px solid $light-semi-gray;
+    padding: 10px 10px 10px 70px;
+    border-radius: 5px;
+    background-color: rgba($light-color, 0.3);
+    [dir="rtl"] & {
+      padding: 10px 70px 10px 10px;
+    }
+    &:focus {
+      outline: none !important;
+    }
+  }
+}
+.form-label-align-right {
+  label {
+    text-align: right;
+    padding-top: 17px;
+    font-weight: 500;
+  }
+}
+// Custom style
+.custom-input {
+  &.was-validated {
+    .form-control,
+    .form-select {
+      &:valid {
+        border-color: $success-color;
+      }
+      &:invalid {
+        border-color: $danger-color;
+      }
+    }
+  }
+  .valid-tooltip {
+    background-color: $success-color;
+  }
+  .invalid-tooltip {
+    background-color: rgba($danger-color, 0.8);
+  }
+  .invalid-feedback {
+    color: $danger-color !important;
+  }
+  .form-check {
+    .form-check-input {
+      &:valid {
+        border-color: $success-color;
+      }
+      &:invalid {
+        border-color: $danger-color;
+      }
+      &:invalid ~ .form-check-label {
+        color: $danger-color;
+      }
+      &:valid ~ .form-check-label {
+        color: $success-color;
+      }
+      &:checked {
+        background-color: $success-color;
+      }
+    }
+    .invalid-feedback {
+      color: $danger-color;
+    }
+  }
+  #validationCustom03,
+  #validationCustom05,
+  #validationCustomUsername {
+    &.form-control,
+    .form-select {
+      border-color: $light-gray;
+    }
+    &.was-validated {
+      .form-control,
+      .form-select {
+        &:valid {
+          border-color: $success-color;
         }
-
-        &[type="file"]::file-selector-button:hover {
-            background-color: rgba($primary-color, 0.2);
+        &:invalid {
+          border-color: $danger-color;
         }
+      }
     }
-}
-
-.roles-form {
-    gap: calc(6px + (20 - 6) * ((100vw - 320px) / (1920 - 320)));
-
-    ::-webkit-scrollbar {
-        height: 3px;
-        background-color: white;
-    }
-
-    ::-webkit-scrollbar-thumb {
-        background-color: #afafaf;
-        border-radius: 3px;
-    }
-
-    ::-webkit-scrollbar-button {
-        display: none;
-    }
-
-    ul {
-        display: flex;
-        align-items: center;
-        gap: 10px;
-        width: 100%;
-        padding: 12px;
-        overflow: auto;
-
+  }
+  .form-check {
+    &.form-switch {
+      .form-check-input {
         [dir="rtl"] & {
-            padding-right: 12px;
+          margin-left: 7px;
         }
-
-        li {
-            width: 100%;
-            white-space: nowrap;
-            min-width: 87px;
-            display: flex;
-            align-items: center;
-            gap: 5px;
-
-            &:first-child {
-                font-weight: 500;
-                color: $theme-font-color;
-                width: 100%;
-                min-width: 112px;
-                display: block;
-            }
-        }
+      }
     }
-
-    > div {
-        &:nth-child(odd) {
-            ul {
-                background-color: #f9f9f6;
-                padding: 12px;
-            }
-        }
-    }
+  }
 }
-
-.option-list {
+// checkbox and radio
+.form-check-reverse {
+  display: flex;
+  flex-direction: row-reverse;
+  justify-content: flex-end;
+  padding: 0;
+  .form-check-input {
+    float: left;
+    margin-right: 0;
+    margin-left: 10px;
+  }
+}
+.checkbox-checked {
+  &.card-wrapper {
+    h6 {
+      &.sub-title {
+        font-weight: 600;
+      }
+    }
+  }
+  .form-check-input {
+    &:checked {
+      background-color: $primary-color;
+      border-color: $primary-color;
+    }
+    &:focus {
+      border-color: $primary-color;
+      box-shadow: 0 0 0 4px rgba($primary-color, 0.25);
+    }
+  }
+  .card-wrapper {
+    .form-check {
+      &:last-child {
+        min-height: 0;
+        margin-bottom: 0;
+        label {
+          margin-bottom: 0;
+        }
+      }
+    }
+  }
+}
+.form-check-size {
+  display: flex;
+  gap: 22px;
+  align-items: center;
+  flex-wrap: wrap;
+  .form-check-inline {
+    margin: 0;
+    min-height: 0;
+    [dir="rtl"] & {
+      margin: 0;
+    }
+    .form-check-input {
+      width: 18px;
+      height: 18px;
+      margin-top: 0;
+    }
+    .check-size {
+      width: 36px;
+      height: 18px;
+      margin-top: 0;
+    }
+    label {
+      margin: 0;
+    }
+  }
+}
+// img checkbox
+.main-img-checkbox {
+  .img-checkbox {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    .main-img-cover {
+      position: absolute;
+      top: 15px;
+      left: 15px;
+      width: 24px;
+      height: 24px;
+      [dir="rtl"] & {
+        left: unset;
+        right: 15px;
+      }
+    }
+    .form-check-label {
+      width: 100%;
+    }
+    img {
+      width: 100%;
+      height: 220px;
+      object-fit: cover;
+    }
+  }
+}
+// icons radio button
+.main-icon-checkbox {
+  &.checkbox {
+    label {
+      margin-top: 0;
+      &::before {
+        content: "";
+        width: 100%;
+        height: 100%;
+        margin-left: 1px;
+        background-color: transparent;
+        top: 0;
+        display: block;
+        [dir="rtl"] & {
+          margin-left: unset;
+          margin-right: 1px;
+        }
+      }
+    }
+  }
+  &.checkbox-primary {
+    input[type="checkbox"]:checked {
+      + label::before {
+        color: transparent;
+        border: 2px solid $primary-color;
+      }
+    }
+    input[type="checkbox"] {
+      opacity: 1;
+    }
+    .form-check-input {
+      border: 1px solid var(--light-bg);
+      &.checkbox-shadow {
+        &:focus {
+          box-shadow: none;
+        }
+      }
+      &:checked[type="checkbox"] {
+        background-image: none;
+      }
+    }
+  }
+}
+.main-radio-toggle,
+.main-checkbox-toggle {
+  .btn {
+    margin-bottom: 0;
+  }
+}
+.radio-wrapper,
+.checkbox-wrapper {
+  display: flex;
+  gap: calc(8px + (16 - 8) * ((100vw - 320px) / (1920 - 320)));
+  flex-wrap: wrap;
+  justify-content: center;
+  @media (max-width: 1200px) {
+    justify-content: unset;
+  }
+  li {
+    position: relative;
+    width: 100%;
+    padding: 12px;
+    border: none;
+    text-align: center;
     display: flex;
     align-items: center;
     justify-content: center;
-    gap: 10px;
+    max-width: 130px;
+    @media (max-width: 1335px) {
+      max-width: 113px;
+    }
+    @media (max-width: 1232px) {
+      padding: 10px;
+      max-width: 105px;
+    }
+    .form-check-input {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      float: none;
+      margin: 0;
+      top: 0;
+      left: 0;
+      opacity: 1;
+      border-radius: 0;
+      background-color: transparent;
+      border: 1px solid $light-gray;
+      &:focus {
+        box-shadow: none;
+      }
+      &[type="radio"] {
+        opacity: 1;
+      }
+      &:checked {
+        border: 2px solid $primary-color;
+        background-color: transparent;
+        &[type="radio"] {
+          background-image: none;
+          box-shadow: unset;
+        }
+      }
+    }
+    .form-check-label {
+      position: unset;
+      padding: 0;
+      margin-bottom: 0;
+      &:after {
+        content: none;
+      }
+      &::before {
+        content: none;
+      }
+      i {
+        font-size: 18px;
+        padding-right: 8px;
+        [dir="rtl"] & {
+          padding-right: 0;
+          padding-left: 8px;
+        }
+      }
+      span {
+        font-size: 16px;
+      }
+    }
+  }
 }
+.rtl-input {
+  .form-check {
+    &.form-check-inline {
+      [dir="rtl"] & {
+        padding: 0;
+      }
+    }
+    &.form-switch {
+      [dir="rtl"] & {
+        padding-right: 40px;
+      }
+      .form-check-input {
+        [dir="rtl"] & {
+          margin-left: unset;
+          margin-right: -40px;
+          float: right;
+        }
+      }
+    }
+  }
+}
+// Custom form
+.radio-form {
+  display: flex;
+  gap: 18px;
+  flex-wrap: wrap;
+  .form-check {
+    min-height: 0;
+    margin-bottom: 0;
+    .form-check-label {
+      margin-bottom: 0;
+    }
+  }
+}
+// default-form start
 
+.form-check {
+  margin-bottom: 0;
+}
+.theme-form {
+  .custom-input {
+    .row {
+      .col {
+        .row {
+          &:last-child {
+            label {
+              margin: 0;
+            }
+          }
+        }
+      }
+    }
+  }
+  &.dark-inputs {
+    input::file-selector-button {
+      border-radius: 30px;
+    }
+  }
+  .form-floating {
+    > label {
+      [dir="rtl"] & {
+        left: unset;
+        right: 0;
+      }
+    }
+  }
+}
+// Student validation form
+.avatar-upload {
+  flex-direction: column;
+  div:first-child {
+    position: relative;
+    max-width: 340px;
+    margin: auto;
+    .avatar-edit {
+      position: absolute;
+      right: 25px;
+      z-index: 1;
+      top: 4px;
+      input {
+        display: none;
+      }
+      label {
+        display: inline-block;
+        width: 35px;
+        height: 35px;
+        margin-bottom: 0;
+        border-radius: 100%;
+        background: var(--light-bg);
+        border: 1px solid transparent;
+        box-shadow: 0px 2px 4px 0px rgba(0, 0, 0, 0.12);
+        cursor: pointer;
+        font-weight: normal;
+        transition: all 0.2s ease-in-out;
+        &::after {
+          content: "\f040";
+          font-family: "FontAwesome";
+          color: var(--body-font-color);
+          position: absolute;
+          top: 8px;
+          left: 3px;
+          right: 0;
+          text-align: center;
+          margin: auto;
+          [dir="rtl"] & {
+            right: 3px;
+            left: 0;
+          }
+        }
+      }
+    }
+    .avatar-preview {
+      width: 250px;
+      height: 250px;
+      position: relative;
+      border: 1px dashed  rgba(0,0,0,0.3);
+      box-shadow: 0px 2px 4px 0px rgba(0, 0, 0, 0.1);
+      margin: auto;
+      display: flex;
+      align-items: center;
+      cursor: pointer;
+      justify-content: center;
+      overflow: hidden;
+      .info {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-direction: column;
+        pointer-events: none;
+        svg {
+          font-size: 60px;
+          opacity: 0.2;
+        }
+        h5 {
+          font-size: 17px;
+          text-align: center;
+          opacity: 0.5;
+        }
+      }
+    }
+  }
+  h6 {
+    text-align: center;
+    padding-top: 14px;
+  }
+}
 /**=====================
-      Form CSS Ends
-  ==========================**/
+  2.18 Forms CSS Ends
+==========================**/

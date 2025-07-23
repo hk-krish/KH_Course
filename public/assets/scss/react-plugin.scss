@@ -1,0 +1,210 @@
+.simple-list {
+  .list-group-item {
+    padding: 0;
+    border: none;
+    background-color: transparent;
+    position: unset;
+  }
+}
+ /* scrollable css */
+.custom-container {
+  width: 100% !important;
+  height: 300px !important;
+}
+.scroll-content-width {
+  width: 1600px;
+}
+//map
+.custom-map {
+  height: 500px;
+  width: 100%;
+}
+/* range css */
+.range-container {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  margin: 1em;
+}
+.range-track {
+  height: 36px;
+  display: flex;
+  width: 100%;
+}
+.price-range-output {
+  margin-top: 30px;
+}
+.price-range-thumb {
+  height: 16px;
+  width: 16px;
+  border-radius: 60px;
+  background-color: #26695c;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  box-shadow: 0px 2px 6px #aaa;
+}
+.range-output {
+  margin-top: 12px;
+}
+.range-thumb {
+  height: 35px;
+  width: 35px;
+  border-radius: 30px;
+  background-color: #fff;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  box-shadow: 0px 2px 6px #aaa;
+}
+.range-thumb-bar {
+  height: 16px;
+  width: 5px;
+  background-color: #ccc;
+}
+.range-thumb-bar-dragged {
+  background-color: #4d8aff;
+}
+.range-track-bar {
+  position: relative;
+  height: 5px;
+  width: 100%;
+  border-radius: 4px;
+}
+//rating
+.rating {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+  >span {
+    display: inline-flex !important;
+    align-items: center;
+    gap: 0px;
+  }
+  .br-selected {
+    display: block;
+    width: 12px;
+    padding: 5px 0;
+    height: 28px;
+    float: left;
+    background-color: #009db530;
+    margin: 1px;
+    text-align: center;
+  }
+  .br-widget {
+    display: block;
+    width: calc(40px + (60 - 40) * ((100vw - 320px) / (1920 - 320)));
+    height: 8px;
+    float: left;
+    background-color: #009db530;
+    margin: 3px;
+  }
+  .br-current {
+    background-color: $primary-color !important;
+    color: $white !important;
+  }
+  .square-number {
+    display: block;
+    width: 30px;
+    height: 30px;
+    float: left;
+    border: 2px solid #009db557;
+    background-color: rgb(255 255 255);
+    margin: 2px;
+    text-decoration: none;
+    font-size: 14px;
+    line-height: 1.8;
+    text-align: center;
+    color: #009db557;
+    font-weight: 600;
+    &.active {
+      border: 2px solid $primary-color;
+      color: $primary-color;
+    }
+  }
+  &.reverse {
+    .square-number {
+      width: 22px;
+      height: 22px;
+    }
+  }
+  .text-primary {
+    color: $primary-color !important;
+  }
+  .text-body {
+    color: $theme-body-font-color;
+  }
+  .star {
+    color: #ffa800;
+  }
+  &.pill-rating-list {
+    .pill-rating {
+      padding: 7px 15px;
+      background-color: #009db530;
+      color: var(--theme-default);
+      text-decoration: none;
+      font-size: 13px;
+      text-align: center;
+      font-weight: 400;
+    }
+    >span {
+      >span {
+        &:first-of-type {
+          .pill-rating {
+            border-top-left-radius: 999px;
+            border-bottom-left-radius: 999px;
+          }
+        }
+        &:last-of-type {
+          .pill-rating {
+            border-top-right-radius: 999px;
+            border-bottom-right-radius: 999px;
+          }
+        }
+      }
+    }
+  }
+  .current-rating {
+    font-size: 20px;
+    line-height: 1;
+    color: var(--theme-default);
+    font-weight: 400;
+  }
+}
+.reactour__popover {
+  background-color: $primary-color !important;
+  color: $white !important;
+  span {
+    background-color: $primary-color !important;
+    padding: 0 10px !important;
+    border-radius: 100% !important;
+    border: 1px solid $white;
+    height: unset !important;
+  }
+  .reactour__close-button {
+    top: -18px !important;
+    right: -18px !important;
+    color: $white;
+    height: 12px;
+    width: 12px;
+  }
+  >div[dir] {
+    >button {
+      display: flex !important;
+      color: $white !important;
+      svg {
+        color: $white !important;
+      }
+    }
+  }
+}
+.vertical-timeline{
+  &::before{
+    background: #e5e5e5;
+    width: 2px;
+  }
+}
+.map-z-index{
+  z-index: 1;
+}

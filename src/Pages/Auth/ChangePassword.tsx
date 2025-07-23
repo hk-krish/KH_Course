@@ -1,12 +1,16 @@
 import { yupResolver } from "@hookform/resolvers/yup";
 import { Button } from "antd";
-import { useState } from "react";
+import { Fragment, useState } from "react";
 import { useForm } from "react-hook-form";
 import { Post } from "../../Api";
 import { Url_Keys } from "../../Constant";
 import { useAppSelector } from "../../ReduxToolkit/Hooks";
 import { ChangePasswordType } from "../../Types/Auth";
 import { ChangePasswordSchema } from "../../Utils/ValidationSchemas";
+import { Card, CardBody, Col, Container, Label, Row } from "reactstrap";
+import { Form } from "react-router-dom";
+import Breadcrumbs from "../../CoreComponents/Breadcrumbs";
+import CommonCardHeader from "../../CoreComponents/CommonCardHeader";
 
 const ChangePassword = () => {
   const [loading, setLoading] = useState(false);
@@ -37,53 +41,56 @@ const ChangePassword = () => {
     } catch (error) {}
   };
   return (
-    <div className="container-fluid">
-      <div className="row">
-        <div className="col-12">
-          <div className="row">
-            <div className="col-12">
-              <div className="card">
-                <div className="card-header">
-                  <h5>Change Password</h5>
-                </div>
-                <div className="card-body">
-                  <div className="input-items">
-                    <form className="row gy-3" onSubmit={handleSubmit(onSubmit)}>
-                      <div className="col-12">
-                        <div className="input-box">
-                          <h6>Old Password</h6>
-                          <input type="text" name="text" placeholder="Enter Old Password" {...register("oldPassword")} />
-                          {errors.oldPassword && <p className="text-danger mt-1">{errors.oldPassword.message}</p>}
-                        </div>
+    <Fragment>
+      <Breadcrumbs mainTitle="Change Password" parent="Pages" />
+      <Container fluid>
+        <Col md="12">
+          <Card>
+            <CommonCardHeader title="Change Password" />
+            <CardBody>
+              <div className="input-items">
+                <Form onSubmit={handleSubmit(onSubmit)}>
+                  <Row className="gy-3">
+                    <Col md="12">
+                      <div className="input-box">
+                        <Label>Old Password</Label>
+                        <input type="text" {...register("oldPassword")} placeholder="Enter Old Password" />
+                        {errors.oldPassword && <p className="text-danger">{errors.oldPassword.message}</p>}
                       </div>
-                      <div className="col-12">
-                        <div className="input-box">
-                          <h6>New Password</h6>
-                          <input type="text" placeholder="Enter New Password" {...register("newPassword")} />
-                          {errors.newPassword && <p className="text-danger mt-1">{errors.newPassword.message}</p>}
-                        </div>
+                    </Col>
+
+                    <Col md="6">
+                      <div className="input-box">
+                        <Label>New Password</Label>
+                        <input type="text" {...register("newPassword")} placeholder="Enter New Password" />
+                        {errors.newPassword && <p className="text-danger">{errors.newPassword.message}</p>}
                       </div>
-                      <div className="col-12">
-                        <div className="input-box">
-                          <h6>Confirm Password</h6>
-                          <input type="text" name="text" placeholder="Enter Confirm Password" {...register("confirmPassword")} />
-                          {errors.confirmPassword && <p className="text-danger mt-1">{errors.confirmPassword.message}</p>}
-                        </div>
+                    </Col>
+
+                    <Col md="6">
+                      <div className="input-box">
+                        <Label>Confirm Password</Label>
+                        <input type="text" {...register("confirmPassword")} placeholder="Enter Confirm password" />
+                        {errors.confirmPassword && <p className="text-danger">{errors.confirmPassword.message}</p>}
                       </div>
-                      <div className="col-12">
-                        <Button htmlType="submit" className="btn restaurant-button" type="primary" size="large">
+                    </Col>
+                  </Row>
+                  <Row>
+                    <Col>
+                      <div className="text-center mt-4">
+                        <Button htmlType="submit" className="btn btn-primary" loading={loading}>
                           Save
                         </Button>
                       </div>
-                    </form>
-                  </div>
-                </div>
+                    </Col>
+                  </Row>
+                </Form>
               </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
+            </CardBody>
+          </Card>
+        </Col>
+      </Container>
+    </Fragment>
   );
 };
 

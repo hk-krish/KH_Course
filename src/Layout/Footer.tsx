@@ -1,16 +1,24 @@
 import React from "react";
+import { Col, Container, Row } from "reactstrap";
+import SvgIcon from "../CoreComponents/SvgIcon";
 
 const Footer = () => {
   return (
-    <div className="container-fluid">
-      <footer className="footer">
-        <div className="row">
-          <div className="col-md-12 footer-copyright text-center">
+    <footer className="footer">
+      <Container fluid>
+        <Row>
+          <Col md="6" className="p-0 footer-copyright">
             <p className="mb-0">Copyright 2025 © HK Digiverse & IT Consultancy Pvt Ltd</p>
-          </div>
-        </div>
-      </footer>
-    </div>
+          </Col>
+          <Col md="6" className="p-0">
+            <p className="heart mb-0">
+              Hand crafted & made with
+              <SvgIcon className="svg-color footer-icon ms-1" iconId="heart" />
+            </p>
+          </Col>
+        </Row>
+      </Container>
+    </footer>
   );
 };
 

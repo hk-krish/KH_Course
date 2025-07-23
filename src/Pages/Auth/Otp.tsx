@@ -1,7 +1,8 @@
 import { Button } from "antd";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
-import { useNavigate } from "react-router-dom";
+import { Form, useNavigate } from "react-router-dom";
+import { Col, Container, Label, Row } from "reactstrap";
 import { Post } from "../../Api";
 import { RouteList, Url_Keys } from "../../Constant";
 import { useAppDispatch } from "../../ReduxToolkit/Hooks";
@@ -18,7 +19,7 @@ const Otp = () => {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm({ defaultValues: { email: "", otp: "" }});
+  } = useForm({ defaultValues: { email: "", otp: "" } });
 
   const onSubmit = async (data: OtpType) => {
     try {
@@ -26,7 +27,7 @@ const Otp = () => {
         setLoading(true);
         const response = await Post(Url_Keys.Auth.ForgotPassword, { email: data.email });
         if (response.status === 200) {
-          dispatch(setEmailOtp(data.email))
+          dispatch(setEmailOtp(data.email));
           setOtp(true);
           setLoading(false);
         }
@@ -43,41 +44,48 @@ const Otp = () => {
   };
 
   return (
-    <section className="log-in-section section-b-space">
-      <div className="container w-100">
-        <div className="row">
-          <div className="col-xl-5 col-lg-6 mx-auto">
-            <div className="log-in-box">
-              <div className="log-in-title">
-                <h3>Welcome To HK Course</h3>
-                <h4>Send OTP</h4>
+    <Container fluid className="p-0">
+      <Row className="m-0">
+        <Col xs="12" className="p-0">
+          <div className="login-card">
+            <div>
+              <div>
+                {/* <Link className="logo" to={RouteList.Dashboard}> */}
+                {/* <Image className="img-fluid for-light" src={dynamicImage(`logo/logo.png`)} alt="loginPage" /> */}
+                {/* <Image className="img-fluid for-dark" src={dynamicImage(`logo/logo_dark.png`)} alt="loginPage" /> */}
+                {/* </Link> */}
               </div>
-              <div className="input-box">
-                <form onSubmit={handleSubmit(onSubmit)} className="row g-4">
-                  <div className="col-12">
-                    <input type="email" placeholder="Enter Email" {...register("email", { required: "Email Id is required" })} />
-                    {errors.email && <p className="text-danger m-0">{errors.email.message}</p>}
+              <div className="login-main">
+                <Form onSubmit={handleSubmit(onSubmit)}>
+                  <h3>Forgot Password</h3>
+                  <p>Enter your Email Id </p>
+
+                  <div className="input-box">
+                    <Label className="col-form-label">Your Email</Label>
+                    <input type="text" placeholder="Enter Your Email" {...register("email", { required: "Email Id is required" })} />
+                    {errors.email && <p className="text-danger mt-1">{errors.email.message}</p>}
                   </div>
 
                   {isOtp && (
-                    <div className="col-12">
+                    <div className="input-box">
+                      <Label className="col-form-label">Your OTP</Label>
                       <input type="number" placeholder="Enter OTP" {...register("otp", { required: isOtp ? "OTP is required" : false })} />
                       {errors.otp && <p className="text-danger m-0">{errors.otp.message}</p>}
                     </div>
                   )}
 
-                  <div className="col-12">
-                    <Button htmlType="submit" className="btn btn-animation w-100 justify-content-center" type="primary" size="large" loading={loading}>
+                  <div className="text-end mt-3">
+                    <Button htmlType="submit" className="w-100 btn btn-primary" block size="large" loading={loading}>
                       {isOtp ? "Verify OTP" : "Send OTP"}
                     </Button>
                   </div>
-                </form>
+                </Form>
               </div>
             </div>
           </div>
-        </div>
-      </div>
-    </section>
+        </Col>
+      </Row>
+    </Container>
   );
 };
 

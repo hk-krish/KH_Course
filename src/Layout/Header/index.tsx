@@ -1,18 +1,78 @@
-import { AlignCenter, LogOut, Settings } from "react-feather";
-import { useAppDispatch, useAppSelector } from "../../ReduxToolkit/Hooks";
-import { toggleSidebar } from "../../ReduxToolkit/Slice/LayoutSlice";
-import { RouteList } from "../../Constant/RouteList";
+import { useState } from "react";
 import { Link } from "react-router-dom";
-import { logout } from "../../ReduxToolkit/Slice/AuthSlice";
+import { Col, NavLink, Row } from "reactstrap";
 import { Href } from "../../Constant";
+import { RouteList } from "../../Constant/RouteList";
+import { Image } from "../../CoreComponents/Image";
+import SvgIcon from "../../CoreComponents/SvgIcon";
+import { useAppDispatch, useAppSelector } from "../../ReduxToolkit/Hooks";
+import { logout } from "../../ReduxToolkit/Slice/AuthSlice";
+import { toggleSidebar } from "../../ReduxToolkit/Slice/LayoutSlice";
+import { dynamicImage } from "../../Utils";
+import { Maximize2 } from "iconsax-react";
 
 const Header = () => {
   const { sideBarToggle } = useAppSelector((state) => state.layout);
-
+  const [fullScreen, setFullScreen] = useState(false);
+  const fullScreenHandler = (isFullScreen: boolean) => {
+    setFullScreen(isFullScreen);
+    if (isFullScreen) document.documentElement.requestFullscreen();
+    else document?.exitFullscreen();
+  };
   const dispatch = useAppDispatch();
 
   return (
-    <div className={`page-header ${sideBarToggle ? "close_icon" : ""}`}>
+    <>
+      <div className={`page-header ${sideBarToggle ? "close_icon" : ""}`}>
+        <Row className="header-wrapper m-0">
+          <Col className="header-logo-wrapper col-auto p-0">
+            <div className="logo-wrapper">
+              <Link to={RouteList.Dashboard}>
+                <Image className="img-fluid for-light" src={dynamicImage(`logo/logo.png`)} alt="" />
+              </Link>
+            </div>
+            <div className="toggle-sidebar" onClick={() => dispatch(toggleSidebar())}>
+              <SvgIcon className="sidebar-toggle" iconId="stroke-animation" />
+            </div>
+          </Col>
+          <Col xs="auto" lg="7" md="6" className="nav-right box-col-6 pull-right right-header p-0 ms-auto">
+            <ul className="nav-menus">
+              <li onClick={() => fullScreenHandler(!fullScreen)}>
+                <NavLink href={Href}>
+                  <Maximize2 />
+                </NavLink>
+              </li>
+              <li className="profile-nav onhover-dropdown p-0 m-0">
+                <div className="d-flex profile-media align-items-center">
+                  {/* <Image className="b-r-6 img-40" src={singleUser?.profilePhoto ? singleUser?.profilePhoto : `${ImagePath}user/user.png`} alt="profile" /> */}
+                  <div className="flex-grow-1">
+                    <span>
+                      {/* {singleUser?.firstName} {singleUser?.lastName} */}
+                    </span>
+                    <p className="mb-0">
+                      Admin
+                      <SvgIcon iconId="header-arrow-down" />
+                    </p>
+                  </div>
+                </div>
+                <ul className="profile-dropdown onhover-show-div">
+                  <li>
+                    <Link to={RouteList.ChangePassword}>
+                      <span>Change Password</span>
+                    </Link>
+                  </li>
+                  <li onClick={() =>  dispatch(logout())}>
+                    <Link to={Href}>
+                      <span>LogOut</span>
+                    </Link>
+                  </li>
+                </ul>
+              </li>
+            </ul>
+          </Col>
+        </Row>
+      </div>
+      {/* <div className={`page-header ${sideBarToggle ? "close_icon" : ""}`}>
       <div className="header-wrapper m-0">
         <div className="header-logo-wrapper p-0">
           <div className="logo-wrapper">
@@ -29,13 +89,6 @@ const Header = () => {
             </Link>
           </div>
         </div>
-        {/* <div className="welcome-title">
-          <h5>
-            Food that's you loved!
-            <img src="./assets/images/header.gif" alt="" />
-          </h5>
-          <span>Delight your taste with our most famous food !!</span>
-        </div> */}
         <div className="nav-right col-xl-6 col-5 pull-right right-header p-0">
           <ul className="nav-menus">
             <li className="profile-nav onhover-dropdown pe-0 me-0">
@@ -67,7 +120,8 @@ const Header = () => {
           </ul>
         </div>
       </div>
-    </div>
+    </div> */}
+    </>
   );
 };
 

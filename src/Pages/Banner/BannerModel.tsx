@@ -1,7 +1,7 @@
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useCallback, useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
-import { Button, Modal, ModalBody, ModalHeader } from "reactstrap";
+import { Button, Col, Form, Label, Modal, ModalBody, ModalFooter, ModalHeader } from "reactstrap";
 import CustomCheckbox from "../../CoreComponents/CustomCheckbox";
 import ImageUpload from "../../CoreComponents/ImageUpload";
 import { useAppDispatch, useAppSelector } from "../../ReduxToolkit/Hooks";
@@ -27,8 +27,6 @@ const BannerModel = () => {
   } = useForm({
     resolver: yupResolver(BannerSchema),
   });
-
-;
 
   useEffect(() => {
     if (singleBannerData) {
@@ -64,7 +62,7 @@ const BannerModel = () => {
     } catch (error) {}
   };
 
-    const getSingleBanner = useCallback(async () => {
+  const getSingleBanner = useCallback(async () => {
     try {
       await dispatch(fetchSingleBannerApiData({ id: singleEditingIdBanner }));
     } catch (error) {}
@@ -72,61 +70,53 @@ const BannerModel = () => {
 
   useEffect(() => {
     if (singleEditingIdBanner) getSingleBanner();
-  }, [getSingleBanner, singleEditingIdBanner])
+  }, [getSingleBanner, singleEditingIdBanner]);
 
   return (
-    <Modal fade modalClassName="media-modal theme-modal" size="md" centered isOpen={isBannerModal} toggle={onCloseModal}>
-      <ModalHeader tag="h2">
+    <Modal size="md" centered isOpen={isBannerModal} toggle={onCloseModal}>
+      <ModalHeader className="position-relative border-0">
         Insert Media
-        <Button type="button" className="btn-close" onClick={onCloseModal}>
-          <span className="lnr lnr-cross" />
-        </Button>
+        <Button color="transparent" onClick={onCloseModal} className="btn-close" />
       </ModalHeader>
-      <ModalBody>
+      <ModalBody className="pt-0">
         <div className="input-items">
-          <form id="bannerForm" className="row gy-3" onSubmit={handleSubmit(onSubmit)}>
-            <div className="col-12">
-              <div className="input-box">
-                <h6>Banner Title</h6>
-                <input type="text" placeholder="Enter Banner Title" {...register("title")} />
-                {errors.title && <p className="text-danger mt-1">{errors.title.message}</p>}
-              </div>
-            </div>
+          <Form id="bannerForm" className="row gy-3" onSubmit={handleSubmit(onSubmit)}>
+            <Col md="12" className="input-box">
+              <Label>Banner Title</Label>
+              <input type="text" placeholder="Enter Banner Title" {...register("title")} />
+              {errors.title && <p className="text-danger mt-1">{errors.title.message}</p>}
+            </Col>
 
-            <div className="col-12">
-              <div className="input-box">
-                <h6>
-                  Youtube Link <span className="required">*</span>
-                </h6>
-                <input type="text" placeholder="Enter Youtube Link" {...register("youtubeLink")} />
-                {errors.youtubeLink && <p className="text-danger mt-1">{errors.youtubeLink.message}</p>}
-              </div>
-            </div>
+            <Col md="12" className="input-box">
+              <Label>
+                Youtube Link <span className="required">*</span>
+              </Label>
+              <input type="text" placeholder="Enter Youtube Link" {...register("youtubeLink")} />
+              {errors.youtubeLink && <p className="text-danger mt-1">{errors.youtubeLink.message}</p>}
+            </Col>
 
-            <div className="col-12">
-              <div className="input-box">
-                <h6>
-                  Upload Images <span className="required">*</span>
-                </h6>
-                <ImageUpload name="image" trigger={trigger} fileList={fileList} setFileList={setFileList} setValue={setValue} />
-                {errors.image && <p className="text-danger mt-1">{errors.image.message}</p>}
-              </div>
-            </div>
+            <Col md="12" className="input-box">
+              <Label>
+                Upload Images <span className="required">*</span>
+              </Label>
+              <ImageUpload name="image" trigger={trigger} fileList={fileList} setFileList={setFileList} setValue={setValue} />
+              {errors.image && <p className="text-danger mt-1">{errors.image.message}</p>}
+            </Col>
 
-            <div className="col-12">
+            <Col md="12" className="input-box">
               <CustomCheckbox register={register} title="Action" name="action" />
-            </div>
-          </form>
+            </Col>
+          </Form>
         </div>
       </ModalBody>
 
-      <div className="modal-footer">
+      <ModalFooter>
         <div className="right-part">
-          <Button type="submit" form="bannerForm" className="btn btn-dashed">
-            Insert Media
+          <Button type="submit" form="bannerForm" color="primary">
+            Save
           </Button>
         </div>
-      </div>
+      </ModalFooter>
     </Modal>
   );
 };

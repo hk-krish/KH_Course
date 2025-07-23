@@ -1,6 +1,7 @@
-import { RouteList } from "../Constant/RouteList";
+import { RouteList } from "../Constant";
+import { MenuItem } from "../Types/Layout";
 
-export const MenuList = [
-  { id: 1, icon: "ri-home-line", title: "Dashboard", url: RouteList.Dashboard },
-  { id: 2, icon: "ri-home-line", title: "Banner", url: RouteList.Banner },
+export const menuList: MenuItem[] | undefined = [
+  { id: 1, icon: "home", active: false, title: "Dashboard", type: "link", url: RouteList.Dashboard },
+  { id: 2, icon: "home", active: false, title: "Banner", type: "link", url: RouteList.Banner },
 ];

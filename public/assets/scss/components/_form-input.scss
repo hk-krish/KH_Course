@@ -1,5 +1,5 @@
 /**=====================
-     Form Input CSS Start
+    2.16 Form-input CSS Start
 ==========================**/
 %input-mixin1 {
 	position: absolute;
@@ -33,18 +33,149 @@
 	}
 }
 
-.input-group-dashed {
-
-	.input-group-text,
-	.form-control {
-		background: $light-color;
-	}
-}
-
 .input-group-air {
 	box-shadow: 0 3px 20px 0 $light-semi-gray;
 }
 
+
+// Input-groups
+
+.input-group-wrapper {
+	.input-group {
+		margin-bottom: 16px;
+		.dropdown-block{
+			z-index: 3;
+		}
+		.form-control {
+			font-size: 16px;
+
+			&:focus {
+				border-color: var(--recent-border);
+				box-shadow: unset;
+			}
+		}
+
+		&:last-child {
+			margin-bottom: 0;
+			z-index: 0;
+		}
+	}
+
+	.input-group> :not(:first-child):not(.dropdown-menu):not(.valid-tooltip):not(.valid-feedback):not(.invalid-tooltip):not(.invalid-feedback) {
+		border-top-left-radius: 0;
+		border-bottom-left-radius: 0;
+	}
+}
+
+.main-custom-form {
+	label {
+		margin-bottom: 0;
+	}
+
+	.form-select {
+		&:focus {
+			box-shadow: unset;
+			border-color: var(--recent-border);
+		}
+	}
+
+	.dropdown-menu {
+		z-index: 3;
+	}
+
+	.input-group> :not(:first-child):not(.dropdown-menu):not(.valid-tooltip):not(.valid-feedback):not(.invalid-tooltip):not(.invalid-feedback) {
+		border-top-left-radius: 0;
+		border-bottom-left-radius: 0;
+	}
+
+	.form-select,
+	.form-control {
+		font-size: calc(14px + (15 - 14) * ((100vw - 320px) / (1920 - 320)));
+	}
+
+	.input-group-text {
+		font-size: calc(14px + (16 - 14) * ((100vw - 320px) / (1920 - 320)));
+	}
+
+	.dropdown-toggle {
+		&.btn {
+			@media (max-width: 338px) {
+				padding: 6px 11px;
+			}
+		}
+	}
+}
+
+// Segmented Buttons
+.main-segment-btn {
+	.dropdown-toggle {
+		&::after {
+			content: '';
+			margin-left: 0;
+			border-top: 6px solid;
+			border-right: 6px solid transparent;
+			border-left: 6px solid transparent;
+			vertical-align: 2px;
+		}
+	}
+
+	.dropdown-menu {
+		z-index: 3;
+	}
+}
+
+// base-input file
+.form-control-color {
+	max-width: 70rem;
+}
+
+// Raise input style
+.theme-form {
+	select {
+		&.form-select {
+			option {
+				padding: 8px 10px;
+				border-radius: 100px;
+			}
+		}
+	}
+}
+
+.input-radius {
+
+	.form-control {
+		&:focus {
+			box-shadow: unset;
+			border-color: var(--recent-border);
+		}
+	}
+
+	.input-group> :not(:first-child):not(.dropdown-menu):not(.valid-tooltip):not(.valid-feedback):not(.invalid-tooltip):not(.invalid-feedback) {
+		border-top-left-radius: 0;
+		border-bottom-left-radius: 0;
+	}
+}
+
+.floating-wrapper {
+	.form-floating {
+		.form-control {
+			height: 54px;
+		}
+	}
+}
+
+.dropdown-toggle{
+	&:after{
+		border-bottom: 0;
+		border-left: 4px solid transparent;
+		border-right: 4px solid transparent;
+		border-top: 4px solid;
+		content: "";
+		display: inline-block;
+		margin-left: 8px;
+		vertical-align: 4px;
+	}
+}
 /**=====================
-     Form Input CSS Ends
-==========================**/
+    2.16 Form-input CSS Ends
+	==========================**/

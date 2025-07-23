@@ -1,7 +1,7 @@
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
-import { useNavigate } from "react-router-dom";
+import { Form, Link, useNavigate } from "react-router-dom";
 import { Post } from "../../Api";
 import { Url_Keys } from "../../Constant";
 import { RouteList } from "../../Constant/RouteList";
@@ -9,6 +9,7 @@ import { useAppDispatch } from "../../ReduxToolkit/Hooks";
 import { login } from "../../ReduxToolkit/Slice/AuthSlice";
 import { LoginSchema } from "../../Utils/ValidationSchemas";
 import { LoginType } from "../../Types/Auth";
+import { Button, Col, Container, Label, Row } from "reactstrap";
 
 const Login = () => {
   const [isPasswordVisible, setPasswordVisible] = useState(false);
@@ -34,87 +35,54 @@ const Login = () => {
   };
 
   return (
-    <section className="log-in-section section-b-space">
-      {/* <a href="" className="logo-login">
-        <img src="assets/images/logo/1.png" className="img-fluid" alt="" />
-      </a> */}
-      <div className="container w-100">
-        <div className="row">
-          <div className="col-xl-5 col-lg-6 mx-auto">
-            <div className="log-in-box">
-              <div className="log-in-title">
-                <h3>Welcome To HK Course</h3>
-                <h5>Log In Your Account</h5>
+    <Container fluid className="p-0">
+      <Row className="m-0">
+        <Col xs="12" className="p-0">
+          <div className="login-card">
+            <div>
+              <div>
+                {/* <Link className="logo" to={RouteList.Dashboard}> */}
+                  {/* <Image className="img-fluid for-light" src={dynamicImage(`logo/logo.png`)} alt="loginPage" /> */}
+                  {/* <Image className="img-fluid for-dark" src={dynamicImage(`logo/logo_dark.png`)} alt="loginPage" /> */}
+                {/* </Link> */}
               </div>
-              <div className="input-box">
-                <form onSubmit={handleSubmit(onSubmit)} className="row g-3">
-                  <div className="col-12">
-                    <label className="col-form-label pt-0">Your Email</label>
-                    <div className="form-floating theme-form-floating log-in-form">
-                      <input type="email" placeholder="Enter Email" {...register("email")} />
-                    </div>
+              <div className="login-main">
+                <Form onSubmit={handleSubmit(onSubmit)}>
+                  <h3>Login</h3>
+                  <p>Enter your Email Id & Password to login</p>
+
+                  <div className="input-box">
+                    <Label className="col-form-label">Your Email</Label>
+                    <input type="text" placeholder="Enter Your Email" {...register("email")} />
                     {errors.email && <p className="text-danger mt-1">{errors.email.message}</p>}
                   </div>
-                  <div className="col-12">
-                    <label className="col-form-label pt-0">Your Password</label>
-                    <div className="form-floating theme-form-floating log-in-form">
-                      <input type={isPasswordVisible ? "text" : "password"} placeholder="Enter Password" {...register("password")} />
+
+                  <div className="input-box">
+                    <Label className="col-form-label">Your Password</Label>
+                    <div className="position-relative">
+                      <input placeholder="Enter Your Password" type={isPasswordVisible ? "text" : "password"} {...register("password")} />
                       <div className="show-hide" onClick={() => setPasswordVisible(!isPasswordVisible)}>
                         <span className={!isPasswordVisible ? "show" : ""}> </span>
                       </div>
                     </div>
                     {errors.password && <p className="text-danger mt-1">{errors.password.message}</p>}
                   </div>
-                  <div className="col-12">
-                    <div className="forgot-box">
-                      {/* <div className="form-check ps-0 m-0 remember-box">
-                        <input className="custom-checkbox p-0" type="checkbox" name="text" id="flexCheckDefault" />
-                        <label className="form-check-label" htmlFor="flexCheckDefault">
-                          Remember me
-                        </label>
-                      </div> */}
-                      <a href={RouteList.Otp} className="forgot-password">
-                        Forgot Password?
-                      </a>
-                    </div>
+
+                  <div className="checkbox p-0">
+                    <Link to={RouteList.Otp}>Forgot Password</Link>
                   </div>
-                  <div className="col-12">
-                    <button className="btn btn-animation w-100 justify-content-center" type="submit">
-                      Log In
-                    </button>
+                  <div className="text-end mt-3">
+                    <Button color="primary" className="w-100" block>
+                      Login
+                    </Button>
                   </div>
-                </form>
+                </Form>
               </div>
-              {/* <div className="other-log-in">
-                <h6>or</h6>
-              </div> */}
-              {/* <div className="log-in-button">
-                <ul>
-                  <li>
-                    <a href="https://www.google.com/" className="btn google-button w-100" target="_blank">
-                      <img src="./assets/images/google.png" className="blur-up lazyload" alt="" /> Log In with Google
-                    </a>
-                  </li>
-                  <li>
-                    <a href="https://www.facebook.com/" className="btn google-button w-100" target="_blank">
-                      <img src="./assets/images/facebook.png" className="blur-up lazyload" alt="" /> Log In with Facebook
-                    </a>
-                  </li>
-                </ul>
-              </div> */}
-              {/* <div>
-                <h6 className="text-center mt-3">
-                  Don't have account?
-                  <a href="sign-up.html" className="font-primary f-w-600 ps-1">
-                    Create Account
-                  </a>
-                </h6>
-              </div> */}
             </div>
           </div>
-        </div>
-      </div>
-    </section>
+        </Col>
+      </Row>
+    </Container>
   );
 };
 

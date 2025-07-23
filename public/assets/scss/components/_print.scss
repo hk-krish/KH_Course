@@ -1,0 +1,131 @@
+/**=====================
+  2.24 Print CSS Start
+==========================**/
+@media print {
+  .invoice-1,
+  .invoice-2 {
+    width: 1075px !important;
+    margin: 0 auto !important;
+  }
+  .invoice-3 {
+    width: 1050px !important;
+    margin: 0 auto !important;
+  }
+  .invoice-3 {
+    width: 1050px !important;
+    margin: 0 auto !important;
+    .table-invoice-3 {
+      thead  {
+        background: var(--theme-default) !important; 
+      }
+    }
+    .payment-summary {
+      width: 90% !important;
+    }
+  }
+  .invoice-4 {
+    width: 1050px !important;
+    margin: 0 auto !important;
+  }
+  .invoice-5 {
+    width: 1050px !important;
+    margin: 0 auto !important;
+  }
+  .custom-print-btn {
+    display: none !important;
+  }
+  .sidebar-wrapper,
+  .page-header {
+    display: none;
+  }
+  .page-body {
+    margin: 0 !important;
+  }
+  .tap-top {
+    display: none !important;
+  }
+  .customizer-links {
+    display: none;
+  }
+  .page-wrapper {
+    .page-title {
+      visibility: hidden;
+    }
+    .page-body-wrapper {
+      .page-title {
+        display: none;
+      }
+      .page-body {
+        margin: 0 !important;
+        padding: 0 !important ; 
+      }
+    }
+    &.compact-wrapper {
+      .page-body-wrapper {
+        .page-body {
+          margin: 0;
+        }
+      }
+    }
+  }
+  table.fixedHeader-floating {
+    display: none;
+  }
+  // letter-box
+  .mail-left-bar {
+    display: none;
+  }
+  .footer {
+    display: none;
+  }
+  .modal {
+    .modal-bookmark {
+      .modal-content {
+        .list-persons {
+          padding: 20px !important; 
+          .profile-mail {
+            .rounded-circle {
+              border-radius: 50% !important;
+            }
+            .mail-general {
+              padding-top: 25px !important;
+            } 
+          }
+        }
+      }
+    }
+  }
+}
+.invoice-table {
+  margin-top: 16px;
+  margin-bottom: 16px;
+}
+.invoice-2 {
+	.invoice-table {
+		tbody {
+			.invoice-dark {
+				td.product-info {
+					.product-image {
+						img {
+							height: 29px;
+						}
+					}
+				}
+			}
+		}
+	}
+}
+
+.invoice {
+  .text-right {
+    input {
+      margin-top: 6px;
+    }
+  }
+  .d-flex {
+    align-items: center;
+  }
+}
+/**=====================
+  2.24 Print CSS Ends
+==========================**/
