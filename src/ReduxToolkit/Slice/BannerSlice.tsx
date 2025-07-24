@@ -8,7 +8,6 @@ const initialState: BannersSliceType = {
   isBannerModal: false,
   allBanner: null,
   isLoadingBanner: true,
-  isBannerSearchData: null,
   singleEditingIdBanner: null,
   singleBannerData: null,
 };
@@ -22,7 +21,7 @@ export const fetchBannerApiData = createAsyncThunk<BannerApiResponse, FetchApiPa
 });
 
 export const fetchSingleBannerApiData = createAsyncThunk<BannerType, FetchApiParams>("admin/single-banner", async ({ id }) => {
-  const response = await Get<BannerType>(`${Url_Keys.Banner.Single}/${id}`);
+  const response = await Get<BannerType>(`${Url_Keys.Banner.Banner}/${id}`);
   return response?.data;
 });
 
@@ -36,9 +35,6 @@ const BannersSlice = createSlice({
     setSingleEditingIdBanner(state, action) {
       state.singleEditingIdBanner = action.payload;
     },
-    setBannerSearchData(state, action) {
-      state.isBannerSearchData = action.payload;
-    },
   },
   extraReducers: (builder) => {
     builder.addCase(fetchBannerApiData.fulfilled, (state, action) => {
@@ -51,5 +47,5 @@ const BannersSlice = createSlice({
   },
 });
 
-export const { setBannerModal, setSingleEditingIdBanner, setBannerSearchData } = BannersSlice.actions;
+export const { setBannerModal, setSingleEditingIdBanner } = BannersSlice.actions;
 export default BannersSlice.reducer;

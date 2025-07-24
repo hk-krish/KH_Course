@@ -11,4 +11,9 @@ export const RouteList = {
 
   //Other
   ErrorPages: `/error-pages`,
+
+  Category: "/category",
+  Course: "/course",
+  Students: "/students",
+  Lecture: "/lecture",
 };

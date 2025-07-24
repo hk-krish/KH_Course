@@ -1,4 +1,3 @@
-
 export interface ApiResponse<T> {
   status: number;
   message?: string;
@@ -71,4 +70,25 @@ export interface CardHeaderProp {
   typeFilter?: (id: string) => void;
   typeFilterData?: TypeFilterData[];
   rowClass?: string;
+}
+
+export interface ModalPassPropsType {
+  getApi: () => void;
+}
+
+export interface CustomTypeaheadType {
+  errors: any;
+  control: any;
+  title?: string;
+  name?: string;
+  options?: any;
+  disabled?: boolean;
+  allowNew?: boolean;
+}
+
+export interface SelectOption {
+  label: string;
+  id?: string;
+  customOption?: boolean;
+  value?: string;
 }

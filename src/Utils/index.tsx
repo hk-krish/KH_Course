@@ -1,3 +1,5 @@
+import { SelectOption } from "../Types/CoreComponents";
+
 //dynamic image
 const images = require.context(`/public/assets/images`, true);
 
@@ -16,3 +18,5 @@ export const getToken = () => {
 };
 
 export const generateOptions = (data?: { _id: string; name: string }[]) => data?.map((item) => ({ value: item._id, label: item.name })) || [];
+
+export const normalizeTags = (items: SelectOption[] = []) => items.map((item) => (typeof item === "string" ? item : item.value));

@@ -9,8 +9,7 @@ const URL = {
     ChangePassword: "/auth/change-password",
   },
   Banner: {
-    Banner: "/banner/getall",
-    Single: "/banner/get",
+    Banner: "/banner",
     Add: "/banner/add",
     Edit: "/banner/edit",
     Delete: "/banner/delete",
@@ -19,6 +18,30 @@ const URL = {
     Upload: "/upload",
     Delete: "/upload",
   },
+  Category: {
+    Category: "/category",
+    Add: "/category/add",
+    Edit: "/category/edit",
+    Delete: "/category/delete",
+  },
+  Course: {
+    Course: "/course",
+    Add: "/course/add",
+    Edit: "/course/edit",
+    Delete: "/course/delete",
+  },
+  Students: {
+    Students: "/user",
+    Add: "/user/add",
+    Edit: "/user/edit",
+    Delete: "/user/delete",
+  },
+   Lecture: {
+    Lecture: "/lecture",
+    Add: "/lecture/add",
+    Edit: "/lecture/edit",
+    Delete: "/lecture/delete",
+  }
 } as const;
 
 type UrlMap = typeof URL;

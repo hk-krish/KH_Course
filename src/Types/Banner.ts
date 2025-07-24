@@ -25,7 +25,6 @@ export interface BannersSliceType {
   isBannerModal: boolean;
   allBanner: BannerApiResponse;
   isLoadingBanner: boolean;
-  isBannerSearchData: string;
   singleEditingIdBanner: string;
   singleBannerData: BannerType;
 }
@@ -37,8 +36,3 @@ export interface BannerFormData {
   image: string[];
 }
 
-export interface AddBannersModalType {
-  isEdit: boolean;
-  setEdit: (isEdit: boolean) => void;
-  getAllBanner: () => void;
-}

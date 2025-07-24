@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@ant-design/v5-patch-for-react-19": "^1.0.3",
     "@hookform/resolvers": "^5.1.1",
     "@reduxjs/toolkit": "^2.8.2",
     "@testing-library/dom": "^10.4.0",
@@ -19,6 +20,7 @@
     "bootstrap": "^5.3.7",
     "iconsax-react": "^0.0.8",
     "react": "^19.1.0",
+    "react-bootstrap-typeahead": "^6.4.1",
     "react-dom": "^19.1.0",
     "react-feather": "^2.0.10",
     "react-hook-form": "^7.60.0",

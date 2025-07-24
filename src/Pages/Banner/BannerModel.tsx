@@ -1,17 +1,18 @@
 import { yupResolver } from "@hookform/resolvers/yup";
-import { useCallback, useEffect, useState } from "react";
+import { FC, useCallback, useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { Button, Col, Form, Label, Modal, ModalBody, ModalFooter, ModalHeader } from "reactstrap";
 import CustomCheckbox from "../../CoreComponents/CustomCheckbox";
 import ImageUpload from "../../CoreComponents/ImageUpload";
 import { useAppDispatch, useAppSelector } from "../../ReduxToolkit/Hooks";
-import { fetchSingleBannerApiData, setBannerModal } from "../../ReduxToolkit/Slice/BannerSlice";
+import { fetchSingleBannerApiData, setBannerModal, setSingleEditingIdBanner } from "../../ReduxToolkit/Slice/BannerSlice";
 import { BannerSchema } from "../../Utils/ValidationSchemas";
 import { BannerFormData } from "../../Types/Banner";
 import { Post } from "../../Api";
 import { Url_Keys } from "../../Constant";
+import { ModalPassPropsType } from "../../Types/CoreComponents";
 
-const BannerModel = () => {
+const BannerModel: FC<ModalPassPropsType> = ({ getApi }) => {
   const { isBannerModal, singleEditingIdBanner, singleBannerData } = useAppSelector((state) => state.banner);
   const dispatch = useAppDispatch();
 
@@ -43,6 +44,7 @@ const BannerModel = () => {
 
   const onCloseModal = () => {
     dispatch(setBannerModal());
+    dispatch(setSingleEditingIdBanner(null));
     reset();
     setFileList([]);
   };
@@ -58,6 +60,7 @@ const BannerModel = () => {
       if (response?.status === 200) {
         onCloseModal();
         trigger("image");
+        getApi();
       }
     } catch (error) {}
   };
@@ -75,7 +78,7 @@ const BannerModel = () => {
   return (
     <Modal size="md" centered isOpen={isBannerModal} toggle={onCloseModal}>
       <ModalHeader className="position-relative border-0">
-        Insert Media
+        Banner
         <Button color="transparent" onClick={onCloseModal} className="btn-close" />
       </ModalHeader>
       <ModalBody className="pt-0">

@@ -2919,7 +2919,7 @@ body.offcanvas {
   }
 }
 
-.modal-footer{
+.modal-footer {
   display: flex;
   justify-content: center;
 }
@@ -3232,6 +3232,24 @@ nextjs-portal {
   object-position: center;
   aspect-ratio: 0.703704;
 }
-:where(.css-dev-only-do-not-override-7t2xvq).ant-btn-variant-outlined:not(:disabled):not(.ant-btn-disabled):hover{
+:where(.css-dev-only-do-not-override-7t2xvq).ant-btn-variant-outlined:not(:disabled):not(.ant-btn-disabled):hover {
   color: #ffffff !important;
+}
+.ant-image-preview-wrap {
+  z-index: 2000 !important;
+}
+:where(.css-dev-only-do-not-override-7t2xvq).ant-btn-variant-solid:not(:disabled):not(.ant-btn-disabled):hover,
+:where(.css-dev-only-do-not-override-7t2xvq).ant-btn-variant-solid:not(:disabled):not(.ant-btn-disabled):active {
+  background: var(--theme-default);
+  color: #fff;
+}
+:where(.css-dev-only-do-not-override-7t2xvq).ant-btn-variant-outlined:not(:disabled):not(.ant-btn-disabled):hover {
+  color: #000000 !important;
+  border-color: var(--theme-default);
+}
+.ant-btn-variant-solid {
+  background: var(--theme-default);
+}
+.ant-table-expanded-row-fixed{
+  width: 100% !important;
 }

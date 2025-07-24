@@ -1,3 +1,4 @@
+import "@ant-design/v5-patch-for-react-19";
 import { Button, Flex, Image, Modal, Spin, Switch, Table } from "antd";
 import { Edit, Trash } from "iconsax-react";
 import { useCallback, useEffect, useState } from "react";
@@ -7,46 +8,39 @@ import { Url_Keys } from "../../Constant";
 import Breadcrumbs from "../../CoreComponents/Breadcrumbs";
 import CommonCardHeader from "../../CoreComponents/CommonCardHeader";
 import { useAppDispatch, useAppSelector } from "../../ReduxToolkit/Hooks";
-import { fetchBannerApiData, setBannerModal, setSingleEditingIdBanner } from "../../ReduxToolkit/Slice/BannerSlice";
-import BannerModel from "./BannerModel";
-import { Post } from "../../Api";
-import "@ant-design/v5-patch-for-react-19";
+import { fetchCourseApiData, setCourseModal, setSingleEditingIdCourse } from "../../ReduxToolkit/Slice/CourseSlice";
+import CourseModel from "./CourseModel";
 
-const Banner = () => {
+const Course = () => {
   const [isSearch, setSearch] = useState("");
   const [page, setPage] = useState(1);
   const [pageLimit, setPageLimit] = useState(10);
 
   const dispatch = useAppDispatch();
-  const { allBanner, isLoadingBanner } = useAppSelector((state) => state.banner);
+  const { allCourse, isLoadingCourse } = useAppSelector((state) => state.course);
 
-  const getAllBanner = useCallback(() => {
-    dispatch(fetchBannerApiData({ page, limit: pageLimit, search: isSearch }));
+  const getAllCourse = useCallback(async () => {
+    try {
+      await dispatch(fetchCourseApiData({ page, limit: pageLimit, search: isSearch }));
+    } catch (error) {}
   }, [dispatch, isSearch, page, pageLimit]);
 
   useEffect(() => {
-    getAllBanner();
-  }, [getAllBanner]);
+    getAllCourse();
+  }, [getAllCourse]);
 
   const handleDelete = async (record: any) => {
     try {
-      await Delete(`${Url_Keys.Banner.Delete}/${record?._id}`);
-      getAllBanner();
+      await Delete(`${Url_Keys.Course.Delete}/${record?._id}`);
+      getAllCourse();
     } catch (error) {}
   };
 
-  const AddBannerModalClick = () => dispatch(setBannerModal());
+  const AddCourseModalClick = () => dispatch(setCourseModal());
 
   const handleEdit = (item: any) => {
-    dispatch(setSingleEditingIdBanner(item?._id));
-    dispatch(setBannerModal());
-  };
-
-  const handleActive = async (active: boolean, record: any) => {
-    try {
-      const response = await Post(Url_Keys.Banner.Edit, { id: record?._id, action: active });
-      if (response?.status === 200) getAllBanner();
-    } catch (error) {}
+    dispatch(setSingleEditingIdCourse(item?._id));
+    AddCourseModalClick();
   };
 
   const columns = [
@@ -54,43 +48,42 @@ const Banner = () => {
       title: "ID",
       key: "index",
       render: (_: any, __: any, index: number) => (page - 1) * pageLimit + index + 1,
-      width: 80,
+      width: 50,
     },
     {
       title: "Image",
       dataIndex: "image",
       key: "image",
-      render: (url: string) => (url ? <Image src={url} width={60} height={60} alt="banner" fallback="/placeholder.png" /> : <span className="text-muted">No Image</span>),
+      render: (url: string) => (url ? <Image src={url} width={60} height={60} alt="Course" fallback="/placeholder.png" /> : <span className="text-muted">No Image</span>),
       width: 100,
     },
     {
-      title: "Title",
-      dataIndex: "title",
-      key: "title",
+      title: "Name",
+      dataIndex: "name",
+      key: "name",
       render: (text: string) => text || "-",
       width: 150,
     },
     {
-      title: "YouTube",
-      dataIndex: "youtubeLink",
-      key: "youtubeLink",
-      render: (link: string) =>
-        link ? (
-          <a href={link} target="_blank" rel="noopener noreferrer">
-            {link}
-          </a>
-        ) : (
-          "-"
-        ),
-      width: 200,
+      title: "Category",
+      dataIndex: "categoryType",
+      key: "categoryType",
+      render: (text: string) => text || "-",
+      width: 150,
+    },
+    {
+      title: "Feature",
+      dataIndex: "feature",
+      key: "feature",
+      render: (feature: boolean) => <Switch checked={feature} disabled className="switch-xsm" />,
+      width: 50,
     },
     {
       title: "Active",
       dataIndex: "action",
       key: "action",
-      // sorter: (a: any, b: any) => Number(a.action) - Number(b.action),
-      render: (active: boolean, record: any) => <Switch checked={active} className="switch-xsm" onChange={(checked) => handleActive(checked, record)} />,
-      width: 100,
+      render: (active: boolean) => <Switch checked={active} disabled className="switch-xsm" />,
+      width: 50,
     },
     {
       title: "Option",
@@ -98,23 +91,22 @@ const Banner = () => {
       width: 120,
       render: (_: any, record: any) => (
         <Flex gap="middle" justify="center">
-          <Button type="text" onClick={() => handleEdit(record)} title="Edit" className="m-1 p-1 btn btn-primary">
+          <Button className="m-1 p-1 btn btn-primary" onClick={() => handleEdit(record)}>
             <Edit className="action" />
           </Button>
           <Button
-            type="text"
-            danger
             className="m-1 p-1 btn btn-danger"
             onClick={() => {
               Modal.confirm({
                 title: "Are you sure?",
-                content: `Do you really want to delete "${record.title}"?`,
+                content: `Do you really want to delete "${record.name}"?`,
                 okText: "Yes, Delete",
                 cancelText: "Cancel",
-                onOk: () => handleDelete(record),
+                onOk: async () => {
+                  await handleDelete(record);
+                },
               });
             }}
-            title="Delete"
           >
             <Trash className="action" />
           </Button>
@@ -125,27 +117,27 @@ const Banner = () => {
 
   return (
     <>
-      <Breadcrumbs mainTitle="Banners" parent="Pages" />
+      <Breadcrumbs mainTitle="Course" parent="Pages" />
       <Container fluid>
         <Col md="12" className="custom-table">
           <Card>
-            <CommonCardHeader Search={(e) => setSearch(e)} searchClass="col-md-10 col-sm-7" btnTitle="Add Banners" btnClick={AddBannerModalClick} />
+            <CommonCardHeader Search={(e) => setSearch(e)} searchClass="col-md-10 col-sm-7" btnTitle="Add Course" btnClick={AddCourseModalClick} />
             <CardBody>
-              {isLoadingBanner ? (
+              {isLoadingCourse ? (
                 <div className="text-center py-5">
                   <Spin size="large" />
                 </div>
               ) : (
                 <Table
                   className="custom-table"
-                  dataSource={Array.isArray(allBanner?.banner_data) ? allBanner.banner_data : []}
+                  dataSource={Array.isArray(allCourse?.course_data) ? allCourse.course_data : []}
                   columns={columns}
-                  rowKey={(record) => record._id || record.id || record.title}
+                  rowKey="_id"
                   scroll={{ x: "max-content" }}
                   pagination={{
                     current: page,
                     pageSize: pageLimit,
-                    total: allBanner?.totalData || 0,
+                    total: allCourse?.totalData || 0,
                     showSizeChanger: true,
                     onChange: (newPage, newPageSize) => {
                       setPage(newPage);
@@ -158,9 +150,9 @@ const Banner = () => {
           </Card>
         </Col>
       </Container>
-      <BannerModel getApi={getAllBanner} />
+      <CourseModel getApi={getAllCourse} />
     </>
   );
 };
 
-export default Banner;
+export default Course;

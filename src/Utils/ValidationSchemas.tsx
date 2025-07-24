@@ -1,5 +1,20 @@
 import * as yup from "yup";
 
+const tagArraySchema = yup
+  .array()
+  .of(
+    yup.lazy((value) =>
+      typeof value === "string"
+        ? yup.string()
+        : yup.object().shape({
+            label: yup.string().required(),
+            customOption: yup.boolean().optional(),
+          })
+    )
+  )
+  .min(1, "At least one value is required")
+  .required("This field is required");
+
 export const LoginSchema = yup.object().shape({
   email: yup.string().email("Enter a valid email address").required("Email Id is required"),
   password: yup
@@ -45,4 +60,35 @@ export const BannerSchema = yup.object().shape({
   youtubeLink: yup.string().required("Youtube Link is required"),
   action: yup.boolean().notRequired(),
   image: yup.array().min(1, "At least one image is required").required("Image is required"),
+});
+
+export const CategorySchema = yup.object().shape({
+  name: yup.string().required("Category Name is required"),
+  image: yup.array().min(1, "At least one image is required").required("Image is required"),
+  action: yup.boolean().notRequired(),
+  feature: yup.boolean().notRequired(),
+});
+
+export const CourseSchema = yup.object().shape({
+  name: yup.string().required("Course Name is required"),
+  image: yup.array().min(1, "At least one image is required").required("Image is required"),
+  action: yup.boolean().notRequired(),
+  feature: yup.boolean().notRequired(),
+  categoryType: tagArraySchema,
+});
+
+export const StudentsSchema = yup.object().shape({
+  name: yup.string().required("Course Name is required"),
+  image: yup.array().min(1, "At least one image is required").required("Image is required"),
+  action: yup.boolean().notRequired(),
+  feature: yup.boolean().notRequired(),
+  categoryType: yup.string().required("Category is required"),
+});
+
+export const LectureSchema = yup.object().shape({
+  name: yup.string().required("Course Name is required"),
+  image: yup.array().min(1, "At least one image is required").required("Image is required"),
+  action: yup.boolean().notRequired(),
+  feature: yup.boolean().notRequired(),
+  categoryType: yup.string().required("Category is required"),
 });

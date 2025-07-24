@@ -142,51 +142,82 @@
     }
   }
 }
-.custom-table {
-  table {
-    thead {
-      tr {
-        th {
-          padding: 18px 18px 18px 18px;
-          text-align: center;
-          font-size: 16px;
-          font-weight: 600;
-        }
-      }
-    }
-    tbody {
-      tr {
-        td {
-          padding: 8px 18px 8px 18px;
-          text-align: center;
-          font-size: calc(13px + (15 - 13) * ((100vw - 320px) / (1920 - 320)));
-          border-bottom: 1px dashed #dedbdb;
-          .action {
-            width: 20px;
-            stroke: $white;
-          }
-        }
-      }
-      tr:last-child {
-        td {
-          border-bottom: none;
-        }
-      }
-    }
-    tfoot {
-      tr {
-        td {
-          border-top: 1px dashed #dedbdb;
-          border-bottom: 0;
-          text-align: center;
-          font-size: 16px;
-          font-weight: 600;
-        }
-      }
-    }
-  }
-}
-
+// .custom-table {
+//   table {
+//     thead {
+//       tr {
+//         th {
+//           padding: 18px 18px 18px 18px;
+//           text-align: center;
+//           font-size: 16px;
+//           font-weight: 600;
+//         }
+//       }
+//     }
+//     tbody {
+//       tr {
+//         td {
+//           padding: 8px 18px 8px 18px;
+//           text-align: center;
+//           font-size: calc(13px + (15 - 13) * ((100vw - 320px) / (1920 - 320)));
+//           border-bottom: 1px dashed #dedbdb;
+//           .action {
+//             width: 20px;
+//             stroke: $white;
+//           }
+//         }
+//       }
+//       tr:last-child {
+//         td {
+//           border-bottom: none;
+//         }
+//       }
+//     }
+//     tfoot {
+//       tr {
+//         td {
+//           border-top: 1px dashed #dedbdb;
+//           border-bottom: 0;
+//           text-align: center;
+//           font-size: 16px;
+//           font-weight: 600;
+//         }
+//       }
+//     }
+//   }
+//   .ant-table-thead > tr > th {
+//     // background: var(--theme-default);
+//     // color: #ffffff;
+//     background: rgba(204, 162, 112, 0.1);
+//     color: $dark-color;
+//     font-weight: 600;
+//     font-size: 16px;
+//     padding: 18px 18px 18px 18px;
+//     text-align: center;
+//   }
+//   .ant-table-tbody {
+//     tr {
+//       td {
+//         padding: 10px 18px;
+//         text-align: center;
+//         font-size: calc(13px + (15 - 13) * ((100vw - 320px) / (1920 - 320)));
+//         border-bottom: 1px dashed #dedbdb;
+//         .action {
+//           width: 20px;
+//           stroke: $white;
+//         }
+//         // .ant-switch {
+//         //   background-color: rgba($primary-color, 0.06) !important;
+//         //   border-color: rgba($primary-color, 0.06) !important;
+//         // }
+//         .ant-switch-checked {
+//           background-color: var(--theme-default) !important;
+//           border-color: var(--theme-default) !important;
+//         }
+//       }
+//     }
+//   }
+// }
 /**=====================
     3.41 User-profile CSS Ends
 ==========================**/
