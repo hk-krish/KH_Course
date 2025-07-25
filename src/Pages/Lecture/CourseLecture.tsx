@@ -1,47 +1,53 @@
 import "@ant-design/v5-patch-for-react-19";
 import { Button, Flex, Image, Modal, Spin, Switch, Table } from "antd";
-import { Edit, Trash } from "iconsax-react";
+import { DocumentText1, Edit, Trash } from "iconsax-react";
 import { useCallback, useEffect, useState } from "react";
 import { Card, CardBody, Col, Container } from "reactstrap";
 import Delete from "../../Api/Delete";
-import { Url_Keys } from "../../Constant";
+import { RouteList, Url_Keys } from "../../Constant";
 import Breadcrumbs from "../../CoreComponents/Breadcrumbs";
 import CommonCardHeader from "../../CoreComponents/CommonCardHeader";
 import { useAppDispatch, useAppSelector } from "../../ReduxToolkit/Hooks";
-import { fetchCourseApiData, setCourseModal, setSingleEditingIdCourse } from "../../ReduxToolkit/Slice/CourseSlice";
-import CourseModel from "./CourseModel";
+import { fetchLectureApiData, setLectureModal, setSingleEditingIdLecture } from "../../ReduxToolkit/Slice/LectureSlice";
+import LectureModel from "./LectureModel";
+import { useNavigate } from "react-router-dom";
 
-const Course = () => {
+const CourseLecture = () => {
   const [isSearch, setSearch] = useState("");
   const [page, setPage] = useState(1);
   const [pageLimit, setPageLimit] = useState(10);
 
   const dispatch = useAppDispatch();
-  const { allCourse, isLoadingCourse } = useAppSelector((state) => state.course);
+  const navigate = useNavigate();
+  const { allLecture, isLoadingLecture, singleCourseId } = useAppSelector((state) => state.lecture);
 
-  const getAllCourse = useCallback(async () => {
+  const getAllLecture = useCallback(async () => {
     try {
-      await dispatch(fetchCourseApiData({ page, limit: pageLimit, search: isSearch }));
+      await dispatch(fetchLectureApiData({ page, limit: pageLimit, search: isSearch, courseFilter: singleCourseId }));
     } catch (error) {}
-  }, [dispatch, isSearch, page, pageLimit]);
+  }, [dispatch, isSearch, page, pageLimit, singleCourseId]);
 
   useEffect(() => {
-    getAllCourse();
-  }, [getAllCourse]);
+    getAllLecture();
+  }, [getAllLecture]);
 
   const handleDelete = async (record: any) => {
     try {
-      await Delete(`${Url_Keys.Course.Delete}/${record?._id}`);
-      getAllCourse();
+      await Delete(`${Url_Keys.Lecture.Delete}/${record?._id}`);
+      getAllLecture();
     } catch (error) {}
   };
 
-  const AddCourseModalClick = () => dispatch(setCourseModal());
+  const AddLectureModalClick = () => dispatch(setLectureModal());
 
   const handleEdit = (item: any) => {
-    dispatch(setSingleEditingIdCourse(item?._id));
-    AddCourseModalClick();
+    dispatch(setSingleEditingIdLecture(item?._id));
+    AddLectureModalClick();
   };
+
+  useEffect(() => {
+    if (singleCourseId === "") navigate(RouteList.Lecture.Lecture);
+  }, [navigate, singleCourseId]);
 
   const columns = [
     {
@@ -51,46 +57,46 @@ const Course = () => {
       width: 50,
     },
     {
-      title: "Image",
-      dataIndex: "image",
-      key: "image",
-      render: (url: string) => (url ? <Image src={url} width={60} height={60} alt="Course" fallback="/placeholder.png" /> : <span className="text-muted">No Image</span>),
+      title: "Thumbnail",
+      dataIndex: "thumbnail",
+      key: "thumbnail",
+      render: (url: string) => (url ? <Image src={url} width={60} height={60} alt="Lecture" fallback="/placeholder.png" /> : <span className="text-muted">No Image</span>),
       width: 100,
     },
     {
-      title: "Name",
-      dataIndex: "name",
-      key: "name",
+      title: "PDF",
+      dataIndex: "PDF",
+      key: "PDF",
+      render: (url: string) =>
+        url ? (
+          <Button className="m-1 p-1 btn btn-primary">
+            <DocumentText1 className="action" />
+          </Button>
+        ) : (
+          <span className="text-muted">No Image</span>
+        ),
+      width: 100,
+    },
+    {
+      title: "Title",
+      dataIndex: "title",
+      key: "title",
       render: (text: string) => text || "-",
       width: 150,
     },
-    // {
-    //   title: "Category",
-    //   dataIndex: "categoryIds",
-    //   key: "categoryIds",
-    //   render: (text: string) => text || "-",
-    //   width: 150,
-    // },
-    //  {
-    //   title: "user",
-    //   dataIndex: "userIds",
-    //   key: "userIds",
-    //   render: (text: string) => text || "-",
-    //   width: 150,
-    // },
     {
-      title: "Feature",
-      dataIndex: "feature",
-      key: "feature",
-      render: (feature: boolean) => <Switch checked={feature} disabled className="switch-xsm" />,
-      width: 50,
+      title: "Youtube Link",
+      dataIndex: "youtubeLink",
+      key: "youtubeLink",
+      render: (text: string) => text || "-",
+      width: 150,
     },
     {
-      title: "Action",
-      dataIndex: "action",
-      key: "action",
-      render: (active: boolean) => <Switch checked={active} disabled className="switch-xsm" />,
-      width: 50,
+      title: "Priority",
+      dataIndex: "priority",
+      key: "priority",
+      render: (text: number) => text || "-",
+      width: 150,
     },
     {
       title: "Option",
@@ -124,27 +130,27 @@ const Course = () => {
 
   return (
     <>
-      <Breadcrumbs mainTitle="Course" parent="Pages" />
+      <Breadcrumbs mainTitle="Lecture" parent="Pages" />
       <Container fluid>
         <Col md="12" className="custom-table">
           <Card>
-            <CommonCardHeader Search={(e) => setSearch(e)} searchClass="col-md-10 col-sm-7" btnTitle="Add Course" btnClick={AddCourseModalClick} />
+            <CommonCardHeader Search={(e) => setSearch(e)} searchClass="col-md-10 col-sm-7" btnTitle="Add Lecture" btnClick={AddLectureModalClick} />
             <CardBody>
-              {isLoadingCourse ? (
+              {isLoadingLecture ? (
                 <div className="text-center py-5">
                   <Spin size="large" />
                 </div>
               ) : (
                 <Table
                   className="custom-table"
-                  dataSource={Array.isArray(allCourse?.course_data) ? allCourse.course_data : []}
+                  dataSource={Array.isArray(allLecture?.lecture_data) ? allLecture.lecture_data : []}
                   columns={columns}
                   rowKey="_id"
                   scroll={{ x: "max-content" }}
                   pagination={{
                     current: page,
                     pageSize: pageLimit,
-                    total: allCourse?.totalData || 0,
+                    total: allLecture?.totalData || 0,
                     showSizeChanger: true,
                     onChange: (newPage, newPageSize) => {
                       setPage(newPage);
@@ -157,9 +163,9 @@ const Course = () => {
           </Card>
         </Col>
       </Container>
-      <CourseModel getApi={getAllCourse} />
+      <LectureModel getApi={getAllLecture} />
     </>
   );
 };
 
-export default Course;
+export default CourseLecture;

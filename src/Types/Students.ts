@@ -1,14 +1,15 @@
 export interface StudentsType {
   _id: string;
-  name: string;
-  image: string;
-  feature: boolean;
-  action: boolean;
-  locked: boolean;
-  categoryType:string;
+  firstName: string;
+  lastName: string;
+  email: string;
+  phoneNumber: string;
+  password: string;
   isDeleted: boolean;
+  isBlocked: boolean;
   createdAt: string;
   updatedAt: string;
+  image: string;
 }
 
 export interface StudentsState {
@@ -18,7 +19,7 @@ export interface StudentsState {
 }
 
 export interface StudentsApiResponse {
-  students_data: StudentsType[];
+  user_data: StudentsType[];
   totalData: number;
   state: StudentsState;
 }
@@ -32,10 +33,10 @@ export interface StudentsSliceType {
 }
 
 export interface StudentsFormData {
-  name: string;
+  firstName: string;
+  lastName: string;
+  email: string;
+  phoneNumber: string;
+  password: string;
   image: string[];
-  action: boolean;
-  feature: boolean;
-  locked: boolean;
-  categoryType:string
 }

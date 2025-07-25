@@ -1,11 +1,13 @@
+import { SelectOption } from "./CoreComponents";
+
 export interface LectureType {
   _id: string;
-  name: string;
-  image: string;
-  feature: boolean;
-  action: boolean;
-  locked: boolean;
-  categoryType:string;
+  title: string;
+  youtubeLink: string;
+  priority: number;
+  thumbnail: string;
+  PDF: string;
+  userIds: string[];
   isDeleted: boolean;
   createdAt: string;
   updatedAt: string;
@@ -29,13 +31,12 @@ export interface LectureSliceType {
   isLoadingLecture: boolean;
   singleEditingIdLecture: string;
   singleLectureData: LectureType;
+  singleCourseId: string;
 }
 
 export interface LectureFormData {
-  name: string;
-  image: string[];
-  action: boolean;
-  feature: boolean;
-  locked: boolean;
-  categoryType:string
+  title: string;
+  youtubeLink: string;
+  priority: number;
+  userIds: SelectOption[];
 }

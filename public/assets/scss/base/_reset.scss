@@ -516,6 +516,10 @@ $btn-color in (primary, $primary-color),
     border-color: rgba($primary-color, 0.1) !important;
   }
 }
+.btn-success{
+   background-color: $success-color !important;
+  border-color: $success-color !important;
+}
 .btn-primary {
   background-color: var(--theme-default) !important;
   border-color: var(--theme-default) !important;

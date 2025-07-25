@@ -1,6 +1,6 @@
 import { PlusOutlined } from "@ant-design/icons";
 import type { GetProp, UploadProps } from "antd";
-import { Image, Upload } from "antd";
+import { Image, message, Upload } from "antd";
 import React, { FC, useState } from "react";
 import { Post } from "../Api";
 import { Url_Keys } from "../Constant";
@@ -23,14 +23,15 @@ interface ImageUploadProps {
   setValue?: any;
   name: string;
   trigger: any;
+  accept?: string;
 }
 
-const ImageUpload: FC<ImageUploadProps> = ({ fileList, setFileList, multiple, setValue, name, trigger }) => {
+const ImageUpload: FC<ImageUploadProps> = ({ fileList, setFileList, multiple, setValue, name, trigger, accept }) => {
   const [previewOpen, setPreviewOpen] = useState(false);
   const [previewImage, setPreviewImage] = useState("");
-  
+
   const handlePreview = async (file: any) => {
-      if (!file.url && !file.preview) {
+    if (!file.url && !file.preview) {
       file.preview = await getBase64(file.originFileObj as FileType);
     }
     setPreviewImage(file.url || (file.preview as string));
@@ -38,6 +39,14 @@ const ImageUpload: FC<ImageUploadProps> = ({ fileList, setFileList, multiple, se
   };
 
   const customUpload: UploadProps["beforeUpload"] = async (file) => {
+    const isPdf = file.type === "application/pdf";
+
+    // Only allow PDF if the field is for PDF
+    if (name === "pdf" && !isPdf) {
+      message.error("Only PDF files are allowed.");
+      return Upload.LIST_IGNORE;
+    }
+
     const formData = new FormData();
     formData.append("image", file);
 
@@ -50,7 +59,8 @@ const ImageUpload: FC<ImageUploadProps> = ({ fileList, setFileList, multiple, se
       setValue?.(name, updatedList);
       trigger?.(name);
     } catch (error) {}
-    return false; 
+
+    return false;
   };
 
   const removeFile = async (imageSrc: string) => {
@@ -73,10 +83,11 @@ const ImageUpload: FC<ImageUploadProps> = ({ fileList, setFileList, multiple, se
   return (
     <>
       <Upload
+        accept={accept}
         listType="picture-card"
         fileList={fileList.map((url, index) => ({
           uid: String(index),
-          name: `image-${index}.jpg`,
+          name: `file-${index}${name === "pdf" ? ".pdf" : ".jpg"}`,
           status: "done",
           url,
         }))}
@@ -89,17 +100,17 @@ const ImageUpload: FC<ImageUploadProps> = ({ fileList, setFileList, multiple, se
       >
         {multiple || fileList.length < 1 ? uploadButton : null}
       </Upload>
-
-      {/* Preview Modal */}
-      <Image
-        wrapperStyle={{ display: "none" }}
-        preview={{
+      {previewImage && (
+        <Image
+          wrapperStyle={{ display: "none" }}
+          preview={{
             visible: previewOpen,
             onVisibleChange: (visible) => setPreviewOpen(visible),
             afterOpenChange: (visible) => !visible && setPreviewImage(""),
-        }}
-        src={previewImage}
-      />
+          }}
+          src={previewImage}
+        />
+      )}
     </>
   );
 };

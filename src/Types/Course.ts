@@ -7,7 +7,9 @@ export interface CourseType {
   feature: boolean;
   action: boolean;
   locked: boolean;
-  categoryType: string[];
+  categoryIds: string[];
+  userIds: string[];
+  priority: number;
   isDeleted: boolean;
   createdAt: string;
   updatedAt: string;
@@ -39,5 +41,7 @@ export interface CourseFormData {
   action: boolean;
   feature: boolean;
   locked: boolean;
-  categoryType: SelectOption[];
+  categoryIds: SelectOption[];
+  userIds: SelectOption[];
+  priority: number;
 }

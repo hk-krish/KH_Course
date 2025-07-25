@@ -4,6 +4,7 @@ export interface BannerType {
   youtubeLink: string;
   title: string;
   action: boolean;
+  priority: number;
   createdAt: string;
   updatedAt: string;
   isDeleted: boolean;
@@ -34,5 +35,5 @@ export interface BannerFormData {
   youtubeLink: string;
   action: boolean;
   image: string[];
+  priority: number;
 }
-

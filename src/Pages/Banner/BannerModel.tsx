@@ -34,6 +34,7 @@ const BannerModel: FC<ModalPassPropsType> = ({ getApi }) => {
       setValue("title", singleBannerData?.title);
       setValue("action", singleBannerData?.action);
       setValue("youtubeLink", singleBannerData?.youtubeLink);
+      setValue("priority", singleBannerData?.priority);
       if (singleBannerData?.image) {
         setValue("image", [singleBannerData?.image]);
         setFileList([singleBannerData?.image]);
@@ -54,6 +55,7 @@ const BannerModel: FC<ModalPassPropsType> = ({ getApi }) => {
     if (data.title) banner.title = data.title;
     if (data.youtubeLink) banner.youtubeLink = data.youtubeLink;
     if (data.action) banner.action = data.action;
+    if (data.priority) banner.priority = data.priority;
     if (fileList[0]) banner.image = fileList[0];
     try {
       const response = singleEditingIdBanner ? await Post(Url_Keys.Banner.Edit, { id: singleBannerData._id, ...banner }) : await Post(Url_Keys.Banner.Add, banner);
@@ -96,6 +98,13 @@ const BannerModel: FC<ModalPassPropsType> = ({ getApi }) => {
               </Label>
               <input type="text" placeholder="Enter Youtube Link" {...register("youtubeLink")} />
               {errors.youtubeLink && <p className="text-danger mt-1">{errors.youtubeLink.message}</p>}
+            </Col>
+            <Col md="12" className="input-box">
+              <Label htmlFor="priority">
+                Priority <span className="required">*</span>
+              </Label>
+              <input type="number" id="priority" placeholder="Priority" {...register("priority")} />
+              {errors.priority && <span className="text-danger">{errors.priority.message}</span>}
             </Col>
 
             <Col md="12" className="input-box">

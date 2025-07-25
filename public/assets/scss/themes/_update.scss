@@ -3250,6 +3250,30 @@ nextjs-portal {
 .ant-btn-variant-solid {
   background: var(--theme-default);
 }
-.ant-table-expanded-row-fixed{
+.ant-table-expanded-row-fixed {
   width: 100% !important;
+}
+.ant-spin .ant-spin-dot-item {
+  background: var(--theme-default) !important;
+}
+
+.lecture-box {
+  .card {
+    background-color: rgba(249, 249, 249, 1);
+    border: none;
+    border: 1px dashed var(--theme-default) !important;
+    &:hover {
+      box-shadow: none;
+    }
+    .card-body{
+      background-color: transparent !important;
+    }
+    .product-box {
+      .product-img {
+        .ribbon-index {
+          z-index: 0;
+        }
+      }
+    }
+  }
 }

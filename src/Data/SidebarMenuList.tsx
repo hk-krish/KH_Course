@@ -7,5 +7,5 @@ export const menuList: MenuItem[] | undefined = [
   { id: 3, icon: "home", active: false, title: "Category", type: "link", url: RouteList.Category },
   { id: 4, icon: "home", active: false, title: "Course", type: "link", url: RouteList.Course },
   { id: 5, icon: "home", active: false, title: "Students", type: "link", url: RouteList.Students },
-  { id: 6, icon: "home", active: false, title: "Lecture", type: "link", url: RouteList.Lecture },
+  { id: 6, icon: "home", active: false, title: "Lecture", type: "link", url: RouteList.Lecture.Lecture },
 ];

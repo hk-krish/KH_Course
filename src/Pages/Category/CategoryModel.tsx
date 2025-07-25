@@ -34,6 +34,7 @@ const CategoryModel: FC<ModalPassPropsType> = ({ getApi }) => {
       setValue("name", singleCategoryData?.name);
       setValue("action", singleCategoryData?.action);
       setValue("feature", singleCategoryData?.feature);
+      setValue("priority", singleCategoryData?.priority);
       if (singleCategoryData?.image) {
         setValue("image", [singleCategoryData?.image]);
         setFileList([singleCategoryData?.image]);
@@ -54,6 +55,7 @@ const CategoryModel: FC<ModalPassPropsType> = ({ getApi }) => {
     if (data.name) Category.name = data.name;
     if (data.feature) Category.feature = data.feature;
     if (data.action) Category.action = data.action;
+    if (data.priority) Category.priority = data.priority;
     if (fileList[0]) Category.image = fileList[0];
     try {
       const response = singleEditingIdCategory ? await Post(Url_Keys.Category.Edit, { id: singleCategoryData._id, ...Category }) : await Post(Url_Keys.Category.Add, Category);
@@ -85,9 +87,18 @@ const CategoryModel: FC<ModalPassPropsType> = ({ getApi }) => {
         <div className="input-items">
           <Form id="categoryForm" className="row gy-3" onSubmit={handleSubmit(onSubmit)}>
             <Col md="12" className="input-box">
-              <Label>Category Name</Label>
+              <Label>
+                Category Name <span className="required">*</span>
+              </Label>
               <input type="text" placeholder="Enter Category Name" {...register("name")} />
               {errors.name && <p className="text-danger mt-1">{errors.name.message}</p>}
+            </Col>
+            <Col md="12" className="input-box">
+              <Label htmlFor="priority">
+                Priority <span className="required">*</span>
+              </Label>
+              <input type="number" id="priority" placeholder="Priority" {...register("priority")} />
+              {errors.priority && <span className="text-danger">{errors.priority.message}</span>}
             </Col>
 
             <Col md="12" className="input-box">

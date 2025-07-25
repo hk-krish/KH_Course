@@ -1,5 +1,5 @@
 import { Button, Flex, Image, Modal, Popconfirm, Spin, Switch, Table } from "antd";
-import { Edit, Trash } from "iconsax-react";
+import { Forbidden, Edit, Trash } from "iconsax-react";
 import { useCallback, useEffect, useState } from "react";
 import { Card, CardBody, Col, Container } from "reactstrap";
 import Delete from "../../Api/Delete";
@@ -10,6 +10,7 @@ import { useAppDispatch, useAppSelector } from "../../ReduxToolkit/Hooks";
 import { fetchStudentsApiData, setStudentsModal, setSingleEditingIdStudents } from "../../ReduxToolkit/Slice/StudentsSlice";
 import StudentsModel from "./StudentsModel";
 import "@ant-design/v5-patch-for-react-19";
+import { Post } from "../../Api";
 
 const Students = () => {
   const [isSearch, setSearch] = useState("");
@@ -43,6 +44,13 @@ const Students = () => {
     AddStudentsModalClick();
   };
 
+  const handleActive = async (active: boolean, record: any) => {
+    try {
+      const response = await Post(Url_Keys.Students.Edit, { id: record?._id, isBlocked: active });
+      if (response?.status === 200) getAllStudents();
+    } catch (error) {}
+  };
+
   const columns = [
     {
       title: "ID",
@@ -54,36 +62,36 @@ const Students = () => {
       title: "Image",
       dataIndex: "image",
       key: "image",
-      render: (url: string) => (url ? <Image src={url} width={60} height={60} alt="Students" fallback="/placeholder.png" /> : <span className="text-muted">No Image</span>),
+      render: (url: string) => (url ? <Image src={url} width={60} height={60} alt="Category" fallback="/placeholder.png" /> : <span className="text-muted">-</span>),
       width: 100,
     },
     {
-      title: "Name",
-      dataIndex: "name",
-      key: "name",
+      title: "firstName",
+      dataIndex: "firstName",
+      key: "firstName",
       render: (text: string) => text || "-",
       width: 150,
     },
     {
-      title: "Category",
-      dataIndex: "categoryType",
-      key: "categoryType",
+      title: "lastName",
+      dataIndex: "lastName",
+      key: "lastName",
       render: (text: string) => text || "-",
       width: 150,
     },
     {
-      title: "Feature",
-      dataIndex: "feature",
-      key: "feature",
-      render: (feature: boolean) => <Switch checked={feature} disabled className="switch-xsm" />,
-      width: 50,
+      title: "email",
+      dataIndex: "email",
+      key: "email",
+      render: (text: string) => text || "-",
+      width: 150,
     },
     {
-      title: "Active",
-      dataIndex: "action",
-      key: "action",
-      render: (active: boolean) => <Switch checked={active} disabled className="switch-xsm" />,
-      width: 50,
+      title: "phoneNumber",
+      dataIndex: "phoneNumber",
+      key: "phoneNumber",
+      render: (text: string) => text || "-",
+      width: 150,
     },
     {
       title: "Option",
@@ -91,6 +99,22 @@ const Students = () => {
       width: 120,
       render: (_: any, record: any) => (
         <Flex gap="middle" justify="center">
+          <Button
+            className={`m-1 p-1 btn ${record?.isBlocked ? "btn-danger" : "btn-success"}`}
+            onClick={() => {
+              Modal.confirm({
+                title: "Are you sure?",
+                content: `Do you really want to ${record?.isBlocked ? "Un Block" : "Block"} "${record.firstName}"?`,
+                okText: "ok",
+                cancelText: "Cancel",
+                onOk: async () => {
+                  await handleActive(!record?.isBlocked, record);
+                },
+              });
+            }}
+          >
+            <Forbidden className="action" />
+          </Button>
           <Button className="m-1 p-1 btn btn-primary" onClick={() => handleEdit(record)}>
             <Edit className="action" />
           </Button>
@@ -130,7 +154,7 @@ const Students = () => {
               ) : (
                 <Table
                   className="custom-table"
-                  dataSource={Array.isArray(allStudents?.students_data) ? allStudents.students_data : []}
+                  dataSource={Array.isArray(allStudents?.user_data) ? allStudents.user_data : []}
                   columns={columns}
                   rowKey="_id"
                   scroll={{ x: "max-content" }}

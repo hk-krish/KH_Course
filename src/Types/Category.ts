@@ -4,6 +4,7 @@ export interface CategoryType {
   name: string;
   feature: boolean;
   action: boolean;
+  priority: number;
   isDeleted: boolean;
   createdAt: string;
   updatedAt: string;
@@ -34,4 +35,5 @@ export interface CategoryFormData {
   name: string;
   action: boolean;
   image: string[];
+  priority: number;
 }

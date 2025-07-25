@@ -17,6 +17,6 @@ export const getToken = () => {
   return JSON.parse(localStorage.getItem("hk-course-admin-token"));
 };
 
-export const generateOptions = (data?: { _id: string; name: string }[]) => data?.map((item) => ({ value: item._id, label: item.name })) || [];
+export const generateOptions = (data?: { _id: string; name?: string ;firstName?: string ;lastName?: string }[]) => data?.map((item) => ({ value: item._id, label:  item.name ? item.name : `${item.firstName} ${item.lastName}` })) || [];
 
 export const normalizeTags = (items: SelectOption[] = []) => items.map((item) => (typeof item === "string" ? item : item.value));

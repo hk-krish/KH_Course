@@ -15,5 +15,8 @@ export const RouteList = {
   Category: "/category",
   Course: "/course",
   Students: "/students",
-  Lecture: "/lecture",
+  Lecture:{
+    Lecture: "/lecture",
+    CourseLecture: "/course-lecture",
+  }
 };

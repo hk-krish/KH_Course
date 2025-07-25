@@ -84,7 +84,7 @@ const Category = () => {
       width: 50,
     },
     {
-      title: "Active",
+      title: "Action",
       dataIndex: "action",
       key: "action",
       render: (active: boolean, record: any) => <Switch checked={active} className="switch-xsm" onChange={(checked) => handleActive(checked, record, "active")} />,

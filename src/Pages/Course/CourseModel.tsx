@@ -2,19 +2,19 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { FC, useCallback, useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { Button, Col, Form, Label, Modal, ModalBody, ModalFooter, ModalHeader } from "reactstrap";
-import CustomCheckbox from "../../CoreComponents/CustomCheckbox";
-import ImageUpload from "../../CoreComponents/ImageUpload";
-import { useAppDispatch, useAppSelector } from "../../ReduxToolkit/Hooks";
-import { fetchSingleCourseApiData, setCourseModal, setSingleEditingIdCourse } from "../../ReduxToolkit/Slice/CourseSlice";
-import { CourseSchema } from "../../Utils/ValidationSchemas";
-import { CourseFormData } from "../../Types/Course";
 import { Post } from "../../Api";
 import { Url_Keys } from "../../Constant";
-import { ModalPassPropsType } from "../../Types/CoreComponents";
-import { fetchCategoryApiData } from "../../ReduxToolkit/Slice/CategorySlice";
-import { Select } from "antd";
+import CustomCheckbox from "../../CoreComponents/CustomCheckbox";
 import CustomTypeahead from "../../CoreComponents/CustomTypeahead";
+import ImageUpload from "../../CoreComponents/ImageUpload";
+import { useAppDispatch, useAppSelector } from "../../ReduxToolkit/Hooks";
+import { fetchCategoryApiData } from "../../ReduxToolkit/Slice/CategorySlice";
+import { fetchSingleCourseApiData, setCourseModal, setSingleEditingIdCourse } from "../../ReduxToolkit/Slice/CourseSlice";
+import { fetchStudentsApiData } from "../../ReduxToolkit/Slice/StudentsSlice";
+import { ModalPassPropsType } from "../../Types/CoreComponents";
+import { CourseFormData } from "../../Types/Course";
 import { generateOptions, normalizeTags } from "../../Utils";
+import { CourseSchema } from "../../Utils/ValidationSchemas";
 
 const CourseModel: FC<ModalPassPropsType> = ({ getApi }) => {
   const [fileList, setFileList] = useState<string[]>([]);
@@ -23,7 +23,7 @@ const CourseModel: FC<ModalPassPropsType> = ({ getApi }) => {
 
   const { isCourseModal, singleEditingIdCourse, singleCourseData } = useAppSelector((state) => state.course);
   const { allCategory } = useAppSelector((state) => state.category);
-  console.log("allCategory", allCategory);
+  const { allStudents } = useAppSelector((state) => state.students);
 
   const {
     register,
@@ -42,16 +42,18 @@ const CourseModel: FC<ModalPassPropsType> = ({ getApi }) => {
       setValue("name", singleCourseData?.name);
       setValue("action", singleCourseData?.action);
       setValue("feature", singleCourseData?.feature);
-      const selectedOptions = allCategory?.category_data?.filter((product) => singleCourseData.categoryType?.includes(product._id))?.map((product) => ({ label: product.name, value: product._id }));
-      setValue("categoryType", selectedOptions || []);
-      // setValue("categoryType", singleCourseData?.categoryType);
+      const categoryIdsOptions = allCategory?.category_data?.filter((product) => singleCourseData.categoryIds?.includes(product._id))?.map((product) => ({ label: product.name, value: product._id }));
+      setValue("categoryIds", categoryIdsOptions || []);
+      const userIdsOptions = allStudents?.user_data?.filter((user) => singleCourseData.userIds?.includes(user._id))?.map((user) => ({ label: `${user.firstName} ${user.lastName}`, value: user._id }));
+      setValue("userIds", userIdsOptions || []);
+      setValue("priority", singleCourseData?.priority);
       if (singleCourseData?.image) {
         setValue("image", [singleCourseData?.image]);
         setFileList([singleCourseData?.image]);
         trigger("image");
       }
     }
-  }, [allCategory?.category_data, setValue, singleCourseData, trigger]);
+  }, [allCategory?.category_data, allStudents?.user_data, setValue, singleCourseData, trigger]);
 
   const onCloseModal = () => {
     dispatch(setCourseModal());
@@ -61,12 +63,13 @@ const CourseModel: FC<ModalPassPropsType> = ({ getApi }) => {
   };
 
   const onSubmit = async (data: CourseFormData) => {
-
     const Course: any = {};
     if (data.name) Course.name = data.name;
     if (data.feature) Course.feature = data.feature;
     if (data.action) Course.action = data.action;
-    if (data.categoryType) Course.categoryType = normalizeTags(data.categoryType);
+    if (data.categoryIds) Course.categoryIds = normalizeTags(data.categoryIds);
+    if (data.userIds) Course.userIds = normalizeTags(data.userIds);
+    if (data.priority) Course.priority = data.priority;
     if (fileList[0]) Course.image = fileList[0];
     try {
       const response = singleEditingIdCourse ? await Post(Url_Keys.Course.Edit, { id: singleCourseData._id, ...Course }) : await Post(Url_Keys.Course.Add, Course);
@@ -98,6 +101,16 @@ const CourseModel: FC<ModalPassPropsType> = ({ getApi }) => {
     getAllCategory();
   }, [getAllCategory]);
 
+  const getAllStudents = useCallback(async () => {
+    try {
+      await dispatch(fetchStudentsApiData({}));
+    } catch (error) {}
+  }, [dispatch]);
+
+  useEffect(() => {
+    getAllStudents();
+  }, [getAllStudents]);
+
   return (
     <Modal size="md" centered isOpen={isCourseModal} toggle={onCloseModal}>
       <ModalHeader className="position-relative border-0">
@@ -108,17 +121,30 @@ const CourseModel: FC<ModalPassPropsType> = ({ getApi }) => {
         <div className="input-items">
           <Form id="CourseForm" className="row gy-3" onSubmit={handleSubmit(onSubmit)}>
             <Col md="12" className="input-box">
-              <Label>Course Name</Label>
+              <Label>
+                Course Name <span className="required">*</span>
+              </Label>
               <input type="text" placeholder="Enter Course Name" {...register("name")} />
               {errors.name && <p className="text-danger mt-1">{errors.name.message}</p>}
             </Col>
 
             <Col md="12">
               <div className="input-box">
-                <CustomTypeahead control={control} errors={errors.categoryType} title="Category" name="categoryType" options={generateOptions(allCategory?.category_data)} />
+                <CustomTypeahead required control={control} errors={errors.categoryIds} title="Category" name="categoryIds" options={generateOptions(allCategory?.category_data)} />
               </div>
             </Col>
-
+            <Col md="12">
+              <div className="input-box">
+                <CustomTypeahead required control={control} errors={errors.userIds} title="Students" name="userIds" options={generateOptions(allStudents?.user_data)} />
+              </div>
+            </Col>
+            <Col md="12" className="input-box">
+              <Label htmlFor="priority">
+                Priority <span className="required">*</span>
+              </Label>
+              <input type="number" id="priority" placeholder="Priority" {...register("priority")} />
+              {errors.priority && <span className="text-danger">{errors.priority.message}</span>}
+            </Col>
             <Col md="12" className="input-box">
               <Label>
                 Upload Images <span className="required">*</span>

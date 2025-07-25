@@ -15,6 +15,7 @@ export interface FetchApiParams {
   typeFilter?: string;
   category?: string;
   id?: string;
+  courseFilter?: string;
 }
 
 export interface CustomCheckboxType {
@@ -84,6 +85,7 @@ export interface CustomTypeaheadType {
   options?: any;
   disabled?: boolean;
   allowNew?: boolean;
+  required?: boolean;
 }
 
 export interface SelectOption {
