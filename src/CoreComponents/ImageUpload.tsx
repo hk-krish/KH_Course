@@ -5,6 +5,7 @@ import React, { FC, useState } from "react";
 import { Post } from "../Api";
 import { Url_Keys } from "../Constant";
 import Delete from "../Api/Delete";
+import { UploadListType } from "antd/es/upload/interface";
 
 type FileType = Parameters<GetProp<UploadProps, "beforeUpload">>[0];
 
@@ -24,9 +25,10 @@ interface ImageUploadProps {
   name: string;
   trigger: any;
   accept?: string;
+  isListType?: UploadListType;
 }
 
-const ImageUpload: FC<ImageUploadProps> = ({ fileList, setFileList, multiple, setValue, name, trigger, accept }) => {
+const ImageUpload: FC<ImageUploadProps> = ({ fileList, setFileList, multiple, setValue, name, trigger, accept, isListType }) => {
   const [previewOpen, setPreviewOpen] = useState(false);
   const [previewImage, setPreviewImage] = useState("");
 
@@ -84,7 +86,7 @@ const ImageUpload: FC<ImageUploadProps> = ({ fileList, setFileList, multiple, se
     <>
       <Upload
         accept={accept}
-        listType="picture-card"
+        listType={isListType ?? "picture-card"}
         fileList={fileList.map((url, index) => ({
           uid: String(index),
           name: `file-${index}${name === "pdf" ? ".pdf" : ".jpg"}`,

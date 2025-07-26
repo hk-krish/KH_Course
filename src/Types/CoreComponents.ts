@@ -1,3 +1,5 @@
+import { FormEvent } from "react";
+
 export interface ApiResponse<T> {
   status: number;
   message?: string;
@@ -16,6 +18,7 @@ export interface FetchApiParams {
   category?: string;
   id?: string;
   courseFilter?: string;
+  blockFilter?: string;
 }
 
 export interface CustomCheckboxType {
@@ -75,6 +78,8 @@ export interface CardHeaderProp {
 
 export interface ModalPassPropsType {
   getApi: () => void;
+  isEdit: boolean;
+  setEdit: (isEdit: boolean) => void;
 }
 
 export interface CustomTypeaheadType {
@@ -86,6 +91,7 @@ export interface CustomTypeaheadType {
   disabled?: boolean;
   allowNew?: boolean;
   required?: boolean;
+  onChangeOverride?: (selected: any[], onChange: (val: any) => void) => void;
 }
 
 export interface SelectOption {
@@ -93,4 +99,13 @@ export interface SelectOption {
   id?: string;
   customOption?: boolean;
   value?: string;
+}
+
+export interface InformationProp {
+  headerTitle?: string;
+  editorContent: string;
+  setEditorContent: (content: string) => void;
+  handleSubmit: (e: FormEvent<HTMLFormElement>) => void;
+  isEditing: boolean;
+  setIsEditing: (val: boolean) => void;
 }

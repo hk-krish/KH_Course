@@ -13,6 +13,7 @@ import { fetchCategoryApiData, setCategoryModal, setSingleEditingIdCategory } fr
 import CategoryModel from "./CategoryModel";
 
 const Category = () => {
+  const [isEdit, setEdit] = useState(false);
   const [isSearch, setSearch] = useState("");
   const [page, setPage] = useState(1);
   const [pageLimit, setPageLimit] = useState(10);
@@ -42,6 +43,7 @@ const Category = () => {
   const handleEdit = (item: any) => {
     dispatch(setSingleEditingIdCategory(item?._id));
     AddCategoryModalClick();
+    setEdit(true);
   };
 
   const handleActive = async (active: boolean, record: any, type: string) => {
@@ -155,7 +157,7 @@ const Category = () => {
           </Card>
         </Col>
       </Container>
-      <CategoryModel getApi={getAllCategory} />
+      <CategoryModel getApi={getAllCategory} isEdit={isEdit} setEdit={setEdit} />
     </>
   );
 };

@@ -24,6 +24,7 @@
     "react-dom": "^19.1.0",
     "react-feather": "^2.0.10",
     "react-hook-form": "^7.60.0",
+    "react-quill-new": "^3.4.6",
     "react-redux": "^9.2.0",
     "react-router-dom": "^7.7.0",
     "react-scripts": "5.0.1",

@@ -6,6 +6,10 @@ import CategorySlice from "./Slice/CategorySlice";
 import CourseSlice from "./Slice/CourseSlice";
 import StudentsSlice from "./Slice/StudentsSlice";
 import LectureSlice from "./Slice/LectureSlice";
+import DocumentSlice from "./Slice/DocumentSlice";
+import FaqSlice from "./Slice/FaqSlice";
+import BlogSlice from "./Slice/BlogSlice";
+import LatestNewsSlice from "./Slice/LatestNewsSlice";
 
 export const store = configureStore({
   reducer: {
@@ -16,6 +20,10 @@ export const store = configureStore({
     course: CourseSlice,
     students: StudentsSlice,
     lecture: LectureSlice,
+    document: DocumentSlice,
+    faq: FaqSlice,
+    blog: BlogSlice,
+    latestNews: LatestNewsSlice,
   },
 });
 

@@ -9,22 +9,25 @@ import CommonCardHeader from "../../CoreComponents/CommonCardHeader";
 import { useAppDispatch, useAppSelector } from "../../ReduxToolkit/Hooks";
 import { fetchStudentsApiData, setStudentsModal, setSingleEditingIdStudents } from "../../ReduxToolkit/Slice/StudentsSlice";
 import StudentsModel from "./StudentsModel";
+import { StudentsBlockTypeData } from "../../Data/CoreComponents";
 import "@ant-design/v5-patch-for-react-19";
 import { Post } from "../../Api";
 
 const Students = () => {
+  const [isEdit, setEdit] = useState(false);
   const [isSearch, setSearch] = useState("");
   const [page, setPage] = useState(1);
   const [pageLimit, setPageLimit] = useState(10);
+  const [isTypeFilter, setTypeFilter] = useState("");
 
   const dispatch = useAppDispatch();
   const { allStudents, isLoadingStudents } = useAppSelector((state) => state.students);
 
   const getAllStudents = useCallback(async () => {
     try {
-      await dispatch(fetchStudentsApiData({ page, limit: pageLimit, search: isSearch }));
+      await dispatch(fetchStudentsApiData({ page, limit: pageLimit, search: isSearch ,blockFilter:isTypeFilter }));
     } catch (error) {}
-  }, [dispatch, isSearch, page, pageLimit]);
+  }, [dispatch, page, pageLimit, isSearch, isTypeFilter]);
 
   useEffect(() => {
     getAllStudents();
@@ -42,6 +45,7 @@ const Students = () => {
   const handleEdit = (item: any) => {
     dispatch(setSingleEditingIdStudents(item?._id));
     AddStudentsModalClick();
+    setEdit(true);
   };
 
   const handleActive = async (active: boolean, record: any) => {
@@ -104,7 +108,7 @@ const Students = () => {
             onClick={() => {
               Modal.confirm({
                 title: "Are you sure?",
-                content: `Do you really want to ${record?.isBlocked ? "Un Block" : "Block"} "${record.firstName}"?`,
+                content: `Do you really want to ${record?.isBlocked ? "Unblock" : "Block"} "${record.firstName}"?`,
                 okText: "ok",
                 cancelText: "Cancel",
                 onOk: async () => {
@@ -145,7 +149,7 @@ const Students = () => {
       <Container fluid>
         <Col md="12" className="custom-table">
           <Card>
-            <CommonCardHeader Search={(e) => setSearch(e)} searchClass="col-md-10 col-sm-7" btnTitle="Add Students" btnClick={AddStudentsModalClick} />
+            <CommonCardHeader Search={(e) => setSearch(e)} searchClass="col-md-8" typeFilter={setTypeFilter} typeFilterData={StudentsBlockTypeData} btnTitle="Add Banners" btnClick={AddStudentsModalClick} />
             <CardBody>
               {isLoadingStudents ? (
                 <div className="text-center py-5">
@@ -174,7 +178,7 @@ const Students = () => {
           </Card>
         </Col>
       </Container>
-      <StudentsModel getApi={getAllStudents} />
+      <StudentsModel getApi={getAllStudents} isEdit={isEdit} setEdit={setEdit} />
     </>
   );
 };

@@ -12,6 +12,7 @@ import { fetchCourseApiData, setCourseModal, setSingleEditingIdCourse } from "..
 import CourseModel from "./CourseModel";
 
 const Course = () => {
+  const [isEdit, setEdit] = useState(false);
   const [isSearch, setSearch] = useState("");
   const [page, setPage] = useState(1);
   const [pageLimit, setPageLimit] = useState(10);
@@ -41,6 +42,7 @@ const Course = () => {
   const handleEdit = (item: any) => {
     dispatch(setSingleEditingIdCourse(item?._id));
     AddCourseModalClick();
+    setEdit(true);
   };
 
   const columns = [
@@ -157,7 +159,7 @@ const Course = () => {
           </Card>
         </Col>
       </Container>
-      <CourseModel getApi={getAllCourse} />
+      <CourseModel getApi={getAllCourse} isEdit={isEdit} setEdit={setEdit} />
     </>
   );
 };

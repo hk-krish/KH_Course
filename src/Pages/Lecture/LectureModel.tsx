@@ -16,7 +16,7 @@ import CustomTypeahead from "../../CoreComponents/CustomTypeahead";
 import { fetchStudentsApiData } from "../../ReduxToolkit/Slice/StudentsSlice";
 import { generateOptions, normalizeTags } from "../../Utils";
 
-const LectureModel: FC<ModalPassPropsType> = ({ getApi }) => {
+const LectureModel: FC<ModalPassPropsType> = ({ getApi, isEdit, setEdit }) => {
   const [imageList, setImageList] = useState<string[]>([]);
   const [fileList, setFileList] = useState<string[]>([]);
 
@@ -24,6 +24,8 @@ const LectureModel: FC<ModalPassPropsType> = ({ getApi }) => {
 
   const { isLectureModal, singleEditingIdLecture, singleLectureData, singleCourseId } = useAppSelector((state) => state.lecture);
   const { allStudents } = useAppSelector((state) => state.students);
+  console.log("singleEditingIdLecture", singleEditingIdLecture);
+  console.log("singleLectureData", singleLectureData);
 
   const {
     register,
@@ -38,7 +40,7 @@ const LectureModel: FC<ModalPassPropsType> = ({ getApi }) => {
   });
 
   useEffect(() => {
-    if (singleLectureData) {
+    if (singleLectureData && isEdit) {
       setValue("title", singleLectureData?.title);
       setValue("youtubeLink", singleLectureData?.youtubeLink);
       setValue("priority", singleLectureData?.priority);
@@ -55,7 +57,7 @@ const LectureModel: FC<ModalPassPropsType> = ({ getApi }) => {
         trigger("pdf");
       }
     }
-  }, [allStudents?.user_data, setValue, singleLectureData, trigger]);
+  }, [allStudents?.user_data, isEdit, setValue, singleLectureData, trigger]);
 
   const onCloseModal = () => {
     dispatch(setLectureModal());
@@ -63,6 +65,8 @@ const LectureModel: FC<ModalPassPropsType> = ({ getApi }) => {
     reset();
     setFileList([]);
     setImageList([]);
+    setEdit(false);
+    setValue("userIds", []);
   };
 
   const onSubmit = async (data: LectureFormData) => {
@@ -75,7 +79,7 @@ const LectureModel: FC<ModalPassPropsType> = ({ getApi }) => {
     if (imageList[0]) Lecture.thumbnail = imageList[0];
     if (fileList[0]) Lecture.PDF = fileList[0];
     try {
-      const response = singleEditingIdLecture ? await Post(Url_Keys.Lecture.Edit, { id: singleLectureData._id, ...Lecture }) : await Post(Url_Keys.Lecture.Add, Lecture);
+      const response = isEdit ? await Post(Url_Keys.Lecture.Edit, { id: singleLectureData._id, ...Lecture }) : await Post(Url_Keys.Lecture.Add, Lecture);
       if (response?.status === 200) {
         onCloseModal();
         // trigger("image");
@@ -104,10 +108,12 @@ const LectureModel: FC<ModalPassPropsType> = ({ getApi }) => {
     getAllStudents();
   }, [getAllStudents]);
 
+  const extendedOptions = [{ value: "all", label: "Select All" }, ...generateOptions(allStudents?.user_data)];
+
   return (
     <Modal size="md" centered isOpen={isLectureModal} toggle={onCloseModal}>
       <ModalHeader className="position-relative border-0">
-        Lecture
+        {isEdit ? "Edit" : "Add"} Lecture
         <Button color="transparent" onClick={onCloseModal} className="btn-close" />
       </ModalHeader>
       <ModalBody className="pt-0">
@@ -129,7 +135,21 @@ const LectureModel: FC<ModalPassPropsType> = ({ getApi }) => {
             </Col>
             <Col md="12">
               <div className="input-box">
-                <CustomTypeahead required control={control} errors={errors.userIds} title="Students" name="userIds" options={generateOptions(allStudents?.user_data)} />
+                <CustomTypeahead
+                  required
+                  control={control}
+                  errors={errors.userIds}
+                  title="Students"
+                  name="userIds"
+                  options={extendedOptions}
+                  onChangeOverride={(selected, fieldOnChange) => {
+                    if (selected.some((item) => item.value === "all")) {
+                      fieldOnChange(generateOptions(allStudents?.user_data));
+                    } else {
+                      fieldOnChange(selected);
+                    }
+                  }}
+                />
               </div>
             </Col>
             <Col md="12" className="input-box">

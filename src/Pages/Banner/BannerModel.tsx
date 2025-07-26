@@ -12,7 +12,7 @@ import { Post } from "../../Api";
 import { Url_Keys } from "../../Constant";
 import { ModalPassPropsType } from "../../Types/CoreComponents";
 
-const BannerModel: FC<ModalPassPropsType> = ({ getApi }) => {
+const BannerModel: FC<ModalPassPropsType> = ({ getApi, isEdit, setEdit }) => {
   const { isBannerModal, singleEditingIdBanner, singleBannerData } = useAppSelector((state) => state.banner);
   const dispatch = useAppDispatch();
 
@@ -30,7 +30,7 @@ const BannerModel: FC<ModalPassPropsType> = ({ getApi }) => {
   });
 
   useEffect(() => {
-    if (singleBannerData) {
+    if (singleBannerData && isEdit) {
       setValue("title", singleBannerData?.title);
       setValue("action", singleBannerData?.action);
       setValue("youtubeLink", singleBannerData?.youtubeLink);
@@ -41,13 +41,14 @@ const BannerModel: FC<ModalPassPropsType> = ({ getApi }) => {
         trigger("image");
       }
     }
-  }, [setValue, singleBannerData, trigger]);
+  }, [isEdit, setValue, singleBannerData, trigger]);
 
   const onCloseModal = () => {
     dispatch(setBannerModal());
     dispatch(setSingleEditingIdBanner(null));
     reset();
     setFileList([]);
+    setEdit(false);
   };
 
   const onSubmit = async (data: BannerFormData) => {
@@ -58,7 +59,7 @@ const BannerModel: FC<ModalPassPropsType> = ({ getApi }) => {
     if (data.priority) banner.priority = data.priority;
     if (fileList[0]) banner.image = fileList[0];
     try {
-      const response = singleEditingIdBanner ? await Post(Url_Keys.Banner.Edit, { id: singleBannerData._id, ...banner }) : await Post(Url_Keys.Banner.Add, banner);
+      const response = isEdit ? await Post(Url_Keys.Banner.Edit, { id: singleBannerData._id, ...banner }) : await Post(Url_Keys.Banner.Add, banner);
       if (response?.status === 200) {
         onCloseModal();
         trigger("image");
@@ -80,7 +81,7 @@ const BannerModel: FC<ModalPassPropsType> = ({ getApi }) => {
   return (
     <Modal size="md" centered isOpen={isBannerModal} toggle={onCloseModal}>
       <ModalHeader className="position-relative border-0">
-        Banner
+          {isEdit ? "Edit" : "Add"} Banner
         <Button color="transparent" onClick={onCloseModal} className="btn-close" />
       </ModalHeader>
       <ModalBody className="pt-0">

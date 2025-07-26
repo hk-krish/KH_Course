@@ -16,7 +16,7 @@ import { CourseFormData } from "../../Types/Course";
 import { generateOptions, normalizeTags } from "../../Utils";
 import { CourseSchema } from "../../Utils/ValidationSchemas";
 
-const CourseModel: FC<ModalPassPropsType> = ({ getApi }) => {
+const CourseModel: FC<ModalPassPropsType> = ({ getApi, isEdit, setEdit }) => {
   const [fileList, setFileList] = useState<string[]>([]);
 
   const dispatch = useAppDispatch();
@@ -38,7 +38,7 @@ const CourseModel: FC<ModalPassPropsType> = ({ getApi }) => {
   });
 
   useEffect(() => {
-    if (singleCourseData) {
+    if (singleCourseData && isEdit) {
       setValue("name", singleCourseData?.name);
       setValue("action", singleCourseData?.action);
       setValue("feature", singleCourseData?.feature);
@@ -53,13 +53,14 @@ const CourseModel: FC<ModalPassPropsType> = ({ getApi }) => {
         trigger("image");
       }
     }
-  }, [allCategory?.category_data, allStudents?.user_data, setValue, singleCourseData, trigger]);
+  }, [allCategory?.category_data, allStudents?.user_data, isEdit, setValue, singleCourseData, trigger]);
 
   const onCloseModal = () => {
     dispatch(setCourseModal());
     dispatch(setSingleEditingIdCourse(null));
     reset();
     setFileList([]);
+    setEdit(false);
   };
 
   const onSubmit = async (data: CourseFormData) => {
@@ -72,7 +73,7 @@ const CourseModel: FC<ModalPassPropsType> = ({ getApi }) => {
     if (data.priority) Course.priority = data.priority;
     if (fileList[0]) Course.image = fileList[0];
     try {
-      const response = singleEditingIdCourse ? await Post(Url_Keys.Course.Edit, { id: singleCourseData._id, ...Course }) : await Post(Url_Keys.Course.Add, Course);
+      const response = isEdit ? await Post(Url_Keys.Course.Edit, { id: singleCourseData._id, ...Course }) : await Post(Url_Keys.Course.Add, Course);
       if (response?.status === 200) {
         onCloseModal();
         // trigger("image");
@@ -111,10 +112,13 @@ const CourseModel: FC<ModalPassPropsType> = ({ getApi }) => {
     getAllStudents();
   }, [getAllStudents]);
 
+  const studentsExtendedOptions = [{ value: "all", label: "Select All" }, ...generateOptions(allStudents?.user_data)];
+  const categoryExtendedOptions = [{ value: "all", label: "Select All" }, ...generateOptions(allCategory?.category_data)];
+
   return (
     <Modal size="md" centered isOpen={isCourseModal} toggle={onCloseModal}>
       <ModalHeader className="position-relative border-0">
-        Course
+        {isEdit ? "Edit" : "Add"} Course
         <Button color="transparent" onClick={onCloseModal} className="btn-close" />
       </ModalHeader>
       <ModalBody className="pt-0">
@@ -130,12 +134,40 @@ const CourseModel: FC<ModalPassPropsType> = ({ getApi }) => {
 
             <Col md="12">
               <div className="input-box">
-                <CustomTypeahead required control={control} errors={errors.categoryIds} title="Category" name="categoryIds" options={generateOptions(allCategory?.category_data)} />
+                <CustomTypeahead
+                  required
+                  control={control}
+                  errors={errors.categoryIds}
+                  title="Category"
+                  name="categoryIds"
+                  options={categoryExtendedOptions}
+                  onChangeOverride={(selected, fieldOnChange) => {
+                    if (selected.some((item) => item.value === "all")) {
+                      fieldOnChange(generateOptions(allCategory?.category_data));
+                    } else {
+                      fieldOnChange(selected);
+                    }
+                  }}
+                />
               </div>
             </Col>
             <Col md="12">
               <div className="input-box">
-                <CustomTypeahead required control={control} errors={errors.userIds} title="Students" name="userIds" options={generateOptions(allStudents?.user_data)} />
+                <CustomTypeahead
+                  required
+                  control={control}
+                  errors={errors.userIds}
+                  title="Students"
+                  name="userIds"
+                  options={studentsExtendedOptions}
+                  onChangeOverride={(selected, fieldOnChange) => {
+                    if (selected.some((item) => item.value === "all")) {
+                      fieldOnChange(generateOptions(allStudents?.user_data));
+                    } else {
+                      fieldOnChange(selected);
+                    }
+                  }}
+                />
               </div>
             </Col>
             <Col md="12" className="input-box">

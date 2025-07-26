@@ -36,12 +36,42 @@ const URL = {
     Edit: "/user/edit",
     Delete: "/user/delete",
   },
-   Lecture: {
+  Lecture: {
     Lecture: "/lecture",
     Add: "/lecture/add",
     Edit: "/lecture/edit",
     Delete: "/lecture/delete",
-  }
+  },
+  AboutUs: {
+    AboutUs: "/about-us",
+    AboutUsEdit: "/about-us/add/edit",
+  },
+  PrivacyPolicy: {
+    PrivacyPolicy: "/privacy-policy",
+    PrivacyPolicyEdit: "/privacy-policy/add/edit",
+  },
+  TermsCondition: {
+    TermsCondition: "/terms-condition",
+    TermsConditionEdit: "/terms-condition/add/edit",
+  },
+  Faq: {
+    Faq: "/faq",
+    Add: "/faq/add",
+    Edit: "/faq/edit",
+    Delete: "/faq",
+  },
+  Blog: {
+    Blog: "/blog",
+    Add: "/blog/add",
+    Edit: "/blog/edit",
+    Delete: "/blog",
+  },
+  LatestNews: {
+    LatestNews: "/latest-news",
+    Add: "/latest-news/add",
+    Edit: "/latest-news/edit",
+    Delete: "/latest-news",
+  },
 } as const;
 
 type UrlMap = typeof URL;

@@ -17,6 +17,17 @@ export const getToken = () => {
   return JSON.parse(localStorage.getItem("hk-course-admin-token"));
 };
 
-export const generateOptions = (data?: { _id: string; name?: string ;firstName?: string ;lastName?: string }[]) => data?.map((item) => ({ value: item._id, label:  item.name ? item.name : `${item.firstName} ${item.lastName}` })) || [];
+export const generateOptions = (data?: { _id: string; name?: string; firstName?: string; lastName?: string }[]) => {
+  if (!data || !Array.isArray(data)) return [];
+
+  return data.map((item) => {
+    const label = item.name?.trim() || [item.firstName, item.lastName].filter(Boolean).join(" ") || "Unnamed";
+
+    return {
+      value: item._id,
+      label,
+    };
+  });
+};
 
 export const normalizeTags = (items: SelectOption[] = []) => items.map((item) => (typeof item === "string" ? item : item.value));

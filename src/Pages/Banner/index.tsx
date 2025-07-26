@@ -13,6 +13,7 @@ import { Post } from "../../Api";
 import "@ant-design/v5-patch-for-react-19";
 
 const Banner = () => {
+  const [isEdit, setEdit] = useState(false);
   const [isSearch, setSearch] = useState("");
   const [page, setPage] = useState(1);
   const [pageLimit, setPageLimit] = useState(10);
@@ -40,6 +41,7 @@ const Banner = () => {
   const handleEdit = (item: any) => {
     dispatch(setSingleEditingIdBanner(item?._id));
     dispatch(setBannerModal());
+    setEdit(true);
   };
 
   const handleActive = async (active: boolean, record: any) => {
@@ -163,7 +165,7 @@ const Banner = () => {
           </Card>
         </Col>
       </Container>
-      <BannerModel getApi={getAllBanner} />
+      <BannerModel getApi={getAllBanner} isEdit={isEdit} setEdit={setEdit}/>
     </>
   );
 };

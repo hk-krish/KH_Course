@@ -12,7 +12,7 @@ import { Post } from "../../Api";
 import { Url_Keys } from "../../Constant";
 import { ModalPassPropsType } from "../../Types/CoreComponents";
 
-const CategoryModel: FC<ModalPassPropsType> = ({ getApi }) => {
+const CategoryModel: FC<ModalPassPropsType> = ({ getApi, isEdit, setEdit }) => {
   const { isCategoryModal, singleEditingIdCategory, singleCategoryData } = useAppSelector((state) => state.category);
   const dispatch = useAppDispatch();
 
@@ -30,7 +30,7 @@ const CategoryModel: FC<ModalPassPropsType> = ({ getApi }) => {
   });
 
   useEffect(() => {
-    if (singleCategoryData) {
+    if (singleCategoryData && isEdit) {
       setValue("name", singleCategoryData?.name);
       setValue("action", singleCategoryData?.action);
       setValue("feature", singleCategoryData?.feature);
@@ -41,13 +41,14 @@ const CategoryModel: FC<ModalPassPropsType> = ({ getApi }) => {
         trigger("image");
       }
     }
-  }, [setValue, singleCategoryData, trigger]);
+  }, [isEdit, setValue, singleCategoryData, trigger]);
 
   const onCloseModal = () => {
     dispatch(setCategoryModal());
     dispatch(setSingleEditingIdCategory(null));
     reset();
     setFileList([]);
+    setEdit(false);
   };
 
   const onSubmit = async (data: CategoryFormData) => {
@@ -58,7 +59,7 @@ const CategoryModel: FC<ModalPassPropsType> = ({ getApi }) => {
     if (data.priority) Category.priority = data.priority;
     if (fileList[0]) Category.image = fileList[0];
     try {
-      const response = singleEditingIdCategory ? await Post(Url_Keys.Category.Edit, { id: singleCategoryData._id, ...Category }) : await Post(Url_Keys.Category.Add, Category);
+      const response = isEdit ? await Post(Url_Keys.Category.Edit, { id: singleCategoryData._id, ...Category }) : await Post(Url_Keys.Category.Add, Category);
       if (response?.status === 200) {
         onCloseModal();
         // trigger("image");
@@ -80,7 +81,7 @@ const CategoryModel: FC<ModalPassPropsType> = ({ getApi }) => {
   return (
     <Modal size="md" centered isOpen={isCategoryModal} toggle={onCloseModal}>
       <ModalHeader className="position-relative border-0">
-        Category
+        {isEdit ? "Edit" : "Add"} Category
         <Button color="transparent" onClick={onCloseModal} className="btn-close" />
       </ModalHeader>
       <ModalBody className="pt-0">

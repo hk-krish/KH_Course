@@ -1,7 +1,8 @@
 import "@ant-design/v5-patch-for-react-19";
-import { Button, Flex, Image, Modal, Spin, Switch, Table } from "antd";
+import { Button, Flex, Image, Modal, Spin, Table } from "antd";
 import { DocumentText1, Edit, Trash } from "iconsax-react";
 import { useCallback, useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { Card, CardBody, Col, Container } from "reactstrap";
 import Delete from "../../Api/Delete";
 import { RouteList, Url_Keys } from "../../Constant";
@@ -10,9 +11,9 @@ import CommonCardHeader from "../../CoreComponents/CommonCardHeader";
 import { useAppDispatch, useAppSelector } from "../../ReduxToolkit/Hooks";
 import { fetchLectureApiData, setLectureModal, setSingleEditingIdLecture } from "../../ReduxToolkit/Slice/LectureSlice";
 import LectureModel from "./LectureModel";
-import { useNavigate } from "react-router-dom";
 
 const CourseLecture = () => {
+  const [isEdit, setEdit] = useState(false);
   const [isSearch, setSearch] = useState("");
   const [page, setPage] = useState(1);
   const [pageLimit, setPageLimit] = useState(10);
@@ -43,6 +44,7 @@ const CourseLecture = () => {
   const handleEdit = (item: any) => {
     dispatch(setSingleEditingIdLecture(item?._id));
     AddLectureModalClick();
+    setEdit(true);
   };
 
   useEffect(() => {
@@ -73,7 +75,7 @@ const CourseLecture = () => {
             <DocumentText1 className="action" />
           </Button>
         ) : (
-          <span className="text-muted">No Image</span>
+          <span className="text-muted">-</span>
         ),
       width: 100,
     },
@@ -163,7 +165,7 @@ const CourseLecture = () => {
           </Card>
         </Col>
       </Container>
-      <LectureModel getApi={getAllLecture} />
+      <LectureModel getApi={getAllLecture} isEdit={isEdit} setEdit={setEdit} />
     </>
   );
 };

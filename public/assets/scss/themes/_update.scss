@@ -2947,6 +2947,7 @@ body.offcanvas {
       .img {
         transition: 0.4s ease;
         border-radius: 8px;
+        aspect-ratio: 0.703704;
       }
     }
 
@@ -3265,7 +3266,7 @@ nextjs-portal {
     &:hover {
       box-shadow: none;
     }
-    .card-body{
+    .card-body {
       background-color: transparent !important;
     }
     .product-box {
@@ -3275,5 +3276,22 @@ nextjs-portal {
         }
       }
     }
+  }
+}
+
+.profile-image {
+  .ant-upload-list-picture-circle {
+    justify-content: center;
+
+    .ant-upload-list-item-container {
+      width: 125px !important;
+      height: 125px !important;
+    }
+  }
+}
+
+.description-quill {
+  .ql-editor {
+    min-height: 100% !important;
   }
 }

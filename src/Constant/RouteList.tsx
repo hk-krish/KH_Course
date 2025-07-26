@@ -15,6 +15,11 @@ export const RouteList = {
   Category: "/category",
   Course: "/course",
   Students: "/students",
+  Document: "/document",
+  FAQ: "/faq",
+  Blog: "/blog",
+  LatestNews: "/latest-news",
+  
   Lecture:{
     Lecture: "/lecture",
     CourseLecture: "/course-lecture",

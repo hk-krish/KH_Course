@@ -110,13 +110,30 @@ export const LectureSchema = yup.object().shape({
   youtubeLink: yup.string().required("Youtube Link is required"),
   image: yup.array().min(1, "At least one image is required").required("Image is required"),
   pdf: yup.array().notRequired(),
-  priority: yup
-    .number()
-    .typeError("Priority must be a number")
-    .transform((value, originalValue) => {
-      return originalValue === "" ? undefined : value;
-    })
-    .min(1, "Priority must be at least 1")
-    .required("Priority is required"),
+  priority: PrioritySchema,
   userIds: tagArraySchema,
+});
+
+export const FaqSchema = yup.object().shape({
+  question: yup.string().required("Question is required"),
+  answer: yup.string().required("Answer is required"),
+  priority: PrioritySchema,
+});
+
+export const BlogSchema = yup.object().shape({
+  image: yup.array().min(1, "At least one image is required").required("Image is required"),
+  thumbnail: yup.array().min(1, "At least one image is required").required("Thumbnail Image is required"),
+  title: yup.string().required("Project title is required"),
+  subtitle: yup.string().required("Subtitle is required"),
+  description: yup.string().required("Description is required"),
+  priority: PrioritySchema,
+});
+
+export const LatestNewsSchema = yup.object().shape({
+  image: yup.array().min(1, "At least one image is required").required("Image is required"),
+  thumbnail: yup.array().min(1, "At least one image is required").required("Thumbnail Image is required"),
+  title: yup.string().required("Project title is required"),
+  subtitle: yup.string().required("Subtitle is required"),
+  description: yup.string().required("Description is required"),
+  priority: PrioritySchema,
 });
