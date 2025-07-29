@@ -28,7 +28,8 @@ const Sidebar = () => {
           </div>
           <div className="logo-icon-wrapper">
             <Link to={RouteList.Dashboard}>
-              <Image className="img-fluid" src={dynamicImage(`logo/logo-icon.png`)} alt="" />
+              <h2>HK</h2>
+              {/* <Image className="img-fluid" src={dynamicImage(`logo/logo-icon.png`)} alt="" /> */}
             </Link>
           </div>
           <nav className="sidebar-main">

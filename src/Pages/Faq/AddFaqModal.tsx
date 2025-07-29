@@ -39,7 +39,7 @@ const AddFaqModal: FC<AddFaqModalType> = ({ isEdit, setEdit, getAllFaq }) => {
   const onSubmit = async (data: FaqType) => {
     try {
       try {
-        const response = isEdit ? await Post(Url_Keys.Faq.Edit, { faqId: singleEditingFaq._id, ...data }) : await Post(Url_Keys.Faq.Add, data);
+        const response = isEdit ? await Post(Url_Keys.Faq.Edit, { Id: singleEditingFaq._id, ...data }) : await Post(Url_Keys.Faq.Add, data);
         if (response?.status === 200) {
           onCloseModal();
         }

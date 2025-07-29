@@ -10,6 +10,7 @@ import DocumentSlice from "./Slice/DocumentSlice";
 import FaqSlice from "./Slice/FaqSlice";
 import BlogSlice from "./Slice/BlogSlice";
 import LatestNewsSlice from "./Slice/LatestNewsSlice";
+import ChatSlice from "./Slice/ChatSlice";
 
 export const store = configureStore({
   reducer: {
@@ -24,6 +25,7 @@ export const store = configureStore({
     faq: FaqSlice,
     blog: BlogSlice,
     latestNews: LatestNewsSlice,
+    chat: ChatSlice,
   },
 });
 

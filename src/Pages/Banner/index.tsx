@@ -90,11 +90,11 @@ const Banner = () => {
       title: "Action",
       dataIndex: "action",
       key: "action",
-      filters: [
-        { text: "Active", value: true },
-        { text: "Inactive", value: false },
-      ],
-      onFilter: (value, record) => record.action === value,
+      // filters: [
+      //   { text: "Active", value: true },
+      //   { text: "Inactive", value: false },
+      // ],
+      // onFilter: (value, record) => record.action === value,
       // sorter: (a: any, b: any) => Number(a.action) - Number(b.action),
       render: (active: boolean, record: any) => <Switch checked={active} className="switch-xsm" onChange={(checked) => handleActive(checked, record)} />,
       width: 100,

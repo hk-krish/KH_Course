@@ -19,6 +19,9 @@ export interface FetchApiParams {
   id?: string;
   courseFilter?: string;
   blockFilter?: string;
+  role?: string;
+  senderId?: string;
+  receiverId?: string;
 }
 
 export interface CustomCheckboxType {

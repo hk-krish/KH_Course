@@ -25,7 +25,7 @@ const Students = () => {
 
   const getAllStudents = useCallback(async () => {
     try {
-      await dispatch(fetchStudentsApiData({ page, limit: pageLimit, search: isSearch ,blockFilter:isTypeFilter }));
+      await dispatch(fetchStudentsApiData({ page, limit: pageLimit, search: isSearch ,blockFilter:isTypeFilter ,role:"user"}));
     } catch (error) {}
   }, [dispatch, page, pageLimit, isSearch, isTypeFilter]);
 

@@ -58,20 +58,26 @@ const URL = {
     Faq: "/faq",
     Add: "/faq/add",
     Edit: "/faq/edit",
-    Delete: "/faq",
+    Delete: "/faq/delete",
   },
   Blog: {
     Blog: "/blog",
     Add: "/blog/add",
     Edit: "/blog/edit",
-    Delete: "/blog",
+    Delete: "/blog/delete",
   },
   LatestNews: {
     LatestNews: "/latest-news",
     Add: "/latest-news/add",
     Edit: "/latest-news/edit",
-    Delete: "/latest-news",
+    Delete: "/latest-news/delete",
   },
+  Chat:{
+    Chat: "/chat/getall",
+    Send: "/chat/send",
+    Delete: "/chat/delete",
+    Edit: "/chat/edit",
+  }
 } as const;
 
 type UrlMap = typeof URL;

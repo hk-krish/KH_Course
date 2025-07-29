@@ -3,6 +3,7 @@ import ChangePassword from "../Pages/Auth/ChangePassword";
 import Banner from "../Pages/Banner";
 import Blog from "../Pages/Blog";
 import Category from "../Pages/Category";
+import Chats from "../Pages/Chats";
 import Course from "../Pages/Course";
 import Dashboard from "../Pages/Dashboard";
 import Document from "../Pages/Document";
@@ -25,4 +26,5 @@ export const AppRoutes = [
   { path: RouteList.FAQ, element: <Faq /> },
   { path: RouteList.Blog, element: <Blog /> },
   { path: RouteList.LatestNews, element: <LatestNews /> },
+  { path: RouteList.Chats, element: <Chats /> },
 ];

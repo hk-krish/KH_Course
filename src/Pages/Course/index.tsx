@@ -10,6 +10,7 @@ import CommonCardHeader from "../../CoreComponents/CommonCardHeader";
 import { useAppDispatch, useAppSelector } from "../../ReduxToolkit/Hooks";
 import { fetchCourseApiData, setCourseModal, setSingleEditingIdCourse } from "../../ReduxToolkit/Slice/CourseSlice";
 import CourseModel from "./CourseModel";
+import { Post } from "../../Api";
 
 const Course = () => {
   const [isEdit, setEdit] = useState(false);
@@ -43,6 +44,16 @@ const Course = () => {
     dispatch(setSingleEditingIdCourse(item?._id));
     AddCourseModalClick();
     setEdit(true);
+  };
+
+  const handleActive = async (checked: boolean, record: any, type: string) => {
+    let payload: any = { id: record?._id };
+    if (type === "feature") payload.feature = checked;
+    if (type === "active") payload.action = checked;
+    try {
+      const response = await Post(Url_Keys.Course.Edit, payload);
+      if (response?.status === 200) getAllCourse();
+    } catch (error) {}
   };
 
   const columns = [
@@ -84,14 +95,14 @@ const Course = () => {
       title: "Feature",
       dataIndex: "feature",
       key: "feature",
-      render: (feature: boolean) => <Switch checked={feature} disabled className="switch-xsm" />,
+      render: (feature: boolean, record: any) => <Switch checked={feature} className="switch-xsm" onChange={(checked) => handleActive(checked, record, "feature")} />,
       width: 50,
     },
     {
       title: "Action",
       dataIndex: "action",
       key: "action",
-      render: (active: boolean) => <Switch checked={active} disabled className="switch-xsm" />,
+      render: (active: boolean, record: any) => <Switch checked={active} className="switch-xsm" onChange={(checked) => handleActive(checked, record, "active")} />,
       width: 50,
     },
     {

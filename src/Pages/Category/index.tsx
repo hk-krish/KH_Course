@@ -46,10 +46,10 @@ const Category = () => {
     setEdit(true);
   };
 
-  const handleActive = async (active: boolean, record: any, type: string) => {
+  const handleActive = async (checked: boolean, record: any, type: string) => {
     let payload: any = { id: record?._id };
-    if (type === "active") payload.action = active;
-    if (type === "feature") payload.feature = active;
+    if (type === "feature") payload.feature = checked;
+    if (type === "active") payload.action = checked;
     try {
       const response = await Post(Url_Keys.Category.Edit, payload);
       if (response?.status === 200) getAllCategory();
@@ -77,7 +77,6 @@ const Category = () => {
       render: (text: string) => text || "-",
       width: 150,
     },
-
     {
       title: "Feature",
       dataIndex: "feature",

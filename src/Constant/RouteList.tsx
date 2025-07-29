@@ -19,6 +19,7 @@ export const RouteList = {
   FAQ: "/faq",
   Blog: "/blog",
   LatestNews: "/latest-news",
+  Chats: "/chats",
   
   Lecture:{
     Lecture: "/lecture",

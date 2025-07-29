@@ -12,12 +12,15 @@ const initialState: StudentsSliceType = {
   singleStudentsData: null,
 };
 
-export const fetchStudentsApiData = createAsyncThunk<StudentsApiResponse, FetchApiParams>("admin/Students", async ({ page, limit, search, blockFilter }) => {
+export const fetchStudentsApiData = createAsyncThunk<StudentsApiResponse, FetchApiParams>("admin/Students", async ({ page, limit, search, blockFilter ,role}) => {
   let url = Url_Keys.Students.Students;
-  if (page) url += `?page=${page}&limit=${limit}`;
-  if (search) url += `&search=${search}`;
-  if (blockFilter) url += `&blockFilter=${blockFilter}`;
-  const response = await Get<StudentsApiResponse>(url);
+  const params = new URLSearchParams();
+  if (role) params.append("role", role);
+  if (page) params.append("page", page.toString());
+  if (limit) params.append("limit", limit.toString());
+  if (search) params.append("search", search);
+  if (blockFilter) params.append("blockFilter", blockFilter);
+  const response = await Get<StudentsApiResponse>(`${url}?${params.toString()}`);
   return response?.data;
 });
 

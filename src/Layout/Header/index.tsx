@@ -13,6 +13,7 @@ import { Maximize2 } from "iconsax-react";
 
 const Header = () => {
   const { sideBarToggle } = useAppSelector((state) => state.layout);
+  const { user } = useAppSelector((state) => state.auth);
   const [fullScreen, setFullScreen] = useState(false);
   const fullScreenHandler = (isFullScreen: boolean) => {
     setFullScreen(isFullScreen);
@@ -44,13 +45,13 @@ const Header = () => {
               </li>
               <li className="profile-nav onhover-dropdown p-0 m-0">
                 <div className="d-flex profile-media align-items-center">
-                  {/* <Image className="b-r-6 img-40" src={singleUser?.profilePhoto ? singleUser?.profilePhoto : `${ImagePath}user/user.png`} alt="profile" /> */}
+                  <Image className="b-r-6 img-40" src={user?.user?.profilePhoto ? user?.user?.profilePhoto : dynamicImage(`user/user.png`)} alt="profile" />
                   <div className="flex-grow-1">
                     <span>
-                      {/* {singleUser?.firstName} {singleUser?.lastName} */}
+                      {user?.user?.firstName} {user?.user?.lastName}
                     </span>
-                    <p className="mb-0">
-                      Admin
+                    <p className="mb-0 text-capitalize">
+                      {user?.user?.userType}
                       <SvgIcon iconId="header-arrow-down" />
                     </p>
                   </div>

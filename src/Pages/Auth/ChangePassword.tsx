@@ -29,6 +29,7 @@ const ChangePassword = () => {
       email: user?.user?.email,
       oldPassword: data?.oldPassword,
       newPassword: data?.newPassword,
+      confirmPassword: data?.confirmPassword,
     };
     try {
       setLoading(true);

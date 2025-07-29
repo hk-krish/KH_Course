@@ -1,9 +1,12 @@
-import React from 'react'
+import React, { Fragment } from "react";
+import Breadcrumbs from "../../CoreComponents/Breadcrumbs";
 
 const Dashboard = () => {
   return (
-    <div>Dashboard</div>
-  )
-}
+    <Fragment>
+      <Breadcrumbs mainTitle="Dashboard" parent="Pages" />
+    </Fragment>
+  );
+};
 
-export default Dashboard
+export default Dashboard;

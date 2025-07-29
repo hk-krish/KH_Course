@@ -5,6 +5,7 @@ export interface StudentsType {
   email: string;
   phoneNumber: string;
   password: string;
+  confirmPassword: string;
   isDeleted: boolean;
   isBlocked: boolean;
   createdAt: string;

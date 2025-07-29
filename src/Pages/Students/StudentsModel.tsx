@@ -35,7 +35,7 @@ const StudentsModel: FC<ModalPassPropsType> = ({ getApi, isEdit, setEdit }) => {
       setValue("lastName", singleStudentsData?.lastName);
       setValue("email", singleStudentsData?.email);
       setValue("phoneNumber", singleStudentsData?.phoneNumber);
-      setValue("password", singleStudentsData?.password);
+      setValue("password", singleStudentsData?.confirmPassword);
       if (singleStudentsData?.image) {
         setValue("image", [singleStudentsData?.image]);
         setFileList([singleStudentsData?.image]);
