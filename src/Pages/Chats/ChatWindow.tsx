@@ -1,10 +1,10 @@
+// ChatWindow.tsx
 import { Dropdown, Empty, Typography } from "antd";
 import { ArrowDown2 } from "iconsax-react";
 import { FormEvent, useCallback, useEffect, useRef, useState } from "react";
 import { IoCheckmarkDone } from "react-icons/io5";
 import { Button, Card, Col, Form } from "reactstrap";
 import { Post } from "../../Api";
-import Delete from "../../Api/Delete";
 import { Href, Url_Keys } from "../../Constant";
 import { Image } from "../../CoreComponents/Image";
 import SvgIcon from "../../CoreComponents/SvgIcon";
@@ -14,99 +14,127 @@ import { Chat } from "../../Types/Chat";
 import { dynamicImage } from "../../Utils";
 import { FormatTime } from "../../Utils/DateFormatted";
 import { fetchStudentsApiData } from "../../ReduxToolkit/Slice/StudentsSlice";
+import socket from "../../socket";
 
 const ChatWindow = () => {
   const [messageInput, setMessageInput] = useState("");
   const [editChatId, setEditChatId] = useState<string | null>(null);
+  const [chatList, setChatList] = useState<Chat[]>([]);
 
   const chatContainerRef = useRef<HTMLDivElement>(null);
   const dispatch = useAppDispatch();
   const { allChat, selectedUser } = useAppSelector((state) => state.chat);
   const { user } = useAppSelector((state) => state.auth);
+  const userId = user?.user?._id;
 
-  const getAllStudents = useCallback(async () => {
-    try {
-      await dispatch(fetchStudentsApiData({ blockFilter: "unblock"}));
-    } catch (error) {}
+  // Join socket room & handle events
+  useEffect(() => {
+    if (!userId) return;
+
+    if (!socket.connected) socket.connect();
+    socket.emit("join", userId);
+
+    socket.on("receive_message", (msg: Chat) => {
+      setChatList((prev) => [...prev, msg]);
+    });
+
+    socket.on("message_updated", (updated: Chat) => {
+      setChatList((prev) => prev.map((msg) => (msg._id === updated._id ? updated : msg)));
+    });
+
+    socket.on("message_deleted", ({ messageId }) => {
+      setChatList((prev) => prev.filter((msg) => msg._id !== messageId));
+    });
+
+    socket.on("conversation_deleted", ({ receiverId }) => {
+      if (receiverId === selectedUser?._id) setChatList([]);
+    });
+
+    return () => {
+      socket.off("receive_message");
+      socket.off("message_updated");
+      socket.off("message_deleted");
+      socket.off("conversation_deleted");
+    };
+  }, [userId, selectedUser?._id]);
+
+  useEffect(() => {
+    if (allChat?.allChats) setChatList(allChat.allChats);
+  }, [allChat]);
+
+  const getAllStudents = useCallback(() => {
+    dispatch(fetchStudentsApiData({ blockFilter: "unblock" }));
   }, [dispatch]);
 
   useEffect(() => {
     getAllStudents();
   }, [getAllStudents]);
 
-  const getAllChat = useCallback(async () => {
-    try {
-      await dispatch(fetchChatApiData({ senderId: user?.user?._id, receiverId: selectedUser?._id }));
-    } catch (error) {}
-  }, [dispatch, selectedUser?._id, user?.user?._id]);
+  const getAllChat = useCallback(() => {
+    if (userId && selectedUser?._id) {
+      dispatch(fetchChatApiData({ senderId: userId, receiverId: selectedUser._id }));
+    }
+  }, [dispatch, userId, selectedUser?._id]);
 
   useEffect(() => {
-    if (user?.user?._id && selectedUser?._id) getAllChat();
-  }, [getAllChat, selectedUser?._id, user?.user?._id]);
+    getAllChat();
+  }, [getAllChat]);
 
   useEffect(() => {
     if (chatContainerRef.current) {
-      chatContainerRef.current.scrollTo({ top: chatContainerRef.current.scrollHeight, behavior: "smooth" });
+      chatContainerRef.current.scrollTo({
+        top: chatContainerRef.current.scrollHeight,
+        behavior: "smooth",
+      });
     }
-  }, [allChat]);
+  }, [chatList]);
 
-  const handleMessagePress = async (event: FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
+  const handleMessagePress = (e: FormEvent) => {
+    e.preventDefault();
+    const msg = messageInput.trim();
+    if (!msg || !userId || !selectedUser?._id) return;
 
-    const trimmedMessage = messageInput.trim();
-    if (trimmedMessage.length === 0) return;
-
-    try {
-      if (editChatId) {
-        const payload = { id: editChatId, message: trimmedMessage };
-        const response = await Post(Url_Keys.Chat.Edit, payload);
-        if (response?.status === 200) {
-          setEditChatId(null);
-          setMessageInput("");
-          getAllChat();
-        }
-      } else {
-        const addMessage = {
-          senderId: user?.user?._id,
-          receiverId: selectedUser?._id,
-          message: trimmedMessage,
-        };
-        const response = await Post(Url_Keys.Chat.Send, addMessage);
-        if (response?.status === 200) {
-          setMessageInput("");
-          getAllChat();
-        }
-      }
-    } catch (error) {}
+    if (editChatId) {
+      socket.emit("edit_message", { messageId: editChatId, newMessage: msg });
+      setEditChatId(null);
+    } else {
+      socket.emit("send_message", {
+        senderId: userId,
+        receiverId: selectedUser._id,
+        message: msg,
+      });
+    }
+    getAllChat();
+    setMessageInput("");
   };
 
-  const handleChatDelete = async (id: string) => {
-    try {
-      await Delete(`${Url_Keys.Chat.Delete}/${id}`);
-      getAllChat();
-    } catch (error) {}
+  const handleChatEdit = (msg: Chat) => {
+    setMessageInput(msg.message);
+    setEditChatId(msg._id);
   };
 
-  const handleChatEdit = async (item: Chat) => {
-    try {
-      setMessageInput(item?.message);
-      setEditChatId(item._id);
-    } catch (error) {}
+  const handleChatDelete = (id: string) => {
+    socket.emit("delete_message", { messageId: id });
+    getAllChat();
   };
 
-  const handleAllChatDelete = async () => {
-    await Delete(Url_Keys.Chat.Delete, { senderId: user?.user?._id, receiverId: selectedUser?._id });
+  const handleAllChatDelete = () => {
+    socket.emit("delete_conversation", {
+      senderId: userId,
+      receiverId: selectedUser?._id,
+    });
     getAllChat();
   };
 
   const handleBlockStudent = async () => {
-    try {
-      const response = await Post(Url_Keys.Students.Edit, { id: selectedUser?._id, isBlocked: true });
-      if (response?.status === 200) {
-        getAllStudents();
-        dispatch(setSelectUser(null));
-      }
-    } catch (error) {}
+    const res = await Post(Url_Keys.Students.Edit, {
+      id: selectedUser?._id,
+      isBlocked: true,
+    });
+    if (res?.status === 200) {
+      getAllStudents();
+      dispatch(setSelectUser(null));
+    }
   };
 
   return (
@@ -118,54 +146,55 @@ const ChatWindow = () => {
               <div className="common-space">
                 <div className="chat-time">
                   <div className="active-profile">
-                    <Image className="img-fluid rounded-circle" src={`${selectedUser?.image ? `${selectedUser?.image}` : dynamicImage(`user/user.png`)}`} alt="user" />
+                    <Image className="img-fluid rounded-circle" src={selectedUser.image || dynamicImage("user/user.png")} alt="user" />
                   </div>
                   <div>
-                    <span>{selectedUser?.firstName ? `${selectedUser?.firstName} ${selectedUser?.lastName}` : "Students"}</span>
-                    <p>{selectedUser?.phoneNumber}</p>
+                    <span>
+                      {selectedUser.firstName} {selectedUser.lastName}
+                    </span>
+                    <p>{selectedUser.phoneNumber}</p>
                   </div>
                 </div>
-                <div className="d-flex gap-2">
-                  <Dropdown
-                    menu={{
-                      items: [
-                        {
-                          key: "1",
-                          label: (
-                            <a href={Href} onClick={() => handleBlockStudent()}>
-                              Block Student
-                            </a>
-                          ),
-                        },
-                        {
-                          key: "2",
-                          label: (
-                            <a href={Href} onClick={() => handleAllChatDelete()}>
-                              Delete All Chat
-                            </a>
-                          ),
-                        },
-                      ],
-                    }}
-                    trigger={["click"]}
-                  >
-                    <div className="contact-edit chat-alert bg-light-primary">
-                      <SvgIcon iconId="menubar" />
-                    </div>
-                  </Dropdown>
-                </div>
+                <Dropdown
+                  menu={{
+                    items: [
+                      {
+                        key: "1",
+                        label: (
+                          <a href={Href} onClick={handleBlockStudent}>
+                            Block Student
+                          </a>
+                        ),
+                      },
+                      {
+                        key: "2",
+                        label: (
+                          <a href={Href} onClick={handleAllChatDelete}>
+                            Delete All Chat
+                          </a>
+                        ),
+                      },
+                    ],
+                  }}
+                  trigger={["click"]}
+                >
+                  <div className="contact-edit chat-alert bg-light-primary">
+                    <SvgIcon iconId="menubar" />
+                  </div>
+                </Dropdown>
               </div>
             </div>
+
             <div className="right-sidebar-Chats">
               <div className="msger px-2 pb-2">
                 <div className="msger-chat" ref={chatContainerRef}>
-                  {allChat && allChat.allChats.length > 0 ? (
-                    allChat.allChats.map((item, id) => {
+                  {chatList.length > 0 ? (
+                    chatList.map((item) => {
                       const isCurrentUser = selectedUser?._id === item?.senderId?._id;
                       return (
-                        <div className={`msg ${isCurrentUser ? "right" : "pull-right left"}-msg`} key={item._id}>
+                        <div key={item._id} className={`msg ${isCurrentUser ? "right" : "pull-right left"}-msg`}>
                           <div className="msg-bubble mx-2">
-                            <div className="msg-info mb-0 d-flex justify-content-between align-items-center">
+                            <div className="msg-info d-flex justify-content-between align-items-center">
                               <div className="msg-info-name">{item.message}</div>
                               {!isCurrentUser && (
                                 <Dropdown
@@ -175,15 +204,15 @@ const ChatWindow = () => {
                                         key: "1",
                                         label: (
                                           <a href={Href} onClick={() => handleChatEdit(item)}>
-                                            Edit Message
+                                            Edit
                                           </a>
                                         ),
                                       },
                                       {
                                         key: "2",
                                         label: (
-                                          <a href={Href} onClick={() => handleChatDelete(item?._id)}>
-                                            Delete Chat
+                                          <a href={Href} onClick={() => handleChatDelete(item._id)}>
+                                            Delete
                                           </a>
                                         ),
                                       },
@@ -192,14 +221,14 @@ const ChatWindow = () => {
                                   trigger={["click"]}
                                 >
                                   <div className="msg-hover">
-                                    <ArrowDown2 size="20" color="#000000ff" />
+                                    <ArrowDown2 size="20" />
                                   </div>
                                 </Dropdown>
                               )}
                             </div>
                             <div className="msg-info-time text-end">
                               {FormatTime(item.createdAt)}
-                              <IoCheckmarkDone size={18} color={item.seen ? "#cca270" : "#000000ff"} className="ms-2" />
+                              <IoCheckmarkDone size={18} color={item.seen ? "#cca270" : "#000"} className="ms-2" />
                             </div>
                           </div>
                         </div>
@@ -213,9 +242,9 @@ const ChatWindow = () => {
                 </div>
 
                 <Form className="msger-inputarea" onSubmit={handleMessagePress}>
-                  <input className="msger-input" type="text" placeholder="Type Message here.." value={messageInput} onChange={(e) => setMessageInput(e.target.value)} />
-                  <Button color="primary" className="msger-send-btn" type="submit" aria-label="Send message">
-                    <i className="fa fa-location-arrow" aria-hidden="true" />
+                  <input className="msger-input" type="text" placeholder="Type Message..." value={messageInput} onChange={(e) => setMessageInput(e.target.value)} />
+                  <Button color="primary" className="msger-send-btn" type="submit">
+                    <i className="fa fa-location-arrow" />
                   </Button>
                 </Form>
               </div>
