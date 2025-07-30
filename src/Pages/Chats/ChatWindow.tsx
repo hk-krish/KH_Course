@@ -1,4 +1,3 @@
-// ChatWindow.tsx
 import { Dropdown, Empty, Typography } from "antd";
 import { ArrowDown2 } from "iconsax-react";
 import { FormEvent, useCallback, useEffect, useRef, useState } from "react";
@@ -9,12 +8,12 @@ import { Href, Url_Keys } from "../../Constant";
 import { Image } from "../../CoreComponents/Image";
 import SvgIcon from "../../CoreComponents/SvgIcon";
 import { useAppDispatch, useAppSelector } from "../../ReduxToolkit/Hooks";
-import { fetchChatApiData, setSelectUser } from "../../ReduxToolkit/Slice/ChatSlice";
+import { setSelectUser } from "../../ReduxToolkit/Slice/ChatSlice";
+import { fetchStudentsApiData } from "../../ReduxToolkit/Slice/StudentsSlice";
+import socket from "../../socket";
 import { Chat } from "../../Types/Chat";
 import { dynamicImage } from "../../Utils";
 import { FormatTime } from "../../Utils/DateFormatted";
-import { fetchStudentsApiData } from "../../ReduxToolkit/Slice/StudentsSlice";
-import socket from "../../socket";
 
 const ChatWindow = () => {
   const [messageInput, setMessageInput] = useState("");
@@ -23,11 +22,13 @@ const ChatWindow = () => {
 
   const chatContainerRef = useRef<HTMLDivElement>(null);
   const dispatch = useAppDispatch();
-  const { allChat, selectedUser } = useAppSelector((state) => state.chat);
+  const { selectedUser, isChatSearchData } = useAppSelector((state) => state.chat);
   const { user } = useAppSelector((state) => state.auth);
   const userId = user?.user?._id;
+  const receiver = selectedUser?._id;
 
-  // Join socket room & handle events
+  // console.log("chatList => ", chatList);
+
   useEffect(() => {
     if (!userId) return;
 
@@ -50,44 +51,26 @@ const ChatWindow = () => {
       if (receiverId === selectedUser?._id) setChatList([]);
     });
 
+    socket.emit("get_all_chats", { senderId: userId, receiverId: receiver });
+
+    socket.on("get_all_chats_response", (allChats) => {
+      setChatList(allChats);
+    });
     return () => {
       socket.off("receive_message");
       socket.off("message_updated");
       socket.off("message_deleted");
       socket.off("conversation_deleted");
     };
-  }, [userId, selectedUser?._id]);
-
-  useEffect(() => {
-    if (allChat?.allChats) setChatList(allChat.allChats);
-  }, [allChat]);
+  }, [userId, receiver, selectedUser?._id, chatList]);
 
   const getAllStudents = useCallback(() => {
-    dispatch(fetchStudentsApiData({ blockFilter: "unblock" }));
-  }, [dispatch]);
+    dispatch(fetchStudentsApiData({ blockFilter: "unblock", search: isChatSearchData }));
+  }, [dispatch, isChatSearchData]);
 
   useEffect(() => {
     getAllStudents();
   }, [getAllStudents]);
-
-  const getAllChat = useCallback(() => {
-    if (userId && selectedUser?._id) {
-      dispatch(fetchChatApiData({ senderId: userId, receiverId: selectedUser._id }));
-    }
-  }, [dispatch, userId, selectedUser?._id]);
-
-  useEffect(() => {
-    getAllChat();
-  }, [getAllChat]);
-
-  useEffect(() => {
-    if (chatContainerRef.current) {
-      chatContainerRef.current.scrollTo({
-        top: chatContainerRef.current.scrollHeight,
-        behavior: "smooth",
-      });
-    }
-  }, [chatList]);
 
   const handleMessagePress = (e: FormEvent) => {
     e.preventDefault();
@@ -104,7 +87,12 @@ const ChatWindow = () => {
         message: msg,
       });
     }
-    getAllChat();
+    setTimeout(() => {
+      chatContainerRef.current?.scrollTo({
+        top: chatContainerRef.current.scrollHeight,
+        behavior: "smooth",
+      });
+    }, 100);
     setMessageInput("");
   };
 
@@ -115,7 +103,6 @@ const ChatWindow = () => {
 
   const handleChatDelete = (id: string) => {
     socket.emit("delete_message", { messageId: id });
-    getAllChat();
   };
 
   const handleAllChatDelete = () => {
@@ -123,7 +110,6 @@ const ChatWindow = () => {
       senderId: userId,
       receiverId: selectedUser?._id,
     });
-    getAllChat();
   };
 
   const handleBlockStudent = async () => {
@@ -221,7 +207,7 @@ const ChatWindow = () => {
                                   trigger={["click"]}
                                 >
                                   <div className="msg-hover">
-                                    <ArrowDown2 size="20" />
+                                    <ArrowDown2 size="20" color="#000" />
                                   </div>
                                 </Dropdown>
                               )}

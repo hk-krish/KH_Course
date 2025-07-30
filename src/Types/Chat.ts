@@ -26,10 +26,11 @@ export interface ChatApiResponse {
 }
 
 export interface ChatSliceType {
-  isChatModal: boolean,
-  allChat: ChatApiResponse,
-  isLoadingChat: boolean,
-  singleEditingIdChat: Chat,
-  singleChatData: Chat,
-  selectedUser: StudentsType,
+  isChatModal: boolean;
+  allChat: ChatApiResponse;
+  isLoadingChat: boolean;
+  singleEditingIdChat: Chat;
+  singleChatData: Chat;
+  selectedUser: StudentsType;
+  isChatSearchData: string;
 }

@@ -11,6 +11,7 @@ const initialState: ChatSliceType = {
   singleEditingIdChat: null,
   singleChatData: null,
   selectedUser: null,
+  isChatSearchData:null
 };
 
 export const fetchChatApiData = createAsyncThunk<ChatApiResponse, FetchApiParams>("admin/Chat", async ({ senderId, receiverId }) => {
@@ -38,6 +39,9 @@ const ChatSlice = createSlice({
     setSelectUser: (state, action) => {
       state.selectedUser = action.payload;
     },
+    setChatSearchData(state, action) {
+      state.isChatSearchData = action.payload;
+    },
   },
   extraReducers: (builder) => {
     builder.addCase(fetchChatApiData.fulfilled, (state, action) => {
@@ -50,5 +54,5 @@ const ChatSlice = createSlice({
   },
 });
 
-export const { setChatModal, setSingleEditingIdChat, setSelectUser } = ChatSlice.actions;
+export const { setChatModal, setSingleEditingIdChat, setSelectUser ,setChatSearchData} = ChatSlice.actions;
 export default ChatSlice.reducer;

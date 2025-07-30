@@ -2,7 +2,7 @@ import React from "react";
 import { Search } from "react-feather";
 import { Card, Col, Input, InputGroup, InputGroupText } from "reactstrap";
 import { useAppDispatch, useAppSelector } from "../../ReduxToolkit/Hooks";
-import { setSelectUser } from "../../ReduxToolkit/Slice/ChatSlice";
+import { setChatSearchData, setSelectUser } from "../../ReduxToolkit/Slice/ChatSlice";
 import { Image } from "../../CoreComponents/Image";
 import { dynamicImage } from "../../Utils";
 
@@ -23,7 +23,7 @@ const Sidebar = () => {
             <InputGroupText>
               <Search className="search-icon text-gray" />
             </InputGroupText>
-            <Input type="text" placeholder="Search here.." />
+            <Input type="text" placeholder="Search here.." onChange={(e) => dispatch(setChatSearchData(e.target.value))}/>
           </InputGroup>
         </div>
         <div className="advance-options">
